@@ -11804,7 +11804,6 @@ div#notebook {
 <span class="n">numeric_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;OVR&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">numeric_data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">teams</span> <span class="o">=</span> <span class="n">numeric_data</span><span class="o">.</span><span class="n">columns</span>
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;numTeams&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numeric_data</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11837,13 +11836,13 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>2     114
-4      35
-6      10
-8       3
-10      2
-12      1
-14      1
+<pre>1    114
+2     35
+3     10
+4      3
+5      2
+6      1
+7      1
 Name: numTeams, dtype: int64</pre>
 </div>
 
@@ -11856,83 +11855,6 @@ Name: numTeams, dtype: int64</pre>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;lastName&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Sharpe&#39;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[3]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Name</th>
-      <th>OVR</th>
-      <th>POS</th>
-      <th>PS4</th>
-      <th>firstName</th>
-      <th>lastName</th>
-      <th>POS2</th>
-      <th>Player</th>
-      <th>Pos</th>
-      <th>College</th>
-      <th>...</th>
-      <th>Phi</th>
-      <th>Pit</th>
-      <th>SF</th>
-      <th>Sea</th>
-      <th>TB</th>
-      <th>Ten</th>
-      <th>Was</th>
-      <th>RAMS</th>
-      <th>CHARGERS</th>
-      <th>numTeams</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-<p>0 rows × 44 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">numeric_data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
@@ -11955,7 +11877,7 @@ Name: numTeams, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -12309,7 +12231,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;powerup_aug18.csv&#39;</span><span class="p">)</span>
@@ -12332,7 +12254,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">small_data</span><span class="p">[</span><span class="s1">&#39;Teams&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">small_data</span><span class="p">[</span><span class="s1">&#39;Teams&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="p">)</span>
@@ -12350,7 +12272,7 @@ zwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[7]:</div>
+<div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -12385,363 +12307,48 @@ zwAAAABJRU5ErkJggg==
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Min, Oak, NE, Min, Ten, SF</td>
-      <td>12</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>110</th>
       <td>Rashaan Melvin</td>
       <td>CB</td>
       <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>157</th>
       <td>Terrell Owens</td>
       <td>WR</td>
       <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
-      <td>NYJ, Cle, NYJ, NO</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>Pit,  SF,  Bal,  Oak</td>
-      <td>8</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Michael Vick</td>
       <td>QB</td>
       <td>Atl, Phi, NYJ, Pit</td>
-      <td>8</td>
+      <td>4</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>Ted Hendricks</td>
-      <td>LOLB</td>
-      <td>Bal, GB, Oak, LAR</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Sea, Min, Ten</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>Ndamukong Suh</td>
-      <td>DT</td>
-      <td>Det, Mia, LA</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
-      <td>Atl, Mia, TB,</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>Jimmy Graham</td>
-      <td>TE</td>
-      <td>NO, Sea, GB</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>Zach Brown</td>
+      <th>43</th>
+      <td>Demario Davis</td>
       <td>MLB</td>
-      <td>0</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>127</th>
-      <td>Jabaal Sheard</td>
-      <td>RE</td>
-      <td>Cle, NE, Ind</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>163</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>SF,  Oak,  Sea</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Reggie White</td>
-      <td>LE</td>
-      <td>Phi, GB, Car</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>Josh Sitton</td>
-      <td>LG</td>
-      <td>GB, Chi, Mia</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>115</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
-      <td>Bal, Oak</td>
+      <td>NYJ, Cle, NYJ, NO</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Jason Peters</td>
-      <td>LT</td>
-      <td>Buf, , Phi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>114</th>
-      <td>Greg Olsen</td>
-      <td>TE</td>
-      <td>Chi, Car</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>117</th>
-      <td>Marcus Peters</td>
+      <th>159</th>
+      <td>Rod Woodson</td>
       <td>CB</td>
-      <td>KC, LA</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>113</th>
-      <td>Andrew Norwell</td>
-      <td>LG</td>
-      <td>Car, Jax</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Champ Bailey</td>
-      <td>CB</td>
-      <td>Was, Den</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>128</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Sea, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>139</th>
-      <td>Golden Tate III</td>
-      <td>WR</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>107</th>
-      <td>Tyrann Mathieu</td>
-      <td>FS</td>
-      <td>Ari, Hou</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>147</th>
-      <td>Delanie Walker</td>
-      <td>TE</td>
-      <td>SF, Ten</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>Kevin Zeitler</td>
-      <td>RG</td>
-      <td>Cin, Cle</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>160</th>
-      <td>Demarcus Ware</td>
-      <td>ROLB</td>
-      <td>Dal,  Den</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>161</th>
-      <td>Tim Brown</td>
-      <td>WR</td>
-      <td>Oak,  TB</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>144</th>
-      <td>Danny Trevathan</td>
-      <td>MLB</td>
-      <td>Den, Chi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>86</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>104</th>
-      <td>Alex Mack</td>
-      <td>C</td>
-      <td>Cle, Atl</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>Jarvis Landry</td>
-      <td>WR</td>
-      <td>Mia, Cle</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Willie Roaf</td>
-      <td>LT</td>
-      <td>NO, KC</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Bruce Smith</td>
-      <td>RE</td>
-      <td>Buf, Was</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Steve Young</td>
-      <td>QB</td>
-      <td>TB, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>A.J. Bouye</td>
-      <td>CB</td>
-      <td>Hou, Jax</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>Nigel Bradham</td>
-      <td>LOLB</td>
-      <td>Buf, Phi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>Drew Brees</td>
-      <td>QB</td>
-      <td>SD, NO</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>Malcolm Butler</td>
-      <td>CB</td>
-      <td>NE, Ten</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>Calais Campbell</td>
-      <td>LE</td>
-      <td>Ari, Jax</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>58</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Buf, NE</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>68</th>
-      <td>Damon Harrison Sr</td>
-      <td>DT</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>Casey Hayward</td>
-      <td>CB</td>
-      <td>GB, SD, LAC</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>77</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
-      <td>KC, Oak</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>79</th>
-      <td>Micah Hyde</td>
-      <td>SS</td>
-      <td>GB, Buf</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>82</th>
-      <td>Janoris Jenkins</td>
-      <td>CB</td>
-      <td>Stl, NYG</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>83</th>
-      <td>Malcolm Jenkins</td>
-      <td>SS</td>
-      <td>NO, Phi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>91</th>
-      <td>Linval Joseph</td>
-      <td>DT</td>
-      <td>NYG, Min</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>93</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
-      <td>Bal, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>164</th>
-      <td>Shannon Sharpe</td>
-      <td>TE</td>
-      <td>Den,  Bal</td>
+      <td>Pit,  SF,  Bal,  Oak</td>
       <td>4</td>
     </tr>
   </tbody>
@@ -12757,7 +12364,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">team_abbrevs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pal</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -12796,7 +12403,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span><span class="o">=</span><span class="mi">0</span>
@@ -12813,7 +12420,7 @@ zwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[9]:</div>
+<div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -12848,91 +12455,91 @@ zwAAAABJRU5ErkJggg==
       <td>Michael Vick</td>
       <td>QB</td>
       <td>Atl, Phi, NYJ, Pit</td>
-      <td>8</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Reggie White</td>
       <td>LE</td>
       <td>Phi, GB, Car</td>
-      <td>6</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>27</th>
       <td>Nigel Bradham</td>
       <td>LOLB</td>
       <td>Buf, Phi</td>
-      <td>4</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>41</th>
       <td>Fletcher Cox</td>
       <td>DT</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>51</th>
       <td>Zach Ertz</td>
       <td>TE</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>60</th>
       <td>Brandon Graham</td>
       <td>LE</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>71</th>
       <td>Jordan Hicks</td>
       <td>MLB</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>83</th>
       <td>Malcolm Jenkins</td>
       <td>SS</td>
       <td>NO, Phi</td>
-      <td>4</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>85</th>
       <td>Lane Johnson</td>
       <td>RT</td>
       <td>0</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>95</th>
       <td>Jason Kelce</td>
       <td>C</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>116</th>
       <td>Jason Peters</td>
       <td>LT</td>
       <td>Buf, , Phi</td>
-      <td>4</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>149</th>
       <td>Carson Wentz</td>
       <td>QB</td>
       <td>Phi</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>157</th>
       <td>Terrell Owens</td>
       <td>WR</td>
       <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -12950,6 +12557,164 @@ zwAAAABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="http://content.sportslogos.net/logos/7/151/thumbs/y71myf8mlwlk8lbgagh3fd5e0.gif" alt="Image"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">team_abbrevs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">team_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>NE
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[9]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>POS</th>
+      <th>Teams</th>
+      <th>numTeams</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Randy Moss</td>
+      <td>WR</td>
+      <td>Min, Oak, NE, Min, Ten, SF</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>David Andrews</td>
+      <td>C</td>
+      <td>NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Tom Brady</td>
+      <td>QB</td>
+      <td>NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Malcolm Butler</td>
+      <td>CB</td>
+      <td>NE, Ten</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>James Develin</td>
+      <td>FB</td>
+      <td>, NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Julian Edelman</td>
+      <td>WR</td>
+      <td>, NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Stephon Gilmore</td>
+      <td>CB</td>
+      <td>Buf, NE</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>Rob Gronkowski</td>
+      <td>TE</td>
+      <td>NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>Devin McCourty</td>
+      <td>FS</td>
+      <td>NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>TB, Bal, NE, Ind, Oak</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Jabaal Sheard</td>
+      <td>RE</td>
+      <td>Cle, NE, Ind</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="http://content.sportslogos.net/logos/7/175/thumbs/907.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -12978,7 +12743,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>NE
+<pre>NO
 </pre>
 </div>
 </div>
@@ -13016,81 +12781,81 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>Randy Moss</td>
-      <td>WR</td>
-      <td>Min, Oak, NE, Min, Ten, SF</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>David Andrews</td>
-      <td>C</td>
-      <td>NE</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>Tom Brady</td>
-      <td>QB</td>
-      <td>NE</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>Malcolm Butler</td>
-      <td>CB</td>
-      <td>NE, Ten</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>James Develin</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
       <td>FB</td>
-      <td>, NE</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Willie Roaf</td>
+      <td>LT</td>
+      <td>NO, KC</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>49</th>
-      <td>Julian Edelman</td>
-      <td>WR</td>
-      <td>, NE</td>
+      <th>29</th>
+      <td>Drew Brees</td>
+      <td>QB</td>
+      <td>SD, NO</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>58</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Buf, NE</td>
+      <th>43</th>
+      <td>Demario Davis</td>
+      <td>MLB</td>
+      <td>NYJ, Cle, NYJ, NO</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>65</th>
-      <td>Rob Gronkowski</td>
+      <th>61</th>
+      <td>Jimmy Graham</td>
       <td>TE</td>
-      <td>NE</td>
+      <td>NO, Sea, GB</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>Malcolm Jenkins</td>
+      <td>SS</td>
+      <td>NO, Phi</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>108</th>
-      <td>Devin McCourty</td>
-      <td>FS</td>
-      <td>NE</td>
-      <td>2</td>
+      <th>90</th>
+      <td>Cameron Jordan</td>
+      <td>LE</td>
+      <td>NO</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>110</th>
-      <td>Rashaan Melvin</td>
+      <th>94</th>
+      <td>Alvin Kamara</td>
+      <td>HB</td>
+      <td>NO</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>Marshon Lattimore</td>
       <td>CB</td>
-      <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
+      <td>NO</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>127</th>
-      <td>Jabaal Sheard</td>
-      <td>RE</td>
-      <td>Cle, NE, Ind</td>
-      <td>6</td>
+      <th>119</th>
+      <td>Ryan Ramczyk</td>
+      <td>RT</td>
+      <td>NO</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>Michael Thomas</td>
+      <td>WR</td>
+      <td>NO</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -13107,7 +12872,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/175/thumbs/907.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/171/thumbs/dcy03myfhffbki5d7il3.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13136,7 +12901,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>NO
+<pre>GB
 </pre>
 </div>
 </div>
@@ -13174,81 +12939,74 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <th>3</th>
+      <td>Reggie White</td>
+      <td>LE</td>
+      <td>Phi, GB, Car</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>Willie Roaf</td>
+      <th>5</th>
+      <td>Ted Hendricks</td>
+      <td>LOLB</td>
+      <td>Bal, GB, Oak, LAR</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Davante Adams</td>
+      <td>WR</td>
+      <td>GB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>David Bakhtiari</td>
       <td>LT</td>
-      <td>NO, KC</td>
-      <td>4</td>
+      <td>GB</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>29</th>
-      <td>Drew Brees</td>
-      <td>QB</td>
-      <td>SD, NO</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
-      <td>NYJ, Cle, NYJ, NO</td>
-      <td>8</td>
+      <th>37</th>
+      <td>Kenny Clark</td>
+      <td>DT</td>
+      <td>GB</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>61</th>
       <td>Jimmy Graham</td>
       <td>TE</td>
       <td>NO, Sea, GB</td>
-      <td>6</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>83</th>
-      <td>Malcolm Jenkins</td>
-      <td>SS</td>
-      <td>NO, Phi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>90</th>
-      <td>Cameron Jordan</td>
-      <td>LE</td>
-      <td>NO</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>94</th>
-      <td>Alvin Kamara</td>
-      <td>HB</td>
-      <td>NO</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>Marshon Lattimore</td>
+      <th>69</th>
+      <td>Casey Hayward</td>
       <td>CB</td>
-      <td>NO</td>
+      <td>GB, SD, LAC</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>119</th>
-      <td>Ryan Ramczyk</td>
-      <td>RT</td>
-      <td>NO</td>
+      <th>79</th>
+      <td>Micah Hyde</td>
+      <td>SS</td>
+      <td>GB, Buf</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>143</th>
-      <td>Michael Thomas</td>
-      <td>WR</td>
-      <td>NO</td>
-      <td>2</td>
+      <th>123</th>
+      <td>Aaron Rodgers</td>
+      <td>QB</td>
+      <td>GB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>Josh Sitton</td>
+      <td>LG</td>
+      <td>GB, Chi, Mia</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -13265,7 +13023,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/171/thumbs/dcy03myfhffbki5d7il3.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/172/thumbs/17227042013.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13294,7 +13052,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>GB
+<pre>Min
 </pre>
 </div>
 </div>
@@ -13332,74 +13090,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>Reggie White</td>
-      <td>LE</td>
-      <td>Phi, GB, Car</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Ted Hendricks</td>
-      <td>LOLB</td>
-      <td>Bal, GB, Oak, LAR</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Davante Adams</td>
-      <td>WR</td>
-      <td>GB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>David Bakhtiari</td>
-      <td>LT</td>
-      <td>GB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>Kenny Clark</td>
-      <td>DT</td>
-      <td>GB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>Jimmy Graham</td>
-      <td>TE</td>
-      <td>NO, Sea, GB</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>Casey Hayward</td>
-      <td>CB</td>
-      <td>GB, SD, LAC</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>79</th>
-      <td>Micah Hyde</td>
-      <td>SS</td>
-      <td>GB, Buf</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>123</th>
-      <td>Aaron Rodgers</td>
-      <td>QB</td>
-      <td>GB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>Josh Sitton</td>
+      <th>6</th>
+      <td>Steve Hutchinson</td>
       <td>LG</td>
-      <td>GB, Chi, Mia</td>
-      <td>6</td>
+      <td>Sea, Min, Ten</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Anthony Barr</td>
+      <td>ROLB</td>
+      <td>Min</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Stefon Diggs</td>
+      <td>WR</td>
+      <td>Min</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Everson Griffen</td>
+      <td>RE</td>
+      <td>Min</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>Linval Joseph</td>
+      <td>DT</td>
+      <td>NYG, Min</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>Xavier Rhodes</td>
+      <td>CB</td>
+      <td>Min</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>Harrison Smith</td>
+      <td>FS</td>
+      <td>Min</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Adam Thielen</td>
+      <td>WR</td>
+      <td>Min</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -13416,7 +13160,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/172/thumbs/17227042013.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/168/thumbs/im5xz2q9bjbg44xep08bf5czq.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13445,7 +13189,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Min
+<pre>Was
 </pre>
 </div>
 </div>
@@ -13483,60 +13227,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>6</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Sea, Min, Ten</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>Anthony Barr</td>
-      <td>ROLB</td>
-      <td>Min</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>Stefon Diggs</td>
-      <td>WR</td>
-      <td>Min</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>Everson Griffen</td>
-      <td>RE</td>
-      <td>Min</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>91</th>
-      <td>Linval Joseph</td>
-      <td>DT</td>
-      <td>NYG, Min</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>122</th>
-      <td>Xavier Rhodes</td>
+      <th>0</th>
+      <td>Champ Bailey</td>
       <td>CB</td>
-      <td>Min</td>
+      <td>Was, Den</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>132</th>
-      <td>Harrison Smith</td>
+      <th>9</th>
+      <td>Bruce Smith</td>
+      <td>RE</td>
+      <td>Buf, Was</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sean Taylor</td>
       <td>FS</td>
-      <td>Min</td>
-      <td>2</td>
+      <td>Was</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>140</th>
-      <td>Adam Thielen</td>
-      <td>WR</td>
-      <td>Min</td>
-      <td>2</td>
+      <th>31</th>
+      <td>Zach Brown</td>
+      <td>MLB</td>
+      <td>0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Ryan Kerrigan</td>
+      <td>LOLB</td>
+      <td>Was</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Jordan Reed</td>
+      <td>TE</td>
+      <td>Was</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>Brandon Scherff</td>
+      <td>RG</td>
+      <td>Was</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>Trent Williams</td>
+      <td>LT</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -13553,7 +13297,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/168/thumbs/im5xz2q9bjbg44xep08bf5czq.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/160/thumbs/1053.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13582,7 +13326,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Was
+<pre>Ten
 </pre>
 </div>
 </div>
@@ -13620,59 +13364,66 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>Champ Bailey</td>
-      <td>CB</td>
-      <td>Was, Den</td>
-      <td>4</td>
+      <th>1</th>
+      <td>Randy Moss</td>
+      <td>WR</td>
+      <td>Min, Oak, NE, Min, Ten, SF</td>
+      <td>6</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>Bruce Smith</td>
-      <td>RE</td>
-      <td>Buf, Was</td>
-      <td>4</td>
+      <th>6</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
+      <td>Sea, Min, Ten</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>Sean Taylor</td>
-      <td>FS</td>
-      <td>Was</td>
-      <td>2</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
+      <td>FB</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>31</th>
       <td>Zach Brown</td>
       <td>MLB</td>
       <td>0</td>
-      <td>6</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>97</th>
-      <td>Ryan Kerrigan</td>
-      <td>LOLB</td>
-      <td>Was</td>
+      <th>32</th>
+      <td>Malcolm Butler</td>
+      <td>CB</td>
+      <td>NE, Ten</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>121</th>
-      <td>Jordan Reed</td>
-      <td>TE</td>
-      <td>Was</td>
-      <td>2</td>
+      <th>33</th>
+      <td>Kevin Byard</td>
+      <td>FS</td>
+      <td>Ten</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>126</th>
-      <td>Brandon Scherff</td>
-      <td>RG</td>
-      <td>Was</td>
-      <td>2</td>
+      <th>35</th>
+      <td>Jurrell Casey</td>
+      <td>RE</td>
+      <td>Ten</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>151</th>
-      <td>Trent Williams</td>
+      <th>102</th>
+      <td>Taylor Lewan</td>
       <td>LT</td>
-      <td>0</td>
+      <td>Ten</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Delanie Walker</td>
+      <td>TE</td>
+      <td>SF, Ten</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -13690,7 +13441,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/160/thumbs/1053.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/176/thumbs/17636702014.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13719,7 +13470,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Ten
+<pre>TB
 </pre>
 </div>
 </div>
@@ -13757,67 +13508,74 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>Randy Moss</td>
-      <td>WR</td>
-      <td>Min, Oak, NE, Min, Ten, SF</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Sea, Min, Ten</td>
-      <td>6</td>
+      <th>4</th>
+      <td>Derrick Brooks</td>
+      <td>ROLB</td>
+      <td>TB</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>7</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <td>7</td>
     </tr>
     <tr>
-      <th>31</th>
-      <td>Zach Brown</td>
-      <td>MLB</td>
-      <td>0</td>
-      <td>6</td>
+      <th>11</th>
+      <td>Steve Young</td>
+      <td>QB</td>
+      <td>TB, SF</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>32</th>
-      <td>Malcolm Butler</td>
+      <th>42</th>
+      <td>Lavonte David</td>
+      <td>ROLB</td>
+      <td>TB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Demar Dotson</td>
+      <td>RT</td>
+      <td>, TB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Mike Evans</td>
+      <td>WR</td>
+      <td>TB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>Brent Grimes</td>
       <td>CB</td>
-      <td>NE, Ten</td>
-      <td>4</td>
+      <td>Atl, Mia, TB,</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>33</th>
-      <td>Kevin Byard</td>
-      <td>FS</td>
-      <td>Ten</td>
+      <th>109</th>
+      <td>Gerald McCoy</td>
+      <td>DT</td>
+      <td>TB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>TB, Bal, NE, Ind, Oak</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>Tim Brown</td>
+      <td>WR</td>
+      <td>Oak,  TB</td>
       <td>2</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>Jurrell Casey</td>
-      <td>RE</td>
-      <td>Ten</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>102</th>
-      <td>Taylor Lewan</td>
-      <td>LT</td>
-      <td>Ten</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>147</th>
-      <td>Delanie Walker</td>
-      <td>TE</td>
-      <td>SF, Ten</td>
-      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -13834,7 +13592,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/176/thumbs/17636702014.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/180/thumbs/pfiobtreaq7j0pzvadktsc6jv.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -13863,7 +13621,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>TB
+<pre>Sea
 </pre>
 </div>
 </div>
@@ -13901,74 +13659,74 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>4</th>
-      <td>Derrick Brooks</td>
-      <td>ROLB</td>
-      <td>TB</td>
+      <th>6</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
+      <td>Sea, Min, Ten</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Doug Baldwin</td>
+      <td>WR</td>
+      <td>Sea</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Kam Chancellor</td>
+      <td>SS</td>
+      <td>Sea</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>Jimmy Graham</td>
+      <td>TE</td>
+      <td>NO, Sea, GB</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>Richard Sherman</td>
+      <td>CB</td>
+      <td>Sea, SF</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <th>139</th>
+      <td>Golden Tate III</td>
+      <td>WR</td>
+      <td>0</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>Steve Young</td>
+      <th>142</th>
+      <td>Earl Thomas III</td>
+      <td>FS</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>Bobby Wagner</td>
+      <td>MLB</td>
+      <td>Sea</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Russell Wilson</td>
       <td>QB</td>
-      <td>TB, SF</td>
-      <td>4</td>
+      <td>Sea</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>42</th>
-      <td>Lavonte David</td>
-      <td>ROLB</td>
-      <td>TB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>Demar Dotson</td>
-      <td>RT</td>
-      <td>, TB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>Mike Evans</td>
+      <th>163</th>
+      <td>Jerry Rice</td>
       <td>WR</td>
-      <td>TB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
-      <td>Atl, Mia, TB,</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>109</th>
-      <td>Gerald McCoy</td>
-      <td>DT</td>
-      <td>TB</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>110</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>161</th>
-      <td>Tim Brown</td>
-      <td>WR</td>
-      <td>Oak,  TB</td>
-      <td>4</td>
+      <td>SF,  Oak,  Sea</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -13985,7 +13743,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/180/thumbs/pfiobtreaq7j0pzvadktsc6jv.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/6446/thumbs/644624152017.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14014,7 +13772,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Sea
+<pre>CHARGERS
 </pre>
 </div>
 </div>
@@ -14052,74 +13810,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>6</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Sea, Min, Ten</td>
-      <td>6</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
+      <td>FB</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
     </tr>
     <tr>
-      <th>19</th>
-      <td>Doug Baldwin</td>
+      <th>14</th>
+      <td>Keenan Allen</td>
       <td>WR</td>
-      <td>Sea</td>
-      <td>2</td>
+      <td>SD, LAC</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>36</th>
-      <td>Kam Chancellor</td>
-      <td>SS</td>
-      <td>Sea</td>
-      <td>2</td>
+      <th>25</th>
+      <td>Joey Bosa</td>
+      <td>LE</td>
+      <td>SD, LAC</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>61</th>
-      <td>Jimmy Graham</td>
-      <td>TE</td>
-      <td>NO, Sea, GB</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>128</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Sea, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>139</th>
-      <td>Golden Tate III</td>
-      <td>WR</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>142</th>
-      <td>Earl Thomas III</td>
-      <td>FS</td>
-      <td>0</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>146</th>
-      <td>Bobby Wagner</td>
-      <td>MLB</td>
-      <td>Sea</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>152</th>
-      <td>Russell Wilson</td>
+      <th>29</th>
+      <td>Drew Brees</td>
       <td>QB</td>
-      <td>Sea</td>
+      <td>SD, NO</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>163</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>SF,  Oak,  Sea</td>
-      <td>6</td>
+      <th>59</th>
+      <td>Melvin Gordon</td>
+      <td>HB</td>
+      <td>SD, LAC</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>Casey Hayward</td>
+      <td>CB</td>
+      <td>GB, SD, LAC</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Hunter Henry</td>
+      <td>TE</td>
+      <td>SD, LAC</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>Melvin Ingram</td>
+      <td>RE</td>
+      <td>SD, LAC</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -14136,7 +13880,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/6446/thumbs/644624152017.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/173/thumbs/299.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14165,7 +13909,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CHARGERS
+<pre>Atl
 </pre>
 </div>
 </div>
@@ -14203,60 +13947,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Keenan Allen</td>
-      <td>WR</td>
-      <td>SD, LAC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>Joey Bosa</td>
-      <td>LE</td>
-      <td>SD, LAC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>Drew Brees</td>
+      <th>2</th>
+      <td>Michael Vick</td>
       <td>QB</td>
-      <td>SD, NO</td>
+      <td>Atl, Phi, NYJ, Pit</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>59</th>
-      <td>Melvin Gordon</td>
+      <th>56</th>
+      <td>Devonta Freeman</td>
       <td>HB</td>
-      <td>SD, LAC</td>
-      <td>2</td>
+      <td>Atl</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>69</th>
-      <td>Casey Hayward</td>
+      <th>64</th>
+      <td>Brent Grimes</td>
       <td>CB</td>
-      <td>GB, SD, LAC</td>
-      <td>4</td>
+      <td>Atl, Mia, TB,</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>70</th>
-      <td>Hunter Henry</td>
-      <td>TE</td>
-      <td>SD, LAC</td>
+      <th>87</th>
+      <td>Deion Jones</td>
+      <td>MLB</td>
+      <td>Atl</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Julio Jones</td>
+      <td>WR</td>
+      <td>Atl</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Alex Mack</td>
+      <td>C</td>
+      <td>Cle, Atl</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>80</th>
-      <td>Melvin Ingram</td>
-      <td>RE</td>
-      <td>SD, LAC</td>
-      <td>2</td>
+      <th>125</th>
+      <td>Matt Ryan</td>
+      <td>QB</td>
+      <td>Atl</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>Desmond Trufant</td>
+      <td>CB</td>
+      <td>Atl</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -14273,7 +14017,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/173/thumbs/299.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/153/thumbs/318.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14302,7 +14046,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Atl
+<pre>Bal
 </pre>
 </div>
 </div>
@@ -14340,59 +14084,80 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>Michael Vick</td>
-      <td>QB</td>
-      <td>Atl, Phi, NYJ, Pit</td>
-      <td>8</td>
+      <th>5</th>
+      <td>Ted Hendricks</td>
+      <td>LOLB</td>
+      <td>Bal, GB, Oak, LAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>56</th>
-      <td>Devonta Freeman</td>
-      <td>HB</td>
-      <td>Atl</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
+      <td>FB</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Kyle Juszczyk</td>
+      <td>FB</td>
+      <td>Bal, SF</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>64</th>
-      <td>Brent Grimes</td>
+      <th>110</th>
+      <td>Rashaan Melvin</td>
       <td>CB</td>
-      <td>Atl, Mia, TB,</td>
-      <td>6</td>
+      <td>TB, Bal, NE, Ind, Oak</td>
+      <td>5</td>
     </tr>
     <tr>
-      <th>87</th>
-      <td>Deion Jones</td>
-      <td>MLB</td>
-      <td>Atl</td>
+      <th>115</th>
+      <td>Kelechi Osemele</td>
+      <td>LG</td>
+      <td>Bal, Oak</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>88</th>
-      <td>Julio Jones</td>
-      <td>WR</td>
-      <td>Atl</td>
-      <td>2</td>
+      <th>133</th>
+      <td>Jimmy Smith</td>
+      <td>CB</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>104</th>
-      <td>Alex Mack</td>
-      <td>C</td>
-      <td>Cle, Atl</td>
+      <th>137</th>
+      <td>Terrell Suggs</td>
+      <td>ROLB</td>
+      <td>Bal</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Marshal Yanda</td>
+      <td>RG</td>
+      <td>Bal</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>Pit,  SF,  Bal,  Oak</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>125</th>
-      <td>Matt Ryan</td>
-      <td>QB</td>
-      <td>Atl</td>
-      <td>2</td>
+      <th>162</th>
+      <td>Ray Lewis</td>
+      <td>MLB</td>
+      <td>Bal</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>145</th>
-      <td>Desmond Trufant</td>
-      <td>CB</td>
-      <td>Atl</td>
+      <th>164</th>
+      <td>Shannon Sharpe</td>
+      <td>TE</td>
+      <td>Den,  Bal</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -14410,7 +14175,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/153/thumbs/318.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/5941/thumbs/594179532017.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14439,7 +14204,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Bal
+<pre>RAMS
 </pre>
 </div>
 </div>
@@ -14477,81 +14242,53 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>5</th>
-      <td>Ted Hendricks</td>
-      <td>LOLB</td>
-      <td>Bal, GB, Oak, LAR</td>
-      <td>6</td>
+      <th>47</th>
+      <td>Aaron Donald</td>
+      <td>RE</td>
+      <td>Stl, LA</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <th>66</th>
+      <td>Todd Gurley II</td>
+      <td>HB</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>93</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
-      <td>Bal, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>110</th>
-      <td>Rashaan Melvin</td>
+      <th>82</th>
+      <td>Janoris Jenkins</td>
       <td>CB</td>
-      <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
+      <td>Stl, NYG</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
-      <td>Bal, Oak</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>Jimmy Smith</td>
+      <th>86</th>
+      <td>Trumaine Johnson</td>
       <td>CB</td>
       <td>0</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>137</th>
-      <td>Terrell Suggs</td>
-      <td>ROLB</td>
-      <td>Bal</td>
-      <td>2</td>
+      <th>92</th>
+      <td>Lamarcus Joyner</td>
+      <td>FS</td>
+      <td>Stl, LA</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>153</th>
-      <td>Marshal Yanda</td>
-      <td>RG</td>
-      <td>Bal</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>Rod Woodson</td>
+      <th>117</th>
+      <td>Marcus Peters</td>
       <td>CB</td>
-      <td>Pit,  SF,  Bal,  Oak</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>162</th>
-      <td>Ray Lewis</td>
-      <td>MLB</td>
-      <td>Bal</td>
+      <td>KC, LA</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>164</th>
-      <td>Shannon Sharpe</td>
-      <td>TE</td>
-      <td>Den,  Bal</td>
-      <td>4</td>
+      <th>138</th>
+      <td>Ndamukong Suh</td>
+      <td>DT</td>
+      <td>Det, Mia, LA</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -14568,7 +14305,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/5941/thumbs/594179532017.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/162/thumbs/857.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14597,7 +14334,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>RAMS
+<pre>KC
 </pre>
 </div>
 </div>
@@ -14635,53 +14372,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>47</th>
-      <td>Aaron Donald</td>
-      <td>RE</td>
-      <td>Stl, LA</td>
+      <th>8</th>
+      <td>Willie Roaf</td>
+      <td>LT</td>
+      <td>NO, KC</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>66</th>
-      <td>Todd Gurley II</td>
+      <th>23</th>
+      <td>Eric Berry</td>
+      <td>SS</td>
+      <td>KC</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>Tyreek Hill</td>
+      <td>WR</td>
+      <td>KC</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Justin Houston</td>
+      <td>LOLB</td>
+      <td>KC</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Rodney Hudson</td>
+      <td>C</td>
+      <td>KC, Oak</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>Kareem Hunt</td>
       <td>HB</td>
-      <td>0</td>
-      <td>2</td>
+      <td>KC</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>82</th>
-      <td>Janoris Jenkins</td>
-      <td>CB</td>
-      <td>Stl, NYG</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>86</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>92</th>
-      <td>Lamarcus Joyner</td>
-      <td>FS</td>
-      <td>Stl, LA</td>
-      <td>2</td>
+      <th>96</th>
+      <td>Travis Kelce</td>
+      <td>TE</td>
+      <td>KC</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>117</th>
       <td>Marcus Peters</td>
       <td>CB</td>
       <td>KC, LA</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>Ndamukong Suh</td>
-      <td>DT</td>
-      <td>Det, Mia, LA</td>
-      <td>6</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -14698,7 +14442,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/162/thumbs/857.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/152/thumbs/v7tehkwthrwefgounvi7znf5k.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14727,7 +14471,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>KC
+<pre>NYJ
 </pre>
 </div>
 </div>
@@ -14765,60 +14509,39 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>8</th>
-      <td>Willie Roaf</td>
-      <td>LT</td>
-      <td>NO, KC</td>
+      <th>2</th>
+      <td>Michael Vick</td>
+      <td>QB</td>
+      <td>Atl, Phi, NYJ, Pit</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>23</th>
-      <td>Eric Berry</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
+      <td>FB</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Jamal Adams</td>
       <td>SS</td>
-      <td>KC</td>
+      <td>NYJ</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Damon Harrison Sr</td>
+      <td>DT</td>
+      <td>0</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>72</th>
-      <td>Tyreek Hill</td>
-      <td>WR</td>
-      <td>KC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>75</th>
-      <td>Justin Houston</td>
-      <td>LOLB</td>
-      <td>KC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>77</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
-      <td>KC, Oak</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>78</th>
-      <td>Kareem Hunt</td>
-      <td>HB</td>
-      <td>KC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>Travis Kelce</td>
-      <td>TE</td>
-      <td>KC</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>117</th>
-      <td>Marcus Peters</td>
+      <th>86</th>
+      <td>Trumaine Johnson</td>
       <td>CB</td>
-      <td>KC, LA</td>
-      <td>4</td>
+      <td>0</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -14835,7 +14558,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/152/thumbs/v7tehkwthrwefgounvi7znf5k.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/159/thumbs/15988562013.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14864,7 +14587,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>NYJ
+<pre>Jax
 </pre>
 </div>
 </div>
@@ -14902,39 +14625,53 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>Michael Vick</td>
-      <td>QB</td>
-      <td>Atl, Phi, NYJ, Pit</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Jamal Adams</td>
-      <td>SS</td>
-      <td>NYJ</td>
+      <th>26</th>
+      <td>A.J. Bouye</td>
+      <td>CB</td>
+      <td>Hou, Jax</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>68</th>
-      <td>Damon Harrison Sr</td>
-      <td>DT</td>
-      <td>0</td>
-      <td>4</td>
+      <th>34</th>
+      <td>Calais Campbell</td>
+      <td>LE</td>
+      <td>Ari, Jax</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>86</th>
-      <td>Trumaine Johnson</td>
+      <th>54</th>
+      <td>Leonard Fournette</td>
+      <td>HB</td>
+      <td>Jax</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Myles Jack</td>
+      <td>LOLB</td>
+      <td>Jax</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>Andrew Norwell</td>
+      <td>LG</td>
+      <td>Car, Jax</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Jalen Ramsey</td>
       <td>CB</td>
+      <td>Jax</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Telvin Smith</td>
+      <td>ROLB</td>
       <td>0</td>
-      <td>4</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -14951,7 +14688,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/159/thumbs/15988562013.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/163/thumbs/g9mgk6x3ge26t44cccm9oq1vl.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -14980,7 +14717,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Jax
+<pre>Oak
 </pre>
 </div>
 </div>
@@ -15018,53 +14755,74 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>26</th>
-      <td>A.J. Bouye</td>
-      <td>CB</td>
-      <td>Hou, Jax</td>
-      <td>4</td>
+      <th>1</th>
+      <td>Randy Moss</td>
+      <td>WR</td>
+      <td>Min, Oak, NE, Min, Ten, SF</td>
+      <td>6</td>
     </tr>
     <tr>
-      <th>34</th>
-      <td>Calais Campbell</td>
-      <td>LE</td>
-      <td>Ari, Jax</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>Leonard Fournette</td>
-      <td>HB</td>
-      <td>Jax</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>81</th>
-      <td>Myles Jack</td>
+      <th>5</th>
+      <td>Ted Hendricks</td>
       <td>LOLB</td>
-      <td>Jax</td>
+      <td>Bal, GB, Oak, LAR</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Amari Cooper</td>
+      <td>WR</td>
+      <td>Oak</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Rodney Hudson</td>
+      <td>C</td>
+      <td>KC, Oak</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>113</th>
-      <td>Andrew Norwell</td>
+      <th>105</th>
+      <td>Khalil Mack</td>
+      <td>LE</td>
+      <td>Oak</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>TB, Bal, NE, Ind, Oak</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>Kelechi Osemele</td>
       <td>LG</td>
-      <td>Car, Jax</td>
+      <td>Bal, Oak</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>Pit,  SF,  Bal,  Oak</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>120</th>
-      <td>Jalen Ramsey</td>
-      <td>CB</td>
-      <td>Jax</td>
+      <th>161</th>
+      <td>Tim Brown</td>
+      <td>WR</td>
+      <td>Oak,  TB</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>134</th>
-      <td>Telvin Smith</td>
-      <td>ROLB</td>
-      <td>0</td>
-      <td>2</td>
+      <th>163</th>
+      <td>Jerry Rice</td>
+      <td>WR</td>
+      <td>SF,  Oak,  Sea</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -15081,7 +14839,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/163/thumbs/g9mgk6x3ge26t44cccm9oq1vl.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/149/thumbs/n0fd1z6xmhigb0eej3323ebwq.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15110,7 +14868,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Oak
+<pre>Buf
 </pre>
 </div>
 </div>
@@ -15148,74 +14906,53 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>Randy Moss</td>
-      <td>WR</td>
-      <td>Min, Oak, NE, Min, Ten, SF</td>
-      <td>12</td>
+      <th>9</th>
+      <td>Bruce Smith</td>
+      <td>RE</td>
+      <td>Buf, Was</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>Ted Hendricks</td>
+      <th>27</th>
+      <td>Nigel Bradham</td>
       <td>LOLB</td>
-      <td>Bal, GB, Oak, LAR</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>Amari Cooper</td>
-      <td>WR</td>
-      <td>Oak</td>
+      <td>Buf, Phi</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>77</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
-      <td>KC, Oak</td>
-      <td>4</td>
+      <th>31</th>
+      <td>Zach Brown</td>
+      <td>MLB</td>
+      <td>0</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>105</th>
-      <td>Khalil Mack</td>
-      <td>LE</td>
-      <td>Oak</td>
+      <th>58</th>
+      <td>Stephon Gilmore</td>
+      <td>CB</td>
+      <td>Buf, NE</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>110</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
+      <th>79</th>
+      <td>Micah Hyde</td>
+      <td>SS</td>
+      <td>GB, Buf</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
-      <td>Bal, Oak</td>
-      <td>4</td>
+      <th>116</th>
+      <td>Jason Peters</td>
+      <td>LT</td>
+      <td>Buf, , Phi</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>159</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>Pit,  SF,  Bal,  Oak</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>161</th>
-      <td>Tim Brown</td>
+      <th>157</th>
+      <td>Terrell Owens</td>
       <td>WR</td>
-      <td>Oak,  TB</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>163</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>SF,  Oak,  Sea</td>
-      <td>6</td>
+      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -15232,7 +14969,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/149/thumbs/n0fd1z6xmhigb0eej3323ebwq.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/174/thumbs/f1wggq2k8ql88fe33jzhw641u.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15261,7 +14998,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Buf
+<pre>Car
 </pre>
 </div>
 </div>
@@ -15299,53 +15036,53 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>9</th>
-      <td>Bruce Smith</td>
-      <td>RE</td>
-      <td>Buf, Was</td>
-      <td>4</td>
+      <th>3</th>
+      <td>Reggie White</td>
+      <td>LE</td>
+      <td>Phi, GB, Car</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>27</th>
-      <td>Nigel Bradham</td>
-      <td>LOLB</td>
-      <td>Buf, Phi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>Zach Brown</td>
+      <th>98</th>
+      <td>Luke Kuechly</td>
       <td>MLB</td>
-      <td>0</td>
-      <td>6</td>
+      <td>Car</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>58</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Buf, NE</td>
-      <td>4</td>
+      <th>112</th>
+      <td>Cam Newton</td>
+      <td>QB</td>
+      <td>Car</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>79</th>
-      <td>Micah Hyde</td>
-      <td>SS</td>
-      <td>GB, Buf</td>
-      <td>4</td>
+      <th>113</th>
+      <td>Andrew Norwell</td>
+      <td>LG</td>
+      <td>Car, Jax</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Jason Peters</td>
-      <td>LT</td>
-      <td>Buf, , Phi</td>
-      <td>4</td>
+      <th>114</th>
+      <td>Greg Olsen</td>
+      <td>TE</td>
+      <td>Chi, Car</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>157</th>
-      <td>Terrell Owens</td>
-      <td>WR</td>
-      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
+      <th>129</th>
+      <td>Kawann Short</td>
+      <td>DT</td>
+      <td>Car</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>Daryl Williams</td>
+      <td>RT</td>
+      <td>Car</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -15362,7 +15099,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/174/thumbs/f1wggq2k8ql88fe33jzhw641u.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/155/thumbs/15578552015.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15391,7 +15128,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Car
+<pre>Cle
 </pre>
 </div>
 </div>
@@ -15429,52 +15166,45 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>Reggie White</td>
-      <td>LE</td>
-      <td>Phi, GB, Car</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>Luke Kuechly</td>
-      <td>MLB</td>
-      <td>Car</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>112</th>
-      <td>Cam Newton</td>
-      <td>QB</td>
-      <td>Car</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>113</th>
-      <td>Andrew Norwell</td>
+      <th>24</th>
+      <td>Joel Bitonio</td>
       <td>LG</td>
-      <td>Car, Jax</td>
+      <td>Cle</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Demario Davis</td>
+      <td>MLB</td>
+      <td>NYJ, Cle, NYJ, NO</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>114</th>
-      <td>Greg Olsen</td>
-      <td>TE</td>
-      <td>Chi, Car</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>129</th>
-      <td>Kawann Short</td>
-      <td>DT</td>
-      <td>Car</td>
+      <th>99</th>
+      <td>Jarvis Landry</td>
+      <td>WR</td>
+      <td>Mia, Cle</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>150</th>
-      <td>Daryl Williams</td>
-      <td>RT</td>
-      <td>Car</td>
+      <th>104</th>
+      <td>Alex Mack</td>
+      <td>C</td>
+      <td>Cle, Atl</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Jabaal Sheard</td>
+      <td>RE</td>
+      <td>Cle, NE, Ind</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Kevin Zeitler</td>
+      <td>RG</td>
+      <td>Cin, Cle</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -15492,7 +15222,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/155/thumbs/15578552015.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/156/thumbs/970.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15521,7 +15251,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Cle
+<pre>Pit
 </pre>
 </div>
 </div>
@@ -15559,45 +15289,52 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>24</th>
-      <td>Joel Bitonio</td>
-      <td>LG</td>
-      <td>Cle</td>
-      <td>2</td>
+      <th>2</th>
+      <td>Michael Vick</td>
+      <td>QB</td>
+      <td>Atl, Phi, NYJ, Pit</td>
+      <td>4</td>
     </tr>
     <tr>
-      <th>43</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
-      <td>NYJ, Cle, NYJ, NO</td>
-      <td>8</td>
+      <th>22</th>
+      <td>Le'Veon Bell</td>
+      <td>HB</td>
+      <td>Pit</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>99</th>
-      <td>Jarvis Landry</td>
+      <th>30</th>
+      <td>Antonio Brown</td>
       <td>WR</td>
-      <td>Mia, Cle</td>
-      <td>4</td>
+      <td>Pit</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>104</th>
-      <td>Alex Mack</td>
-      <td>C</td>
-      <td>Cle, Atl</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>127</th>
-      <td>Jabaal Sheard</td>
-      <td>RE</td>
-      <td>Cle, NE, Ind</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>Kevin Zeitler</td>
+      <th>44</th>
+      <td>David DeCastro</td>
       <td>RG</td>
-      <td>Cin, Cle</td>
+      <td>Pit</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Marcus Gilbert</td>
+      <td>RT</td>
+      <td>Pit</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Ben Roethlisberger</td>
+      <td>QB</td>
+      <td>Pit</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>Pit,  SF,  Bal,  Oak</td>
       <td>4</td>
     </tr>
   </tbody>
@@ -15615,7 +15352,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/156/thumbs/970.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/166/thumbs/919.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15644,7 +15381,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Pit
+<pre>NYG
 </pre>
 </div>
 </div>
@@ -15682,53 +15419,46 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>Michael Vick</td>
-      <td>QB</td>
-      <td>Atl, Phi, NYJ, Pit</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>Le'Veon Bell</td>
-      <td>HB</td>
-      <td>Pit</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>Antonio Brown</td>
+      <th>21</th>
+      <td>Odell Beckham Jr</td>
       <td>WR</td>
-      <td>Pit</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Landon Collins</td>
+      <td>SS</td>
+      <td>NYG</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Damon Harrison Sr</td>
+      <td>DT</td>
+      <td>0</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>44</th>
-      <td>David DeCastro</td>
-      <td>RG</td>
-      <td>Pit</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>Marcus Gilbert</td>
-      <td>RT</td>
-      <td>Pit</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>124</th>
-      <td>Ben Roethlisberger</td>
-      <td>QB</td>
-      <td>Pit</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>Rod Woodson</td>
+      <th>82</th>
+      <td>Janoris Jenkins</td>
       <td>CB</td>
-      <td>Pit,  SF,  Bal,  Oak</td>
-      <td>8</td>
+      <td>Stl, NYG</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>Linval Joseph</td>
+      <td>DT</td>
+      <td>NYG, Min</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>Michael Strahan</td>
+      <td>LE</td>
+      <td>NYG</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -15745,7 +15475,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/166/thumbs/919.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/179/thumbs/17994552009.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15774,7 +15504,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>NYG
+<pre>SF
 </pre>
 </div>
 </div>
@@ -15812,46 +15542,60 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>21</th>
-      <td>Odell Beckham Jr</td>
+      <th>1</th>
+      <td>Randy Moss</td>
       <td>WR</td>
-      <td>0</td>
+      <td>Min, Oak, NE, Min, Ten, SF</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Steve Young</td>
+      <td>QB</td>
+      <td>TB, SF</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>39</th>
-      <td>Landon Collins</td>
-      <td>SS</td>
-      <td>NYG</td>
+      <th>93</th>
+      <td>Kyle Juszczyk</td>
+      <td>FB</td>
+      <td>Bal, SF</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>68</th>
-      <td>Damon Harrison Sr</td>
-      <td>DT</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>82</th>
-      <td>Janoris Jenkins</td>
+      <th>128</th>
+      <td>Richard Sherman</td>
       <td>CB</td>
-      <td>Stl, NYG</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>91</th>
-      <td>Linval Joseph</td>
-      <td>DT</td>
-      <td>NYG, Min</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>165</th>
-      <td>Michael Strahan</td>
-      <td>LE</td>
-      <td>NYG</td>
+      <td>Sea, SF</td>
       <td>2</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Delanie Walker</td>
+      <td>TE</td>
+      <td>SF, Ten</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>Terrell Owens</td>
+      <td>WR</td>
+      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>Pit,  SF,  Bal,  Oak</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td>Jerry Rice</td>
+      <td>WR</td>
+      <td>SF,  Oak,  Sea</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -15868,7 +15612,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/179/thumbs/17994552009.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/169/thumbs/364.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -15897,7 +15641,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>SF
+<pre>Chi
 </pre>
 </div>
 </div>
@@ -15935,60 +15679,46 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>Randy Moss</td>
-      <td>WR</td>
-      <td>Min, Oak, NE, Min, Ten, SF</td>
-      <td>12</td>
+      <th>15</th>
+      <td>Adrian Amos</td>
+      <td>SS</td>
+      <td>Chi</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>Steve Young</td>
-      <td>QB</td>
-      <td>TB, SF</td>
-      <td>4</td>
+      <th>76</th>
+      <td>Jordan Howard</td>
+      <td>HB</td>
+      <td>Chi</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>93</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
-      <td>Bal, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>128</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Sea, SF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>147</th>
-      <td>Delanie Walker</td>
+      <th>114</th>
+      <td>Greg Olsen</td>
       <td>TE</td>
-      <td>SF, Ten</td>
-      <td>4</td>
+      <td>Chi, Car</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>157</th>
-      <td>Terrell Owens</td>
-      <td>WR</td>
-      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
+      <th>130</th>
+      <td>Josh Sitton</td>
+      <td>LG</td>
+      <td>GB, Chi, Mia</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>159</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>Pit,  SF,  Bal,  Oak</td>
-      <td>8</td>
+      <th>144</th>
+      <td>Danny Trevathan</td>
+      <td>MLB</td>
+      <td>Den, Chi</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>163</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>SF,  Oak,  Sea</td>
-      <td>6</td>
+      <th>158</th>
+      <td>Brian Urlacher</td>
+      <td>MLB</td>
+      <td>Chi</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -16005,7 +15735,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/169/thumbs/364.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/165/thumbs/406.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16034,7 +15764,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Chi
+<pre>Dal
 </pre>
 </div>
 </div>
@@ -16072,45 +15802,52 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>15</th>
-      <td>Adrian Amos</td>
-      <td>SS</td>
-      <td>Chi</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>76</th>
-      <td>Jordan Howard</td>
+      <th>50</th>
+      <td>Ezekiel Elliott</td>
       <td>HB</td>
-      <td>Chi</td>
-      <td>2</td>
+      <td>Dal</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>114</th>
-      <td>Greg Olsen</td>
-      <td>TE</td>
-      <td>Chi, Car</td>
-      <td>4</td>
+      <th>55</th>
+      <td>Travis Frederick</td>
+      <td>C</td>
+      <td>Dal</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>130</th>
-      <td>Josh Sitton</td>
-      <td>LG</td>
-      <td>GB, Chi, Mia</td>
-      <td>6</td>
+      <th>101</th>
+      <td>Sean Lee</td>
+      <td>ROLB</td>
+      <td>, Dal</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>144</th>
-      <td>Danny Trevathan</td>
-      <td>MLB</td>
-      <td>Den, Chi</td>
-      <td>4</td>
+      <th>106</th>
+      <td>Zack Martin</td>
+      <td>RG</td>
+      <td>Dal</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>158</th>
-      <td>Brian Urlacher</td>
-      <td>MLB</td>
-      <td>Chi</td>
+      <th>135</th>
+      <td>Tyron Smith</td>
+      <td>LT</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>Terrell Owens</td>
+      <td>WR</td>
+      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>Demarcus Ware</td>
+      <td>ROLB</td>
+      <td>Dal,  Den</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -16128,7 +15865,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/165/thumbs/406.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/150/thumbs/15073062018.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16157,7 +15894,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Dal
+<pre>Mia
 </pre>
 </div>
 </div>
@@ -16195,53 +15932,46 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>50</th>
-      <td>Ezekiel Elliott</td>
-      <td>HB</td>
-      <td>Dal</td>
-      <td>2</td>
+      <th>64</th>
+      <td>Brent Grimes</td>
+      <td>CB</td>
+      <td>Atl, Mia, TB,</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>55</th>
-      <td>Travis Frederick</td>
-      <td>C</td>
-      <td>Dal</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>101</th>
-      <td>Sean Lee</td>
-      <td>ROLB</td>
-      <td>, Dal</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>106</th>
-      <td>Zack Martin</td>
-      <td>RG</td>
-      <td>Dal</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>135</th>
-      <td>Tyron Smith</td>
-      <td>LT</td>
+      <th>89</th>
+      <td>Reshad Jones</td>
+      <td>SS</td>
       <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>Jarvis Landry</td>
+      <td>WR</td>
+      <td>Mia, Cle</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>157</th>
-      <td>Terrell Owens</td>
-      <td>WR</td>
-      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
+      <th>130</th>
+      <td>Josh Sitton</td>
+      <td>LG</td>
+      <td>GB, Chi, Mia</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>160</th>
-      <td>Demarcus Ware</td>
-      <td>ROLB</td>
-      <td>Dal,  Den</td>
-      <td>4</td>
+      <th>138</th>
+      <td>Ndamukong Suh</td>
+      <td>DT</td>
+      <td>Det, Mia, LA</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Dan Marino</td>
+      <td>QB</td>
+      <td>Mia</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -16258,7 +15988,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/150/thumbs/15073062018.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/161/thumbs/9ebzja2zfeigaziee8y605aqp.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16287,7 +16017,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Mia
+<pre>Den
 </pre>
 </div>
 </div>
@@ -16325,45 +16055,59 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>64</th>
-      <td>Brent Grimes</td>
+      <th>0</th>
+      <td>Champ Bailey</td>
       <td>CB</td>
-      <td>Atl, Mia, TB,</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>89</th>
-      <td>Reshad Jones</td>
-      <td>SS</td>
-      <td>0</td>
+      <td>Was, Den</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>99</th>
-      <td>Jarvis Landry</td>
+      <th>67</th>
+      <td>Chris Harris Jr</td>
+      <td>CB</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>Von Miller</td>
+      <td>LOLB</td>
+      <td>Den</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>Demaryius Thomas</td>
       <td>WR</td>
-      <td>Mia, Cle</td>
-      <td>4</td>
+      <td>Den</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>130</th>
-      <td>Josh Sitton</td>
-      <td>LG</td>
-      <td>GB, Chi, Mia</td>
-      <td>6</td>
+      <th>144</th>
+      <td>Danny Trevathan</td>
+      <td>MLB</td>
+      <td>Den, Chi</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>138</th>
-      <td>Ndamukong Suh</td>
-      <td>DT</td>
-      <td>Det, Mia, LA</td>
-      <td>6</td>
+      <th>155</th>
+      <td>Terrell Davis</td>
+      <td>RB</td>
+      <td>Den</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>156</th>
-      <td>Dan Marino</td>
-      <td>QB</td>
-      <td>Mia</td>
+      <th>160</th>
+      <td>Demarcus Ware</td>
+      <td>ROLB</td>
+      <td>Dal,  Den</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Shannon Sharpe</td>
+      <td>TE</td>
+      <td>Den,  Bal</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -16381,7 +16125,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/161/thumbs/9ebzja2zfeigaziee8y605aqp.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/157/thumbs/570.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16410,7 +16154,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Den
+<pre>Hou
 </pre>
 </div>
 </div>
@@ -16448,60 +16192,39 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>Champ Bailey</td>
+      <th>26</th>
+      <td>A.J. Bouye</td>
       <td>CB</td>
-      <td>Was, Den</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>67</th>
-      <td>Chris Harris Jr</td>
-      <td>CB</td>
-      <td>0</td>
+      <td>Hou, Jax</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>111</th>
-      <td>Von Miller</td>
-      <td>LOLB</td>
-      <td>Den</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>141</th>
-      <td>Demaryius Thomas</td>
-      <td>WR</td>
-      <td>Den</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>144</th>
-      <td>Danny Trevathan</td>
-      <td>MLB</td>
-      <td>Den, Chi</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>155</th>
-      <td>Terrell Davis</td>
-      <td>RB</td>
-      <td>Den</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>160</th>
-      <td>Demarcus Ware</td>
+      <th>38</th>
+      <td>Jadeveon Clowney</td>
       <td>ROLB</td>
-      <td>Dal,  Den</td>
-      <td>4</td>
+      <td>Hou</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>164</th>
-      <td>Shannon Sharpe</td>
-      <td>TE</td>
-      <td>Den,  Bal</td>
-      <td>4</td>
+      <th>74</th>
+      <td>DeAndre Hopkins</td>
+      <td>WR</td>
+      <td>Hou</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>Tyrann Mathieu</td>
+      <td>FS</td>
+      <td>Ari, Hou</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>J.J. Watt</td>
+      <td>LE</td>
+      <td>Hou</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -16518,7 +16241,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/157/thumbs/570.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/177/thumbs/kwth8f1cfa2sch5xhjjfaof90.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16547,7 +16270,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Hou
+<pre>Ari
 </pre>
 </div>
 </div>
@@ -16585,39 +16308,39 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>26</th>
-      <td>A.J. Bouye</td>
-      <td>CB</td>
-      <td>Hou, Jax</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>Jadeveon Clowney</td>
-      <td>ROLB</td>
-      <td>Hou</td>
+      <th>34</th>
+      <td>Calais Campbell</td>
+      <td>LE</td>
+      <td>Ari, Jax</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>74</th>
-      <td>DeAndre Hopkins</td>
+      <th>53</th>
+      <td>Larry Fitzgerald</td>
       <td>WR</td>
-      <td>Hou</td>
-      <td>2</td>
+      <td>Ari</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>David Johnson</td>
+      <td>HB</td>
+      <td>Ari</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>107</th>
       <td>Tyrann Mathieu</td>
       <td>FS</td>
       <td>Ari, Hou</td>
-      <td>4</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>J.J. Watt</td>
-      <td>LE</td>
-      <td>Hou</td>
-      <td>2</td>
+      <th>118</th>
+      <td>Patrick Peterson</td>
+      <td>CB</td>
+      <td>Ari</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -16634,7 +16357,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/177/thumbs/kwth8f1cfa2sch5xhjjfaof90.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/154/thumbs/403.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16663,7 +16386,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Ari
+<pre>Cin
 </pre>
 </div>
 </div>
@@ -16701,39 +16424,39 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>34</th>
-      <td>Calais Campbell</td>
-      <td>LE</td>
-      <td>Ari, Jax</td>
-      <td>4</td>
+      <th>7</th>
+      <td>Lorenzo Neal</td>
+      <td>FB</td>
+      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
+      <td>7</td>
     </tr>
     <tr>
-      <th>53</th>
-      <td>Larry Fitzgerald</td>
+      <th>17</th>
+      <td>Geno Atkins</td>
+      <td>DT</td>
+      <td>Cin</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>A.J. Green</td>
       <td>WR</td>
-      <td>Ari</td>
+      <td>Cin</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Kevin Zeitler</td>
+      <td>RG</td>
+      <td>Cin, Cle</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>84</th>
-      <td>David Johnson</td>
-      <td>HB</td>
-      <td>Ari</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>107</th>
-      <td>Tyrann Mathieu</td>
-      <td>FS</td>
-      <td>Ari, Hou</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>118</th>
-      <td>Patrick Peterson</td>
-      <td>CB</td>
-      <td>Ari</td>
-      <td>2</td>
+      <th>157</th>
+      <td>Terrell Owens</td>
+      <td>WR</td>
+      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -16750,7 +16473,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/154/thumbs/403.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/170/thumbs/17013982017.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16779,7 +16502,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Cin
+<pre>Det
 </pre>
 </div>
 </div>
@@ -16817,39 +16540,32 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>7</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>NO, NYJ, TB, Ten, Cin, SD, Bal</td>
-      <td>14</td>
+      <th>131</th>
+      <td>Darius Slay Jr</td>
+      <td>CB</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>Geno Atkins</td>
+      <th>136</th>
+      <td>Matthew Stafford</td>
+      <td>QB</td>
+      <td>Det</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>Ndamukong Suh</td>
       <td>DT</td>
-      <td>Cin</td>
-      <td>2</td>
+      <td>Det, Mia, LA</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>62</th>
-      <td>A.J. Green</td>
+      <th>139</th>
+      <td>Golden Tate III</td>
       <td>WR</td>
-      <td>Cin</td>
+      <td>0</td>
       <td>2</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>Kevin Zeitler</td>
-      <td>RG</td>
-      <td>Cin, Cle</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>157</th>
-      <td>Terrell Owens</td>
-      <td>WR</td>
-      <td>SF,  Phi,  Dal,  Buf,  Cin</td>
-      <td>10</td>
     </tr>
   </tbody>
 </table>
@@ -16866,7 +16582,7 @@ zwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/170/thumbs/17013982017.gif" alt="Image"></p>
+<p><img src="http://content.sportslogos.net/logos/7/158/thumbs/593.gif" alt="Image"></p>
 
 </div>
 </div>
@@ -16895,7 +16611,7 @@ zwAAAABJRU5ErkJggg==
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Det
+<pre>Ind
 </pre>
 </div>
 </div>
@@ -16933,141 +16649,32 @@ zwAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
-      <th>131</th>
-      <td>Darius Slay Jr</td>
-      <td>CB</td>
-      <td>0</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>136</th>
-      <td>Matthew Stafford</td>
-      <td>QB</td>
-      <td>Det</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>Ndamukong Suh</td>
-      <td>DT</td>
-      <td>Det, Mia, LA</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>139</th>
-      <td>Golden Tate III</td>
-      <td>WR</td>
-      <td>0</td>
-      <td>4</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="http://content.sportslogos.net/logos/7/158/thumbs/593.gif" alt="Image"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">team_abbrevs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-<span class="n">team_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Ind
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[40]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Name</th>
-      <th>POS</th>
-      <th>Teams</th>
-      <th>numTeams</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
       <th>73</th>
       <td>T.Y. Hilton</td>
       <td>WR</td>
       <td>Ind</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>103</th>
       <td>Andrew Luck</td>
       <td>QB</td>
       <td>, Ind</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>110</th>
       <td>Rashaan Melvin</td>
       <td>CB</td>
       <td>TB, Bal, NE, Ind, Oak</td>
-      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>127</th>
       <td>Jabaal Sheard</td>
       <td>RE</td>
       <td>Cle, NE, Ind</td>
-      <td>6</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
