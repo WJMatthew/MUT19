@@ -273,7 +273,7 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 ```
 
 
-![png](output_7_0.png)
+![png](https://github.com/WJMatthew/MUT19-PowerUp-Team-Analysis/blob/master/img/output_7_0.png)
 
 
 
