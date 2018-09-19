@@ -18,28 +18,13 @@ data = pd.read_csv('csv/powerup_sep1.csv')
 data.drop('Unnamed: 0', axis=1, inplace=True)
 ```
 
-
-```python
-def insert_player(name, pos, pos2, teams, data):
-    data = data.append({'Name': name, 'POS':pos, 'POS2':pos2}, ignore_index=True).fillna(0)
-    
-    for team in teams:
-        data.set_value(len(data)-1, team, 1)
-        
-    return data
-```
-
 Eddie George 1996 Hou, 1997-2003 Ten, 2004 Dal 
 
 Lawrence Taylor NYG
 
 Larry Allen DAL, SF
 
-
 John Randle MIN, SEA
-
-
-look into all HOU players, texans started in 2002, oilers became titans
 
 
 ```python
