@@ -1,8 +1,8 @@
 
 # MUT Power Up players and their eligible teams (scraped from FootballDB)
-#### - Matt , last updated: Sept. 17, 2018<br>
+#### - Matt , last updated: August 29, 2018<br>
 
-
+- Added Sept. 1 legends
 
 
 ```python
@@ -14,8 +14,13 @@ import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 
-data = pd.read_csv('csv/powerup_sep1.csv')
+data = pd.read_csv('csv/powerup_data_aug18.csv')
+data.set_value(5, 'Ind', 1) # - added Ted
+data.set_value(5, 'Bal', 0)
 data.drop('Unnamed: 0', axis=1, inplace=True)
+numeric_data = data.select_dtypes(include=['int64', 'float64']).drop('OVR', axis=1)
+numeric_data.sum().sort_values(ascending=False)
+teams = numeric_data.columns
 ```
 
 
@@ -29,28 +34,13 @@ def insert_player(name, pos, pos2, teams, data):
     return data
 ```
 
-Eddie George 1996 Hou, 1997-2003 Ten, 2004 Dal 
-
-Lawrence Taylor NYG
-
-Larry Allen DAL, SF
-
-
-John Randle MIN, SEA
-
-
-look into all HOU players, texans started in 2002, oilers became titans
-
 
 ```python
-data = insert_player('Eddie George', 'RB', 'RB', ['Ten', 'Dal'], data)
-data = insert_player('Lawrence Taylor', 'ROLB', 'LB', ['NYG'], data)
-data = insert_player('Larry Allen', 'RG', 'OG', ['Det'], data)
-data = insert_player('John Randle', 'DT', 'DT', ['Min', 'Sea'], data)
-
-numeric_data = data.select_dtypes(include=['int64', 'float64']).drop('OVR', axis=1)
-numeric_data.sum().sort_values(ascending=False)
-teams = numeric_data.columns
+# Updates
+data = insert_player('Aeneas Williams', 'CB', 'DB', ['Ari', 'RAMS'], data)
+data = insert_player('Tony Gonzalez', 'TE', 'TE', ['KC', 'Atl'], data)
+data = insert_player('Barry Sanders', 'RB', 'RB', ['Det'], data)
+data = insert_player('Brian Dawkins', 'FS', 'DB', ['Phi', 'Den'], data)
 ```
 
 
@@ -62,19 +52,7 @@ data.tail()
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -104,6 +82,102 @@ data.tail()
   </thead>
   <tbody>
     <tr>
+      <th>165</th>
+      <td>Michael Strahan</td>
+      <td>0.0</td>
+      <td>LE</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>Aeneas Williams</td>
+      <td>0.0</td>
+      <td>CB</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>DB</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Tony Gonzalez</td>
+      <td>0.0</td>
+      <td>TE</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>TE</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Barry Sanders</td>
+      <td>0.0</td>
+      <td>RB</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>RB</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
       <th>169</th>
       <td>Brian Dawkins</td>
       <td>0.0</td>
@@ -120,102 +194,6 @@ data.tail()
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>Eddie George</td>
-      <td>0.0</td>
-      <td>RB</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>RB</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>171</th>
-      <td>Lawrence Taylor</td>
-      <td>0.0</td>
-      <td>ROLB</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>LB</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>172</th>
-      <td>Larry Allen</td>
-      <td>0.0</td>
-      <td>RG</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>OG</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>173</th>
-      <td>John Randle</td>
-      <td>0.0</td>
-      <td>DT</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>DT</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -242,7 +220,7 @@ data['numTeams'].value_counts().sort_values(ascending=False)
     1.0    114
     2.0     35
     3.0     10
-    0.0      8
+    0.0      4
     4.0      3
     5.0      2
     6.0      1
@@ -283,12 +261,12 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 ```
 
 
-![png](output_8_0.png)
+![png](https://github.com/WJMatthew/MUT19-PowerUp-Team-Analysis/blob/master/img/output_7_0.png)
 
 
 
 ```python
-data.to_csv('powerup_sep17.csv')
+data.to_csv('powerup_sep1.csv')
 small_data = data[['Name','POS','Teams', 'numTeams']]
 small_data.to_csv('small_powerup_data.csv')
 ```
@@ -306,19 +284,7 @@ small_data[ small_data['numTeams'] >= 4].sort_values('numTeams', ascending=False
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -413,19 +379,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -532,7 +486,7 @@ team_list[i]
       <th>169</th>
       <td>Brian Dawkins</td>
       <td>FS</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -557,19 +511,6 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -680,19 +621,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -803,19 +732,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -919,19 +836,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -999,13 +904,6 @@ team_list[i]
       <td>Min</td>
       <td>1.0</td>
     </tr>
-    <tr>
-      <th>173</th>
-      <td>John Randle</td>
-      <td>DT</td>
-      <td>NaN</td>
-      <td>0.0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -1028,19 +926,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1130,19 +1016,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1217,13 +1091,6 @@ team_list[i]
       <td>SF, Ten</td>
       <td>2.0</td>
     </tr>
-    <tr>
-      <th>170</th>
-      <td>Eddie George</td>
-      <td>RB</td>
-      <td>NaN</td>
-      <td>0.0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -1246,19 +1113,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1362,19 +1217,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1456,13 +1299,6 @@ team_list[i]
       <td>SF,  Oak,  Sea</td>
       <td>3.0</td>
     </tr>
-    <tr>
-      <th>173</th>
-      <td>John Randle</td>
-      <td>DT</td>
-      <td>NaN</td>
-      <td>0.0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -1485,19 +1321,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1587,19 +1411,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1671,7 +1483,7 @@ team_list[i]
       <th>167</th>
       <td>Tony Gonzalez</td>
       <td>TE</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1696,19 +1508,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1812,19 +1612,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1889,7 +1677,7 @@ team_list[i]
       <th>166</th>
       <td>Aeneas Williams</td>
       <td>CB</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1914,19 +1702,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1998,7 +1774,7 @@ team_list[i]
       <th>167</th>
       <td>Tony Gonzalez</td>
       <td>TE</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2023,19 +1799,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2104,19 +1868,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2199,19 +1951,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2315,19 +2055,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2410,19 +2138,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2505,19 +2221,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2593,19 +2297,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2688,19 +2380,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2754,13 +2434,6 @@ team_list[i]
       <td>NYG</td>
       <td>1.0</td>
     </tr>
-    <tr>
-      <th>171</th>
-      <td>Lawrence Taylor</td>
-      <td>ROLB</td>
-      <td>NaN</td>
-      <td>0.0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -2783,19 +2456,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2885,19 +2546,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2973,19 +2622,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3046,13 +2683,6 @@ team_list[i]
       <td>Dal,  Den</td>
       <td>2.0</td>
     </tr>
-    <tr>
-      <th>170</th>
-      <td>Eddie George</td>
-      <td>RB</td>
-      <td>NaN</td>
-      <td>0.0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -3075,19 +2705,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3163,19 +2781,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3247,7 +2853,7 @@ team_list[i]
       <th>169</th>
       <td>Brian Dawkins</td>
       <td>FS</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -3272,19 +2878,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3353,19 +2947,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3416,7 +2998,7 @@ team_list[i]
       <th>166</th>
       <td>Aeneas Williams</td>
       <td>CB</td>
-      <td>0</td>
+      <td>NaN</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -3441,19 +3023,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3522,19 +3092,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3578,13 +3136,6 @@ team_list[i]
       <th>168</th>
       <td>Barry Sanders</td>
       <td>RB</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>172</th>
-      <td>Larry Allen</td>
-      <td>RG</td>
       <td>NaN</td>
       <td>0.0</td>
     </tr>
@@ -3610,19 +3161,7 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
