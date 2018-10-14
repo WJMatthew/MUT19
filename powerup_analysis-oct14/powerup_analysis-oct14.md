@@ -27,19 +27,6 @@
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -121,19 +108,7 @@
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -261,19 +236,6 @@
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -378,32 +340,9 @@
 ![Image](http://content.sportslogos.net/logos/7/175/thumbs/907.gif)
 
 
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    NO
-
-
-
-
+NO
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -501,32 +440,9 @@ team_list[i]
 ![Image](http://content.sportslogos.net/logos/7/171/thumbs/dcy03myfhffbki5d7il3.gif)
 
 
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    GB
-
-
-
-
+GB
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -617,32 +533,9 @@ team_list[i]
 ![Image](http://content.sportslogos.net/logos/7/172/thumbs/17227042013.gif)
 
 
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    Min
-
-
-
-
-
+Min
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -738,34 +631,10 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/168/thumbs/im5xz2q9bjbg44xep08bf5czq.gif)
-
-
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    Was
-
-
-
-
+Was
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
 
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -856,32 +725,9 @@ team_list[i]
 ![Image](http://content.sportslogos.net/logos/7/160/thumbs/1053.gif)
 
 
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    Ten
-
-
-
-
+Ten
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -964,33 +810,9 @@ team_list[i]
 
 ![Image](http://content.sportslogos.net/logos/7/176/thumbs/17636702014.gif)
 
-
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    TB
-
-
-
-
+TB
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1087,33 +909,9 @@ team_list[i]
 
 ![Image](http://content.sportslogos.net/logos/7/180/thumbs/pfiobtreaq7j0pzvadktsc6jv.gif)
 
-
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
-    Sea
-
-
-
-
+Sea
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1211,12 +1009,6 @@ team_list[i]
 ![Image](http://content.sportslogos.net/logos/7/6446/thumbs/644624152017.gif)
 
 
-```python
-i+=1
-print(team_abbrevs[i])
-team_list[i]
-```
-
     LAC
 
 
@@ -1224,19 +1016,6 @@ team_list[i]
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
