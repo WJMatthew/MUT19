@@ -2506,13 +2506,6 @@ Was
       <td>Bal|Hou|NYJ</td>
       <td>3</td>
     </tr>
-    <tr>
-      <th>154</th>
-      <td>Eddie George</td>
-      <td>RB</td>
-      <td>Hou|Ten|Dal</td>
-      <td>3</td>
-    </tr>
   </tbody>
 </table>
 </div>
