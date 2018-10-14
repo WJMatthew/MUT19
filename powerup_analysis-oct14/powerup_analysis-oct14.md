@@ -2,6 +2,7 @@
 # MUT Power Up players and their eligible teams (scraped from FootballDB)
 #### - Matt , last updated: Oct 14, 2018<br>
 
+- includes HOF, Master, + Legends 
 
 ![png](https://github.com/WJMatthew/MUT19/blob/master/powerup_analysis-oct14/output_9_0.png)
 
