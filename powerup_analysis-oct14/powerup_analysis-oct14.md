@@ -1825,6 +1825,13 @@ Was
       <td>LAR|Pit|Car|SF|Car</td>
       <td>4</td>
     </tr>
+    <tr>
+      <th></th>
+      <td>Steve Smith Sr.</td>
+      <td>WR</td>
+      <td>Car|Bal</td>
+      <td>2</td>
+    </tr>
   </tbody>
 </table>
 </div>
