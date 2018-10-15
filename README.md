@@ -2,11 +2,11 @@
 # MUT Power Up players and their eligible teams (scraped from FootballDB)
 #### - Matt , last updated: Oct 14, 2018<br>
 
-**Includes:** 
-    - Power-Up Players
-    - HOF: Terrell Davis HB, Dan Marino QB, Terrell Owens WR, Brian Urlacher MLB, Rod Woodson
-    - Master: Ryan Shazier MLB, Ricky Williams RB
-    - Team Captains: Ray Lewis MLB, Jerry Rice WR, Shannon Sharpe TE, Michael Strahan LE	
+**Includes:** <br>
+    - Power-Up Players<br>
+    - HOF: Terrell Davis HB, Dan Marino QB, Terrell Owens WR, Brian Urlacher MLB, Rod Woodson<br>
+    - Master: Ryan Shazier MLB, Ricky Williams RB<br>
+    - Team Captains: Ray Lewis MLB, Jerry Rice WR, Shannon Sharpe TE, Michael Strahan LE<br>
     - Legends 
 
 
