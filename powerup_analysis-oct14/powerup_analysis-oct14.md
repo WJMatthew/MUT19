@@ -2,7 +2,13 @@
 # MUT Power Up players and their eligible teams (scraped from FootballDB)
 #### - Matt , last updated: Oct 14, 2018<br>
 
-- includes HOF, Master, + Legends 
+**Includes:** 
+    - Power-Up Players
+    - HOF: Terrell Davis HB, Dan Marino QB, Terrell Owens WR, Brian Urlacher MLB, Rod Woodson
+    - Master: Ryan Shazier MLB, Ricky Williams RB
+    - Team Captains: Ray Lewis MLB, Jerry Rice WR, Shannon Sharpe TE, Michael Strahan LE	
+    - Legends 
+
 
 ![png](https://github.com/WJMatthew/MUT19/blob/master/powerup_analysis-oct14/output_9_0.png)
 
@@ -524,6 +530,13 @@ GB
       <td>OT</td>
       <td>GB|Chi|Mia</td>
       <td>3</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Ha Ha Clinton-Dix</td>
+      <td>DB</td>
+      <td>GB</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -1749,6 +1762,13 @@ Was
       <td>0</td>
       <td>SF|Phi|Dal|Buf|Cin</td>
       <td>5</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Zach Brown</td>
+      <td>LB</td>
+      <td>Buf|Was</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
