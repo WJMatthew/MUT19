@@ -2,6 +2,7 @@
 # MUT Power Up players and their eligible teams (scraped from FootballDB)
 #### - Matt , last updated: Oct 14, 2018<br>
 
+- includes HOF, Master, + Legends 
 
 ![png](https://github.com/WJMatthew/MUT19/blob/master/powerup_analysis-oct14/output_9_0.png)
 
@@ -1825,6 +1826,13 @@ Was
       <td>LAR|Pit|Car|SF|Car</td>
       <td>4</td>
     </tr>
+    <tr>
+      <th></th>
+      <td>Steve Smith Sr.</td>
+      <td>WR</td>
+      <td>Car|Bal</td>
+      <td>2</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -2504,13 +2512,6 @@ Was
       <td>Ed Reed</td>
       <td>DB</td>
       <td>Bal|Hou|NYJ</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>Eddie George</td>
-      <td>RB</td>
-      <td>Hou|Ten|Dal</td>
       <td>3</td>
     </tr>
   </tbody>
