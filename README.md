@@ -1,6 +1,6 @@
 
 # MUT Power Up Players and Their Eligible Teams
-#### - Matt , last updated: Nov 3, 2018<br>
+#### - Matt , last updated: Nov 9, 2018<br>
 
 
 
@@ -26,6 +26,7 @@ numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
 players = pd.concat([obj_data, numeric_data], axis=1)
 players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
 players = players[ players['numTeams'] != 0]
+players['Type'] = players['Type'].str.strip()
 players.to_csv(f'mut_powerups_{date}.csv')
 players_ = players[ (players['Type']!='Legend') & (players['Type']!='Legend Ltd')]
 ```
@@ -928,7 +929,7 @@ team_list[i]
       <td>LG</td>
       <td>Legend</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>191</th>
