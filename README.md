@@ -8,7 +8,7 @@
 
 
 
-![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_4_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_3_0.png)
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_7_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_6_0.png)
 
 
 ### Biggest journeymen
