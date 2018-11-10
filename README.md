@@ -4,6 +4,7 @@
 
 
 
+<<<<<<< HEAD
 ```python
 date = 'nov9'
 ```
@@ -70,6 +71,8 @@ plt.figure(figsize=(13, 4))
 sns.countplot(players['numTeams']);
 plt.title('Power-Up Players Binned by Number of Teams Played For');
 ```
+=======
+>>>>>>> 477709c4bad6d7e1b7bdd3b4245ab0feb65a4626
 
 
 ![png](output_5_0.png)
