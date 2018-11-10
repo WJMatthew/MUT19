@@ -162,7 +162,7 @@ plt.title('Number of Power-Up Players by Position');
 ```
 
 
-![png](output_4_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_4_0.png)
 
 
 
@@ -174,7 +174,7 @@ plt.title('Power-Up Players Binned by Number of Teams Played For');
 ```
 
 
-![png](output_5_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_5_0.png)
 
 
 
@@ -209,7 +209,7 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 ```
 
 
-![png](output_7_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_7_0.png)
 
 
 ### Biggest journeymen
