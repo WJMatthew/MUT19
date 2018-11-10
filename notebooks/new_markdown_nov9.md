@@ -1,8 +1,12 @@
 
 # MUT Power Up Players and Their Eligible Teams
-#### - Matt , last updated: Nov 2, 2018<br>
+#### - Matt , last updated: Nov 3, 2018<br>
 
-- Includes some non PU legends. Will make that more consistent in future.
+
+
+```python
+date = 'nov9'
+```
 
 
 ```python
@@ -22,137 +26,9 @@ numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
 players = pd.concat([obj_data, numeric_data], axis=1)
 players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
 players = players[ players['numTeams'] != 0]
-players.to_csv('mut_powerups_nov2.csv')
+players.to_csv(f'mut_powerups_{date}.csv')
+players_ = players[ (players['Type']!='Legend') & (players['Type']!='Legend Ltd')]
 ```
-
-
-```python
-players.shape
-```
-
-
-
-
-    (206, 38)
-
-
-
-
-```python
-players[ players['Type']=='Legend']
-```
-
-
-
-
-<div>
-
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Name</th>
-      <th>Position</th>
-      <th>Current Team</th>
-      <th>Type</th>
-      <th>All Teams</th>
-      <th>ARI</th>
-      <th>ATL</th>
-      <th>BAL</th>
-      <th>BUF</th>
-      <th>CAR</th>
-      <th>...</th>
-      <th>NYJ</th>
-      <th>OAK</th>
-      <th>PHI</th>
-      <th>PIT</th>
-      <th>SEA</th>
-      <th>SF</th>
-      <th>TB</th>
-      <th>TEN</th>
-      <th>WAS</th>
-      <th>numTeams</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>93</th>
-      <td>Steve Atwater</td>
-      <td>SS</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>,DEN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>102</th>
-      <td>La'Roi Glover</td>
-      <td>DT</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>,NO</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>193</th>
-      <td>Anthony Munoz</td>
-      <td>LT</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>CIN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-<p>3 rows × 38 columns</p>
-</div>
-
-
 
 
 ```python
@@ -162,7 +38,7 @@ plt.title('Number of Power-Up Players by Position');
 ```
 
 
-![png](output_4_0.png)
+![png](output_3_0.png)
 
 
 
@@ -174,12 +50,12 @@ plt.title('Power-Up Players Binned by Number of Teams Played For');
 ```
 
 
-![png](output_5_0.png)
+![png](output_4_0.png)
 
 
 
 ```python
-numeric_data = players.select_dtypes(include=[float, int])
+numeric_data = players_.select_dtypes(include=[float, int])
 
 a = numeric_data.sum().sort_values(ascending=False)[1:]
 
@@ -209,14 +85,14 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 ```
 
 
-![png](output_7_0.png)
+![png](output_6_0.png)
 
 
 ### Biggest journeymen
 
 
 ```python
-small = pd.concat([obj_data[['Name', 'Position', 'Type', 'All Teams']], players['numTeams']], axis=1)
+small = pd.concat([obj_data[['Name', 'Position', 'Type', 'All Teams']], players_['numTeams']], axis=1)
 small['All Teams'] = small['All Teams'].str.lstrip(',')
 small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
 ```
@@ -302,6 +178,14 @@ small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
       <td>PIT,SF,BAL,OAK</td>
       <td>4.0</td>
     </tr>
+    <tr>
+      <th>208</th>
+      <td>Ty Law</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -312,6 +196,8 @@ small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
 ```python
 team_abbrevs = list(pal.keys())
 team_list = []
+
+players = players.dropna()
 
 players.reset_index(drop=True, inplace=True)
 small.reset_index(drop=True, inplace=True)
@@ -480,6 +366,14 @@ team_list[i]
       <td>CHI,PHI</td>
       <td>2.0</td>
     </tr>
+    <tr>
+      <th>206</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
+      <td>2.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -625,6 +519,14 @@ team_list[i]
       <td>NO,NE,LAR</td>
       <td>3.0</td>
     </tr>
+    <tr>
+      <th>208</th>
+      <td>Ty Law</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -672,7 +574,7 @@ team_list[i]
       <td>DT</td>
       <td>Legend</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>103</th>
@@ -1262,6 +1164,14 @@ team_list[i]
       <td>WAS,TEN,BUF</td>
       <td>3.0</td>
     </tr>
+    <tr>
+      <th>206</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
+      <td>2.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -1617,6 +1527,14 @@ team_list[i]
       <td>NO,LAC</td>
       <td>2.0</td>
     </tr>
+    <tr>
+      <th>209</th>
+      <td>LaDainian Tomlinson</td>
+      <td>RB</td>
+      <td>Legend PU</td>
+      <td>LAC,NYJ</td>
+      <td>2.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -1875,6 +1793,14 @@ team_list[i]
       <td>SF,BAL</td>
       <td>2.0</td>
     </tr>
+    <tr>
+      <th>207</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
+      <td>Legend PU</td>
+      <td>CIN,BAL</td>
+      <td>2.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -2109,6 +2035,14 @@ team_list[i]
       <td>KC,ATL,CAR</td>
       <td>3.0</td>
     </tr>
+    <tr>
+      <th>208</th>
+      <td>Ty Law</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4.0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -2164,7 +2098,7 @@ team_list[i]
       <td>C</td>
       <td>Legend Ltd</td>
       <td>NYJ</td>
-      <td>1.0</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>137</th>
@@ -2196,6 +2130,22 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>NYJ,LAR</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>Ty Law</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>LaDainian Tomlinson</td>
+      <td>RB</td>
+      <td>Legend PU</td>
+      <td>LAC,NYJ</td>
       <td>2.0</td>
     </tr>
   </tbody>
@@ -2344,7 +2294,7 @@ team_list[i]
       <td>RT</td>
       <td>Legend Ltd</td>
       <td>OAK</td>
-      <td>1.0</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>110</th>
@@ -3494,7 +3444,7 @@ team_list[i]
       <td>SS</td>
       <td>Legend</td>
       <td>DEN</td>
-      <td>1.0</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>94</th>
@@ -3527,6 +3477,14 @@ team_list[i]
       <td>Power Up</td>
       <td>DEN,PIT</td>
       <td>2.0</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>Ty Law</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4.0</td>
     </tr>
   </tbody>
 </table>
@@ -3767,7 +3725,15 @@ team_list[i]
       <td>LT</td>
       <td>Legend</td>
       <td>CIN</td>
-      <td>1.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
+      <td>Legend PU</td>
+      <td>CIN,BAL</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
