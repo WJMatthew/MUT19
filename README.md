@@ -1,225 +1,29 @@
 
 # MUT Power Up Players and Their Eligible Teams
-#### - Matt , last updated: Nov 2, 2018<br>
-
-- Includes some non PU legends. Will make that more consistent in future.
-
-
-```python
-%matplotlib inline
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
-
-data = pd.read_csv('mut_powerups.csv').drop('Unnamed: 0', axis=1)
-df = pd.concat( [data, data['All Teams'].str.replace(',', '|').str.get_dummies()], axis=1)
-numeric_data = df.select_dtypes(include=[float, int])
-obj_data = df.select_dtypes(exclude=[float, int])
-numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
-players = pd.concat([obj_data, numeric_data], axis=1)
-players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
-players = players[ players['numTeams'] != 0]
-players.to_csv('mut_powerups_nov2.csv')
-```
-
-
-```python
-players.shape
-```
+#### - Matt , last updated: Nov 9, 2018<br>
 
 
 
 
-    (206, 38)
+
+
+
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_4_0.png)
 
 
 
 
-```python
-players[ players['Type']=='Legend']
-```
+
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_5_0.png)
 
 
 
 
-<div>
-
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Name</th>
-      <th>Position</th>
-      <th>Current Team</th>
-      <th>Type</th>
-      <th>All Teams</th>
-      <th>ARI</th>
-      <th>ATL</th>
-      <th>BAL</th>
-      <th>BUF</th>
-      <th>CAR</th>
-      <th>...</th>
-      <th>NYJ</th>
-      <th>OAK</th>
-      <th>PHI</th>
-      <th>PIT</th>
-      <th>SEA</th>
-      <th>SF</th>
-      <th>TB</th>
-      <th>TEN</th>
-      <th>WAS</th>
-      <th>numTeams</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>93</th>
-      <td>Steve Atwater</td>
-      <td>SS</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>,DEN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>102</th>
-      <td>La'Roi Glover</td>
-      <td>DT</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>,NO</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>193</th>
-      <td>Anthony Munoz</td>
-      <td>LT</td>
-      <td>-</td>
-      <td>Legend</td>
-      <td>CIN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-<p>3 rows × 38 columns</p>
-</div>
-
-
-
-
-```python
-plt.figure(figsize=(13, 7))
-sns.countplot(players['Position']);
-plt.title('Number of Power-Up Players by Position');
-```
-
-
-![png](output_4_0.png)
-
-
-
-```python
-# Number of teams per power up player
-plt.figure(figsize=(13, 4))
-sns.countplot(players['numTeams']);
-plt.title('Power-Up Players Binned by Number of Teams Played For');
-```
-
-
-![png](output_5_0.png)
-
-
-
-```python
-numeric_data = players.select_dtypes(include=[float, int])
-
-a = numeric_data.sum().sort_values(ascending=False)[1:]
-
-pal = {'PHI':'xkcd:green', 'NE': 'darkblue', 'NO':'gold', 'GB':'green',
-       'MIN':'xkcd:purple', 'WAS':'maroon', 'TEN': 'cyan', 'TB':'xkcd:crimson',
-       'SEA':'chartreuse', 'LAC':'xkcd:azure', 'ATL':'xkcd:red',
-       'BAL':'indigo', 'LAR':'xkcd:khaki', 'KC':'red', 'NYJ': 'darkgreen',
-       'JAX':'xkcd:darkgreen', 'OAK':'grey', 'BUF':'xkcd:blue', 'CAR':'aqua',
-       'CLE':'chocolate', 'PIT':'xkcd:yellow', 'NYG':'blue', 'SF':'xkcd:gold',
-       'CHI':'xkcd:orange', 'DAL':'xkcd:darkblue', 'MIA':'xkcd:aqua',
-       'DEN':'xkcd:orangered', 'HOU':'xkcd:navy', 'ARI':'xkcd:red',
-       'CIN':'xkcd:orange', 'DET':'xkcd:lightblue', 'IND':'xkcd:azure'}
-```
-
-
-```python
-plt.figure(figsize=(15, 10))
-ax = sns.barplot(x=a.values, y=a.index, palette=pal)
-for p in ax.patches:
-    if np.isnan(p.get_width()):
-        gh = 0.0
-    else:
-        gh = np.round(p.get_width(), 2)
-                
-    ax.annotate(int(gh), (np.round(gh+0.15, 3), p.get_y()+0.5))
-ax.set_title('Number of Power Up Players Eligible for Each Team');
-```
-
-
-![png](output_7_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_7_0.png)
 
 
 ### Biggest journeymen
 
-
-```python
-small = pd.concat([obj_data[['Name', 'Position', 'Type', 'All Teams']], players['numTeams']], axis=1)
-small['All Teams'] = small['All Teams'].str.lstrip(',')
-small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
-```
 
 
 
