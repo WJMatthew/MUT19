@@ -113,24 +113,7 @@
 
 
 
-
-```python
-team_abbrevs = list(pal.keys())
-team_list = []
-
-players = players.dropna()
-
-players.reset_index(drop=True, inplace=True)
-small.reset_index(drop=True, inplace=True)
-
-for team in team_abbrevs:
-    current_team = players[ players[team]==1]
-    indices = current_team.index.values
-    team_list.append(small.iloc[indices])
-```
-
 # Team Lists
-**---------------------------------------------------------------**
 
 ![Image](http://content.sportslogos.net/logos/7/167/thumbs/960.gif)
 
