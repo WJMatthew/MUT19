@@ -19,6 +19,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 data = pd.read_csv('mut_powerups.csv').drop('Unnamed: 0', axis=1)
+data = data[ data['Type'].str.strip() != 'Legend']
 df = pd.concat( [data, data['All Teams'].str.replace(',', '|').str.get_dummies()], axis=1)
 numeric_data = df.select_dtypes(include=[float, int])
 obj_data = df.select_dtypes(exclude=[float, int])
@@ -27,9 +28,29 @@ players = pd.concat([obj_data, numeric_data], axis=1)
 players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
 players = players[ players['numTeams'] != 0]
 players['Type'] = players['Type'].str.strip()
-players.to_csv(f'mut_powerups_{date}.csv')
 players_ = players[ (players['Type']!='Legend') & (players['Type']!='Legend Ltd')]
+players.to_csv(f'mut_powerups_{date}.csv')
+players = players_
 ```
+
+
+```python
+players_['Type'].value_counts()
+```
+
+
+
+
+    Power Up     155
+    Legend PU     36
+    HoF            5
+    Captain        4
+    Master         2
+    MF             1
+    NG             1
+    Name: Type, dtype: int64
+
+
 
 
 ```python
@@ -39,7 +60,7 @@ plt.title('Number of Power-Up Players by Position');
 ```
 
 
-![png](output_3_0.png)
+![png](output_4_0.png)
 
 
 
@@ -51,7 +72,7 @@ plt.title('Power-Up Players Binned by Number of Teams Played For');
 ```
 
 
-![png](output_4_0.png)
+![png](output_5_0.png)
 
 
 
@@ -86,7 +107,7 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 ```
 
 
-![png](output_6_0.png)
+![png](output_7_0.png)
 
 
 ### Biggest journeymen
@@ -96,102 +117,8 @@ ax.set_title('Number of Power Up Players Eligible for Each Team');
 small = pd.concat([obj_data[['Name', 'Position', 'Type', 'All Teams']], players_['numTeams']], axis=1)
 small['All Teams'] = small['All Teams'].str.lstrip(',')
 small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
+small = small[ small['Type'] != 'Legend']
 ```
-
-
-
-
-<div>
-
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Name</th>
-      <th>Position</th>
-      <th>Type</th>
-      <th>All Teams</th>
-      <th>numTeams</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>105</th>
-      <td>Lorenzo Neal</td>
-      <td>FB</td>
-      <td>Legend PU</td>
-      <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
-    </tr>
-    <tr>
-      <th>85</th>
-      <td>Deion Sanders</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>Randy Moss</td>
-      <td>WR</td>
-      <td>Legend PU</td>
-      <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>117</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>84</th>
-      <td>Michael Vick</td>
-      <td>QB</td>
-      <td>Legend PU</td>
-      <td>ATL,PHI,NYJ,PIT</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>Kevin Greene</td>
-      <td>LOLB</td>
-      <td>Legend PU</td>
-      <td>LAR,PIT,CAR,SF</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>114</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>HoF</td>
-      <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>208</th>
-      <td>Ty Law</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>NE,NYJ,KC,DEN</td>
-      <td>4.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -248,7 +175,23 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>111</th>
+      <th>107</th>
+      <td>Howie Long</td>
+      <td>RT</td>
+      <td>Legend Ltd</td>
+      <td>OAK</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>Tim Brown</td>
+      <td>WR</td>
+      <td>Legend PU</td>
+      <td>OAK,TB</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>109</th>
       <td>Donovan McNabb</td>
       <td>QB</td>
       <td>Legend PU</td>
@@ -256,31 +199,31 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>112</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
       <th>113</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
+      <td>SEA,MIN,TEN</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
+      <th>146</th>
+      <td>Rodney Hudson</td>
+      <td>C</td>
+      <td>Power Up</td>
+      <td>OAK,KC</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>OAK,TB,BAL,NE,IND</td>
       <td>5.0</td>
     </tr>
     <tr>
-      <th>150</th>
+      <th>148</th>
       <td>Fletcher Cox</td>
       <td>DT</td>
       <td>Power Up</td>
@@ -288,7 +231,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>151</th>
+      <th>149</th>
       <td>Zach Ertz</td>
       <td>TE</td>
       <td>Power Up</td>
@@ -296,7 +239,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>152</th>
+      <th>150</th>
       <td>Brandon Graham</td>
       <td>LE</td>
       <td>Power Up</td>
@@ -304,7 +247,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>153</th>
+      <th>151</th>
       <td>Jordan Hicks</td>
       <td>MLB</td>
       <td>Power Up</td>
@@ -312,7 +255,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>154</th>
+      <th>152</th>
       <td>Lane Johnson</td>
       <td>RT</td>
       <td>Power Up</td>
@@ -320,7 +263,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>155</th>
+      <th>153</th>
       <td>Jason Kelce</td>
       <td>C</td>
       <td>Power Up</td>
@@ -328,7 +271,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>156</th>
+      <th>154</th>
       <td>Carson Wentz</td>
       <td>QB</td>
       <td>Power Up</td>
@@ -336,7 +279,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>157</th>
+      <th>155</th>
       <td>Nigel Bradham</td>
       <td>LOLB</td>
       <td>Power Up</td>
@@ -344,36 +287,20 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>158</th>
-      <td>Jason Peters</td>
-      <td>LT</td>
-      <td>Power Up</td>
-      <td>PHI,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>Malcom Jenkins</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>PHI,NO</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>205</th>
-      <td>Alshon Jeffery</td>
+      <th>199</th>
+      <td>Brandin Cooks</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>CHI,PHI</td>
-      <td>2.0</td>
+      <td>NO,NE,LAR</td>
+      <td>3.0</td>
     </tr>
     <tr>
-      <th>206</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
-      <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <th>200</th>
+      <td>T.J. Watt</td>
+      <td>ROLB</td>
+      <td>Power Up</td>
+      <td>PIT</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -417,7 +344,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>100</th>
+      <th>99</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Legend PU</td>
@@ -425,7 +352,23 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>123</th>
+      <th>119</th>
+      <td>Sean Taylor</td>
+      <td>FS</td>
+      <td>Legend PU</td>
+      <td>WAS</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Champ Bailey</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>WAS,DEN</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>121</th>
       <td>David Andrews</td>
       <td>C</td>
       <td>Power Up</td>
@@ -433,7 +376,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>124</th>
+      <th>122</th>
       <td>Tom Brady</td>
       <td>QB</td>
       <td>Power Up</td>
@@ -441,7 +384,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>125</th>
+      <th>123</th>
       <td>James Develin</td>
       <td>FB</td>
       <td>Power Up</td>
@@ -449,7 +392,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>126</th>
+      <th>124</th>
       <td>Julian Edelman</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -457,7 +400,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>127</th>
+      <th>125</th>
       <td>Rob Gronkowski</td>
       <td>TE</td>
       <td>Power Up</td>
@@ -465,7 +408,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>128</th>
+      <th>126</th>
       <td>Devin McCourty</td>
       <td>FS</td>
       <td>Power Up</td>
@@ -473,60 +416,44 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>129</th>
-      <td>Dont'a Hightower</td>
-      <td>LOLB</td>
+      <th>145</th>
+      <td>Kelechi Osemele</td>
+      <td>LG</td>
       <td>Power Up</td>
-      <td>NE</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NE,BUF</td>
+      <td>OAK,BAL</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
+      <th>177</th>
+      <td>Jurell Casey</td>
+      <td>RE</td>
       <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>181</th>
-      <td>Malcolm Butler</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>TEN,NE</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>196</th>
-      <td>Willie McGinest</td>
-      <td>ROLB</td>
-      <td>Legend PU</td>
-      <td>NE</td>
+      <td>TEN</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>203</th>
-      <td>Brandin Cooks</td>
+      <th>190</th>
+      <td>Mean Joe Greene</td>
+      <td>DT</td>
+      <td>NG</td>
+      <td>PIT</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Emmanuel Sanders</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NE,LAR</td>
-      <td>3.0</td>
+      <td>DEN,PIT</td>
+      <td>2.0</td>
     </tr>
     <tr>
-      <th>208</th>
-      <td>Ty Law</td>
-      <td>CB</td>
+      <th>202</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>NE,NYJ,KC,DEN</td>
-      <td>4.0</td>
+      <td>TEN,PHI</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -570,15 +497,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>102</th>
-      <td>La'Roi Glover</td>
-      <td>DT</td>
-      <td>Legend</td>
-      <td>NO</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>103</th>
+      <th>101</th>
       <td>Willie Roaf</td>
       <td>LT</td>
       <td>Legend PU</td>
@@ -586,7 +505,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>104</th>
+      <th>102</th>
       <td>Ricky Williams</td>
       <td>HB</td>
       <td>Master</td>
@@ -594,7 +513,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -602,7 +521,23 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>131</th>
+      <th>127</th>
+      <td>Dont'a Hightower</td>
+      <td>LOLB</td>
+      <td>Power Up</td>
+      <td>NE</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>Stephon Gilmore</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NE,BUF</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>129</th>
       <td>Cameron Jordan</td>
       <td>LE</td>
       <td>Power Up</td>
@@ -610,7 +545,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>132</th>
+      <th>130</th>
       <td>Alvin Kamara</td>
       <td>HB</td>
       <td>Power Up</td>
@@ -618,7 +553,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>133</th>
+      <th>131</th>
       <td>Marson Lattimore</td>
       <td>CB</td>
       <td>Power Up</td>
@@ -626,7 +561,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>134</th>
+      <th>132</th>
       <td>Ryan Ramczyk</td>
       <td>RT</td>
       <td>Power Up</td>
@@ -634,7 +569,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>135</th>
+      <th>133</th>
       <td>Michael Thomas</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -642,44 +577,28 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>136</th>
-      <td>Drew Brees</td>
-      <td>QB</td>
+      <th>155</th>
+      <td>Nigel Bradham</td>
+      <td>LOLB</td>
       <td>Power Up</td>
-      <td>NO,LAC</td>
+      <td>PHI,BUF</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>137</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>NO,NYJ,CLE</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>Malcom Jenkins</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>PHI,NO</td>
-      <td>2.0</td>
+      <th>191</th>
+      <td>Calvin Johnson</td>
+      <td>WR</td>
+      <td>MF</td>
+      <td>DET</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>197</th>
-      <td>Jeremy Shockey</td>
-      <td>TE</td>
-      <td>Legend PU</td>
-      <td>NYG,NO,CAR</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>203</th>
-      <td>Brandin Cooks</td>
+      <td>Emmanuel Sanders</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NE,LAR</td>
-      <td>3.0</td>
+      <td>DEN,PIT</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -787,7 +706,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>96</th>
+      <th>95</th>
       <td>Ted Hendricks</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -795,12 +714,12 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>113</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <th>109</th>
+      <td>Donovan McNabb</td>
+      <td>QB</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
-      <td>3.0</td>
+      <td>PHI,MIN</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -892,7 +811,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>100</th>
+      <th>99</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Legend PU</td>
@@ -900,7 +819,7 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>101</th>
+      <th>100</th>
       <td>John Randle</td>
       <td>DT</td>
       <td>Legend PU</td>
@@ -908,36 +827,28 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>111</th>
-      <td>Donovan McNabb</td>
-      <td>QB</td>
-      <td>Legend PU</td>
-      <td>PHI,MIN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>115</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>189</th>
-      <td>Randall McDaniel</td>
-      <td>LG</td>
-      <td>Legend</td>
-      <td>MIN</td>
+      <th>107</th>
+      <td>Howie Long</td>
+      <td>RT</td>
+      <td>Legend Ltd</td>
+      <td>OAK</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>191</th>
-      <td>Paul Krause</td>
-      <td>FS</td>
+      <th>111</th>
+      <td>Reggie White</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>WAS,MIN</td>
-      <td>2.0</td>
+      <td>PHI,GB,CAR</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Ronde Barber</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>TB</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -989,23 +900,39 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>121</th>
-      <td>Sean Taylor</td>
-      <td>FS</td>
+      <th>117</th>
+      <td>Steve Young</td>
+      <td>QB</td>
       <td>Legend PU</td>
-      <td>WAS</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>122</th>
-      <td>Champ Bailey</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>WAS,DEN</td>
+      <td>TB,SF</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>183</th>
+      <th>118</th>
+      <td>Eddie George</td>
+      <td>HB</td>
+      <td>Legend PU</td>
+      <td>TEN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>Malcolm Butler</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>TEN,NE</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>Delanie Walker</td>
+      <td>TE</td>
+      <td>Power Up</td>
+      <td>TEN,SF</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>181</th>
       <td>Ryan Kerrigan</td>
       <td>LOLB</td>
       <td>Power Up</td>
@@ -1013,7 +940,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>184</th>
+      <th>182</th>
       <td>Jordan Reed</td>
       <td>TE</td>
       <td>Power Up</td>
@@ -1021,7 +948,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>185</th>
+      <th>183</th>
       <td>Brandon Scherff</td>
       <td>RG</td>
       <td>Power Up</td>
@@ -1030,27 +957,11 @@ team_list[i]
     </tr>
     <tr>
       <th>186</th>
-      <td>Trent Williams</td>
-      <td>LT</td>
-      <td>Power Up</td>
-      <td>WAS</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>187</th>
-      <td>Zach Brown</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>WAS,TEN,BUF</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>191</th>
-      <td>Paul Krause</td>
-      <td>FS</td>
+      <td>Ronde Barber</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>WAS,MIN</td>
-      <td>2.0</td>
+      <td>TB</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -1086,7 +997,7 @@ team_list[i]
   </thead>
   <tbody>
     <tr>
-      <th>100</th>
+      <th>99</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Legend PU</td>
@@ -1094,7 +1005,7 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -1102,23 +1013,39 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
+      <th>111</th>
+      <td>Reggie White</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
+      <td>PHI,GB,CAR</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>120</th>
-      <td>Eddie George</td>
-      <td>HB</td>
+      <th>116</th>
+      <td>Derrick Brooks</td>
+      <td>ROLB</td>
       <td>Legend PU</td>
-      <td>TEN</td>
+      <td>TB</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>178</th>
+      <th>174</th>
+      <td>Gerald McCoy</td>
+      <td>DT</td>
+      <td>Power Up</td>
+      <td>TB</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Brent Grimes</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>TB,ATL,MIA</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>176</th>
       <td>Kevin Byard</td>
       <td>FS</td>
       <td>Power Up</td>
@@ -1126,7 +1053,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>179</th>
+      <th>177</th>
       <td>Jurell Casey</td>
       <td>RE</td>
       <td>Power Up</td>
@@ -1134,7 +1061,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>180</th>
+      <th>178</th>
       <td>Taylor Lewan</td>
       <td>LT</td>
       <td>Power Up</td>
@@ -1142,36 +1069,20 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>181</th>
-      <td>Malcolm Butler</td>
-      <td>CB</td>
+      <th>183</th>
+      <td>Brandon Scherff</td>
+      <td>RG</td>
       <td>Power Up</td>
-      <td>TEN,NE</td>
-      <td>2.0</td>
+      <td>WAS</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>182</th>
-      <td>Delanie Walker</td>
-      <td>TE</td>
+      <th>200</th>
+      <td>T.J. Watt</td>
+      <td>ROLB</td>
       <td>Power Up</td>
-      <td>TEN,SF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>187</th>
-      <td>Zach Brown</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>WAS,TEN,BUF</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>206</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
-      <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <td>PIT</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -1207,7 +1118,7 @@ team_list[i]
   </thead>
   <tbody>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -1215,39 +1126,55 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>110</th>
-      <td>Tim Brown</td>
+      <th>106</th>
+      <td>Kevin Mawae</td>
+      <td>C</td>
+      <td>Legend Ltd</td>
+      <td>NYJ</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>Jerry Rice</td>
       <td>WR</td>
-      <td>Legend PU</td>
-      <td>OAK,TB</td>
-      <td>2.0</td>
+      <td>Captain</td>
+      <td>SF,OAK,SEA</td>
+      <td>3.0</td>
     </tr>
     <tr>
-      <th>118</th>
-      <td>Derrick Brooks</td>
-      <td>ROLB</td>
-      <td>Legend PU</td>
-      <td>TB</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>119</th>
-      <td>Steve Young</td>
-      <td>QB</td>
-      <td>Legend PU</td>
-      <td>TB,SF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
+      <th>115</th>
+      <td>Terell Owens</td>
+      <td>WR</td>
+      <td>HoF</td>
+      <td>SF,PHI,DAL,BUF,CIN</td>
       <td>5.0</td>
     </tr>
     <tr>
-      <th>173</th>
+      <th>145</th>
+      <td>Kelechi Osemele</td>
+      <td>LG</td>
+      <td>Power Up</td>
+      <td>OAK,BAL</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Kyle Juszczyk</td>
+      <td>FB</td>
+      <td>Power Up</td>
+      <td>SF,BAL</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Richard Sherman</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>SF,SEA</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>171</th>
       <td>Lavonte David</td>
       <td>ROLB</td>
       <td>Power Up</td>
@@ -1255,7 +1182,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>174</th>
+      <th>172</th>
       <td>Demar Dotson</td>
       <td>RT</td>
       <td>Power Up</td>
@@ -1263,7 +1190,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>175</th>
+      <th>173</th>
       <td>Mike Evans</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -1271,27 +1198,11 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>176</th>
-      <td>Gerald McCoy</td>
-      <td>DT</td>
+      <th>184</th>
+      <td>Trent Williams</td>
+      <td>LT</td>
       <td>Power Up</td>
-      <td>TB</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>177</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>TB,ATL,MIA</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>188</th>
-      <td>Ronde Barber</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>TB</td>
+      <td>WAS</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -1344,7 +1255,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>101</th>
+      <th>100</th>
       <td>John Randle</td>
       <td>DT</td>
       <td>Legend PU</td>
@@ -1352,23 +1263,39 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
+      <th>111</th>
+      <td>Reggie White</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
+      <td>PHI,GB,CAR</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>Captain</td>
-      <td>SF,OAK,SEA</td>
-      <td>3.0</td>
+      <th>112</th>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>HoF</td>
+      <td>PIT,SF,BAL,OAK</td>
+      <td>4.0</td>
     </tr>
     <tr>
-      <th>166</th>
+      <th>162</th>
+      <td>Marcus Gilbert</td>
+      <td>RT</td>
+      <td>Power Up</td>
+      <td>PIT</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td>Ben Roethlisberger</td>
+      <td>QB</td>
+      <td>Power Up</td>
+      <td>PIT</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>164</th>
       <td>Doug Baldwin</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -1376,7 +1303,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>167</th>
+      <th>165</th>
       <td>Kam Chancellor</td>
       <td>SS</td>
       <td>Power Up</td>
@@ -1384,7 +1311,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>168</th>
+      <th>166</th>
       <td>Earl Thomas III</td>
       <td>FS</td>
       <td>Power Up</td>
@@ -1392,15 +1319,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>169</th>
-      <td>Bobby Wagner</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>SEA</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>170</th>
+      <th>168</th>
       <td>Russell Wilson</td>
       <td>QB</td>
       <td>Power Up</td>
@@ -1408,28 +1327,20 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>172</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>SF,SEA</td>
-      <td>2.0</td>
+      <th>187</th>
+      <td>Dermontti Dawson</td>
+      <td>C</td>
+      <td>Legend PU</td>
+      <td>PIT</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>192</th>
-      <td>Franco Harris</td>
-      <td>FB</td>
+      <td>Willie McGinest</td>
+      <td>ROLB</td>
       <td>Legend PU</td>
-      <td>PIT,SEA</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
-      <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
+      <td>NE</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -1513,7 +1424,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -1521,19 +1432,19 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>136</th>
-      <td>Drew Brees</td>
-      <td>QB</td>
+      <th>132</th>
+      <td>Ryan Ramczyk</td>
+      <td>RT</td>
       <td>Power Up</td>
-      <td>NO,LAC</td>
-      <td>2.0</td>
+      <td>NO</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>209</th>
-      <td>LaDainian Tomlinson</td>
-      <td>RB</td>
+      <th>203</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
       <td>Legend PU</td>
-      <td>LAC,NYJ</td>
+      <td>CIN,BAL</td>
       <td>2.0</td>
     </tr>
   </tbody>
@@ -1634,7 +1545,7 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>97</th>
+      <th>96</th>
       <td>Tony Gonzalez</td>
       <td>TE</td>
       <td>Legend PU</td>
@@ -1642,19 +1553,19 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>177</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
+      <th>173</th>
+      <td>Mike Evans</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>TB,ATL,MIA</td>
-      <td>3.0</td>
+      <td>TB</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>200</th>
-      <td>Dontari Poe</td>
-      <td>DT</td>
+      <th>194</th>
+      <td>Marshawn Lynch</td>
+      <td>RB</td>
       <td>Power Up</td>
-      <td>KC,ATL,CAR</td>
+      <td>OAK,BUF,SEA</td>
       <td>3.0</td>
     </tr>
   </tbody>
@@ -1739,7 +1650,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>94</th>
+      <th>93</th>
       <td>Shannon Sharpe</td>
       <td>TE</td>
       <td>Captain</td>
@@ -1747,7 +1658,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>104</th>
+      <th>102</th>
       <td>Ricky Williams</td>
       <td>HB</td>
       <td>Master</td>
@@ -1755,7 +1666,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -1763,15 +1674,23 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>114</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>HoF</td>
-      <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
+      <th>110</th>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
+      <td>Legend PU</td>
+      <td>PHI,DEN</td>
+      <td>2.0</td>
     </tr>
     <tr>
-      <th>147</th>
+      <th>143</th>
+      <td>Khalil Mack</td>
+      <td>LE</td>
+      <td>Power Up</td>
+      <td>CHI,OAK</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>145</th>
       <td>Kelechi Osemele</td>
       <td>LG</td>
       <td>Power Up</td>
@@ -1779,27 +1698,19 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
+      <th>167</th>
+      <td>Bobby Wagner</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
+      <td>SEA</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>171</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
+      <th>201</th>
+      <td>Alshon Jeffery</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>SF,BAL</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>207</th>
-      <td>Willie Anderson</td>
-      <td>RT</td>
-      <td>Legend PU</td>
-      <td>CIN,BAL</td>
+      <td>CHI,PHI</td>
       <td>2.0</td>
     </tr>
   </tbody>
@@ -1884,7 +1795,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>98</th>
+      <th>97</th>
       <td>Kevin Greene</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -1892,28 +1803,28 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>140</th>
-      <td>Janoris Jenkins</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYG,LAR</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>143</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYJ,LAR</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>203</th>
-      <td>Brandin Cooks</td>
+      <th>136</th>
+      <td>Odell Beckham Jr</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NE,LAR</td>
-      <td>3.0</td>
+      <td>NYG</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>Damon Harrison Sr</td>
+      <td>DT</td>
+      <td>Power Up</td>
+      <td>NYG,NYJ</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Emmanuel Sanders</td>
+      <td>WR</td>
+      <td>Power Up</td>
+      <td>DEN,PIT</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -2005,7 +1916,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>97</th>
+      <th>96</th>
       <td>Tony Gonzalez</td>
       <td>TE</td>
       <td>Legend PU</td>
@@ -2013,7 +1924,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>103</th>
+      <th>101</th>
       <td>Willie Roaf</td>
       <td>LT</td>
       <td>Legend PU</td>
@@ -2021,28 +1932,28 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
+      <th>144</th>
+      <td>Derek Carr</td>
+      <td>QB</td>
       <td>Power Up</td>
-      <td>OAK,KC</td>
-      <td>2.0</td>
+      <td>OAK</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>200</th>
-      <td>Dontari Poe</td>
-      <td>DT</td>
+      <th>194</th>
+      <td>Marshawn Lynch</td>
+      <td>RB</td>
       <td>Power Up</td>
-      <td>KC,ATL,CAR</td>
+      <td>OAK,BUF,SEA</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>208</th>
-      <td>Ty Law</td>
-      <td>CB</td>
+      <th>202</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>NE,NYJ,KC,DEN</td>
-      <td>4.0</td>
+      <td>TEN,PHI</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -2086,7 +1997,7 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -2094,23 +2005,31 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>108</th>
-      <td>Kevin Mawae</td>
-      <td>C</td>
-      <td>Legend Ltd</td>
-      <td>NYJ</td>
-      <td>NaN</td>
+      <th>133</th>
+      <td>Michael Thomas</td>
+      <td>WR</td>
+      <td>Power Up</td>
+      <td>NO</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>137</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
+      <td>Landon Collins</td>
+      <td>SS</td>
       <td>Power Up</td>
-      <td>NO,NYJ,CLE</td>
-      <td>3.0</td>
+      <td>NYG</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>141</th>
+      <th>138</th>
+      <td>Janoris Jenkins</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NYG,LAR</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>139</th>
       <td>Damon Harrison Sr</td>
       <td>DT</td>
       <td>Power Up</td>
@@ -2118,35 +2037,19 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>142</th>
-      <td>Jamal Adams</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>NYJ</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>143</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYJ,LAR</td>
+      <th>202</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>208</th>
-      <td>Ty Law</td>
-      <td>CB</td>
+      <th>203</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
       <td>Legend PU</td>
-      <td>NE,NYJ,KC,DEN</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>209</th>
-      <td>LaDainian Tomlinson</td>
-      <td>RB</td>
-      <td>Legend PU</td>
-      <td>LAC,NYJ</td>
+      <td>CIN,BAL</td>
       <td>2.0</td>
     </tr>
   </tbody>
@@ -2274,7 +2177,7 @@ team_list[i]
   </thead>
   <tbody>
     <tr>
-      <th>96</th>
+      <th>95</th>
       <td>Ted Hendricks</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -2282,7 +2185,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>100</th>
+      <th>99</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Legend PU</td>
@@ -2290,23 +2193,23 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>109</th>
-      <td>Howie Long</td>
-      <td>RT</td>
+      <th>106</th>
+      <td>Kevin Mawae</td>
+      <td>C</td>
       <td>Legend Ltd</td>
-      <td>OAK</td>
+      <td>NYJ</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>110</th>
-      <td>Tim Brown</td>
-      <td>WR</td>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
       <td>Legend PU</td>
-      <td>OAK,TB</td>
+      <td>PHI,DEN</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>114</th>
+      <th>112</th>
       <td>Rod Woodson</td>
       <td>CB</td>
       <td>HoF</td>
@@ -2314,15 +2217,23 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>Captain</td>
-      <td>SF,OAK,SEA</td>
-      <td>3.0</td>
+      <th>140</th>
+      <td>Jamal Adams</td>
+      <td>SS</td>
+      <td>Power Up</td>
+      <td>NYJ</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>144</th>
+      <th>141</th>
+      <td>Trumaine Johnson</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NYJ,LAR</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>142</th>
       <td>Amari Cooper</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -2330,7 +2241,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>145</th>
+      <th>143</th>
       <td>Khalil Mack</td>
       <td>LE</td>
       <td>Power Up</td>
@@ -2338,7 +2249,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>146</th>
+      <th>144</th>
       <td>Derek Carr</td>
       <td>QB</td>
       <td>Power Up</td>
@@ -2346,7 +2257,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>147</th>
+      <th>145</th>
       <td>Kelechi Osemele</td>
       <td>LG</td>
       <td>Power Up</td>
@@ -2354,28 +2265,12 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
-      <td>Power Up</td>
-      <td>OAK,KC</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
-      <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
+      <th>192</th>
+      <td>Willie McGinest</td>
+      <td>ROLB</td>
+      <td>Legend PU</td>
+      <td>NE</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -2429,52 +2324,52 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NE,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>157</th>
-      <td>Nigel Bradham</td>
-      <td>LOLB</td>
-      <td>Power Up</td>
-      <td>PHI,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>158</th>
-      <td>Jason Peters</td>
-      <td>LT</td>
-      <td>Power Up</td>
-      <td>PHI,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>187</th>
-      <td>Zach Brown</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>WAS,TEN,BUF</td>
+      <th>113</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
+      <td>Legend PU</td>
+      <td>SEA,MIN,TEN</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>198</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
+      <th>126</th>
+      <td>Devin McCourty</td>
+      <td>FS</td>
       <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
+      <td>NE</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Jason Kelce</td>
+      <td>C</td>
+      <td>Power Up</td>
+      <td>PHI</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Carson Wentz</td>
+      <td>QB</td>
+      <td>Power Up</td>
+      <td>PHI</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>Brandon Scherff</td>
+      <td>RG</td>
+      <td>Power Up</td>
+      <td>WAS</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td>Willie McGinest</td>
+      <td>ROLB</td>
+      <td>Legend PU</td>
+      <td>NE</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -2560,7 +2455,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>98</th>
+      <th>97</th>
       <td>Kevin Greene</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -2568,36 +2463,36 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>113</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <th>109</th>
+      <td>Donovan McNabb</td>
+      <td>QB</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
+      <td>PHI,MIN</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td>Calvin Johnson</td>
+      <td>WR</td>
+      <td>MF</td>
+      <td>DET</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Marshawn Lynch</td>
+      <td>RB</td>
+      <td>Power Up</td>
+      <td>OAK,BUF,SEA</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>197</th>
-      <td>Jeremy Shockey</td>
-      <td>TE</td>
-      <td>Legend PU</td>
-      <td>NYG,NO,CAR</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>200</th>
+      <th>196</th>
       <td>Dontari Poe</td>
       <td>DT</td>
       <td>Power Up</td>
       <td>KC,ATL,CAR</td>
       <td>3.0</td>
-    </tr>
-    <tr>
-      <th>202</th>
-      <td>Christian McCaffrey</td>
-      <td>RB</td>
-      <td>Power Up</td>
-      <td>CAR</td>
-      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -2675,12 +2570,12 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>137</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
+      <th>133</th>
+      <td>Michael Thomas</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NYJ,CLE</td>
-      <td>3.0</td>
+      <td>NO</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -2726,7 +2621,7 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>98</th>
+      <th>97</th>
       <td>Kevin Greene</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -2734,15 +2629,31 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>114</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>HoF</td>
-      <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
+      <th>110</th>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
+      <td>Legend PU</td>
+      <td>PHI,DEN</td>
+      <td>2.0</td>
     </tr>
     <tr>
-      <th>160</th>
+      <th>156</th>
+      <td>Jason Peters</td>
+      <td>LT</td>
+      <td>Power Up</td>
+      <td>PHI,BUF</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>Malcom Jenkins</td>
+      <td>SS</td>
+      <td>Power Up</td>
+      <td>PHI,NO</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>158</th>
       <td>Ryan Shazier</td>
       <td>MLB</td>
       <td>Master</td>
@@ -2750,7 +2661,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>161</th>
+      <th>159</th>
       <td>Le'Veon Bell</td>
       <td>HB</td>
       <td>Power Up</td>
@@ -2758,7 +2669,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>162</th>
+      <th>160</th>
       <td>Antonio Brown</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -2766,7 +2677,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>163</th>
+      <th>161</th>
       <td>David DeCastro</td>
       <td>RG</td>
       <td>Power Up</td>
@@ -2774,23 +2685,15 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>164</th>
-      <td>Marcus Gilbert</td>
-      <td>RT</td>
+      <th>185</th>
+      <td>Zach Brown</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
+      <td>WAS,TEN,BUF</td>
+      <td>3.0</td>
     </tr>
     <tr>
-      <th>165</th>
-      <td>Ben Roethlisberger</td>
-      <td>QB</td>
-      <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>190</th>
+      <th>187</th>
       <td>Dermontti Dawson</td>
       <td>C</td>
       <td>Legend PU</td>
@@ -2798,35 +2701,27 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>192</th>
-      <td>Franco Harris</td>
-      <td>FB</td>
+      <th>188</th>
+      <td>Paul Krause</td>
+      <td>FS</td>
       <td>Legend PU</td>
-      <td>PIT,SEA</td>
+      <td>WAS,MIN</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>194</th>
-      <td>Mean Joe Greene</td>
-      <td>DT</td>
-      <td>NG</td>
-      <td>PIT</td>
+      <th>195</th>
+      <td>Demarcus Lawrence</td>
+      <td>LE</td>
+      <td>Power Up</td>
+      <td>DAL</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>201</th>
-      <td>Emmanuel Sanders</td>
-      <td>WR</td>
+      <th>198</th>
+      <td>Christian McCaffrey</td>
+      <td>RB</td>
       <td>Power Up</td>
-      <td>DEN,PIT</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>204</th>
-      <td>T.J. Watt</td>
-      <td>ROLB</td>
-      <td>Power Up</td>
-      <td>PIT</td>
+      <td>CAR</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -2873,7 +2768,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>106</th>
+      <th>104</th>
       <td>Michael Strahan</td>
       <td>LE</td>
       <td>Captain</td>
@@ -2881,7 +2776,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>107</th>
+      <th>105</th>
       <td>Lawrence Taylor</td>
       <td>ROLB</td>
       <td>Legend PU</td>
@@ -2889,7 +2784,23 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>138</th>
+      <th>134</th>
+      <td>Drew Brees</td>
+      <td>QB</td>
+      <td>Power Up</td>
+      <td>NO,LAC</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>Demario Davis</td>
+      <td>MLB</td>
+      <td>Power Up</td>
+      <td>NO,NYJ,CLE</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>136</th>
       <td>Odell Beckham Jr</td>
       <td>WR</td>
       <td>Power Up</td>
@@ -2897,7 +2808,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>139</th>
+      <th>137</th>
       <td>Landon Collins</td>
       <td>SS</td>
       <td>Power Up</td>
@@ -2905,28 +2816,12 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>140</th>
-      <td>Janoris Jenkins</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYG,LAR</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>141</th>
-      <td>Damon Harrison Sr</td>
-      <td>DT</td>
-      <td>Power Up</td>
-      <td>NYG,NYJ</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>197</th>
-      <td>Jeremy Shockey</td>
-      <td>TE</td>
-      <td>Legend PU</td>
-      <td>NYG,NO,CAR</td>
-      <td>3.0</td>
+      <th>191</th>
+      <td>Calvin Johnson</td>
+      <td>WR</td>
+      <td>MF</td>
+      <td>DET</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -2980,7 +2875,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>98</th>
+      <th>97</th>
       <td>Kevin Greene</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -2988,7 +2883,7 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>100</th>
+      <th>99</th>
       <td>Randy Moss</td>
       <td>WR</td>
       <td>Legend PU</td>
@@ -2996,7 +2891,15 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>114</th>
+      <th>110</th>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
+      <td>Legend PU</td>
+      <td>PHI,DEN</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>112</th>
       <td>Rod Woodson</td>
       <td>CB</td>
       <td>HoF</td>
@@ -3004,15 +2907,15 @@ team_list[i]
       <td>4.0</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>Captain</td>
-      <td>SF,OAK,SEA</td>
+      <th>113</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
+      <td>Legend PU</td>
+      <td>SEA,MIN,TEN</td>
       <td>3.0</td>
     </tr>
     <tr>
-      <th>117</th>
+      <th>115</th>
       <td>Terell Owens</td>
       <td>WR</td>
       <td>HoF</td>
@@ -3020,36 +2923,28 @@ team_list[i]
       <td>5.0</td>
     </tr>
     <tr>
-      <th>119</th>
-      <td>Steve Young</td>
+      <th>167</th>
+      <td>Bobby Wagner</td>
+      <td>MLB</td>
+      <td>Power Up</td>
+      <td>SEA</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Russell Wilson</td>
       <td>QB</td>
-      <td>Legend PU</td>
-      <td>TB,SF</td>
-      <td>2.0</td>
+      <td>Power Up</td>
+      <td>SEA</td>
+      <td>1.0</td>
     </tr>
     <tr>
-      <th>171</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
+      <th>178</th>
+      <td>Taylor Lewan</td>
+      <td>LT</td>
       <td>Power Up</td>
-      <td>SF,BAL</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>172</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>SF,SEA</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>182</th>
-      <td>Delanie Walker</td>
-      <td>TE</td>
-      <td>Power Up</td>
-      <td>TEN,SF</td>
-      <td>2.0</td>
+      <td>TEN</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -3135,20 +3030,20 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>145</th>
-      <td>Khalil Mack</td>
-      <td>LE</td>
+      <th>141</th>
+      <td>Trumaine Johnson</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>CHI,OAK</td>
+      <td>NYJ,LAR</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>205</th>
-      <td>Alshon Jeffery</td>
+      <th>199</th>
+      <td>Brandin Cooks</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>CHI,PHI</td>
-      <td>2.0</td>
+      <td>NO,NE,LAR</td>
+      <td>3.0</td>
     </tr>
   </tbody>
 </table>
@@ -3250,20 +3145,20 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
+      <th>113</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
+      <td>Legend PU</td>
+      <td>SEA,MIN,TEN</td>
+      <td>3.0</td>
     </tr>
     <tr>
-      <th>199</th>
-      <td>Demarcus Lawrence</td>
-      <td>LE</td>
-      <td>Power Up</td>
-      <td>DAL</td>
-      <td>1.0</td>
+      <th>193</th>
+      <td>Jeremy Shockey</td>
+      <td>TE</td>
+      <td>Legend PU</td>
+      <td>NYG,NO,CAR</td>
+      <td>3.0</td>
     </tr>
   </tbody>
 </table>
@@ -3333,7 +3228,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>99</th>
+      <th>98</th>
       <td>Dan Marino</td>
       <td>QB</td>
       <td>HoF</td>
@@ -3341,7 +3236,7 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>104</th>
+      <th>102</th>
       <td>Ricky Williams</td>
       <td>HB</td>
       <td>Master</td>
@@ -3349,12 +3244,12 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>177</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
+      <th>173</th>
+      <td>Mike Evans</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>TB,ATL,MIA</td>
-      <td>3.0</td>
+      <td>TB</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -3441,14 +3336,6 @@ team_list[i]
     </tr>
     <tr>
       <th>93</th>
-      <td>Steve Atwater</td>
-      <td>SS</td>
-      <td>Legend</td>
-      <td>DEN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>94</th>
       <td>Shannon Sharpe</td>
       <td>TE</td>
       <td>Captain</td>
@@ -3456,36 +3343,36 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>112</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>122</th>
-      <td>Champ Bailey</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>WAS,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>201</th>
-      <td>Emmanuel Sanders</td>
+      <th>108</th>
+      <td>Tim Brown</td>
       <td>WR</td>
-      <td>Power Up</td>
-      <td>DEN,PIT</td>
+      <td>Legend PU</td>
+      <td>OAK,TB</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>208</th>
-      <td>Ty Law</td>
-      <td>CB</td>
+      <th>118</th>
+      <td>Eddie George</td>
+      <td>HB</td>
       <td>Legend PU</td>
-      <td>NE,NYJ,KC,DEN</td>
-      <td>4.0</td>
+      <td>TEN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>Demarcus Lawrence</td>
+      <td>LE</td>
+      <td>Power Up</td>
+      <td>DAL</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -3705,7 +3592,7 @@ team_list[i]
       <td>2.0</td>
     </tr>
     <tr>
-      <th>105</th>
+      <th>103</th>
       <td>Lorenzo Neal</td>
       <td>FB</td>
       <td>Legend PU</td>
@@ -3713,27 +3600,19 @@ team_list[i]
       <td>7.0</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>193</th>
-      <td>Anthony Munoz</td>
-      <td>LT</td>
-      <td>Legend</td>
-      <td>CIN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>207</th>
-      <td>Willie Anderson</td>
-      <td>RT</td>
+      <th>113</th>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
       <td>Legend PU</td>
-      <td>CIN,BAL</td>
+      <td>SEA,MIN,TEN</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Alshon Jeffery</td>
+      <td>WR</td>
+      <td>Power Up</td>
+      <td>CHI,PHI</td>
       <td>2.0</td>
     </tr>
   </tbody>
@@ -3804,7 +3683,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>95</th>
+      <th>94</th>
       <td>Barry Sanders</td>
       <td>HB</td>
       <td>Legend PU</td>
@@ -3812,12 +3691,12 @@ team_list[i]
       <td>1.0</td>
     </tr>
     <tr>
-      <th>195</th>
-      <td>Calvin Johnson</td>
-      <td>WR</td>
-      <td>MF</td>
-      <td>DET</td>
-      <td>1.0</td>
+      <th>189</th>
+      <td>Franco Harris</td>
+      <td>FB</td>
+      <td>Legend PU</td>
+      <td>PIT,SEA</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -3879,7 +3758,7 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>96</th>
+      <th>95</th>
       <td>Ted Hendricks</td>
       <td>LOLB</td>
       <td>Legend PU</td>
@@ -3887,12 +3766,12 @@ team_list[i]
       <td>3.0</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
+      <th>145</th>
+      <td>Kelechi Osemele</td>
+      <td>LG</td>
       <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
+      <td>OAK,BAL</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
