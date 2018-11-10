@@ -4,54 +4,6 @@
 
 
 
-<<<<<<< HEAD
-```python
-date = 'nov9'
-```
-
-
-```python
-%matplotlib inline
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
-
-data = pd.read_csv('mut_powerups.csv').drop('Unnamed: 0', axis=1)
-df = pd.concat( [data, data['All Teams'].str.replace(',', '|').str.get_dummies()], axis=1)
-numeric_data = df.select_dtypes(include=[float, int])
-obj_data = df.select_dtypes(exclude=[float, int])
-numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
-players = pd.concat([obj_data, numeric_data], axis=1)
-players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
-players = players[ players['numTeams'] != 0]
-players['Type'] = players['Type'].str.strip()
-players.to_csv(f'mut_powerups_{date}.csv')
-players_ = players[ (players['Type']!='Legend') & (players['Type']!='Legend Ltd')]
-```
-
-
-```python
-plt.figure(figsize=(13, 7))
-sns.countplot(players['Position']);
-plt.title('Number of Power-Up Players by Position');
-```
-
-
-![png](output_3_0.png)
-
-
-
-```python
-# Number of teams per power up player
-plt.figure(figsize=(13, 4))
-sns.countplot(players['numTeams']);
-plt.title('Power-Up Players Binned by Number of Teams Played For');
-```
-=======
->>>>>>> 850b854625723cd3fb27e9914d4163d39a4dc89c
 
 ![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_3_0.png)
 
