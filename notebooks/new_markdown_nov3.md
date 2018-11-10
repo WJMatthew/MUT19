@@ -2,28 +2,8 @@
 # MUT Power Up Players and Their Eligible Teams
 #### - Matt , last updated: Nov 2, 2018<br>
 
-- Includes some non PU legends. Will make that more consistent in future.
 
 
-```python
-%matplotlib inline
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
-
-data = pd.read_csv('mut_powerups.csv').drop('Unnamed: 0', axis=1)
-df = pd.concat( [data, data['All Teams'].str.replace(',', '|').str.get_dummies()], axis=1)
-numeric_data = df.select_dtypes(include=[float, int])
-obj_data = df.select_dtypes(exclude=[float, int])
-numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
-players = pd.concat([obj_data, numeric_data], axis=1)
-players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
-players = players[ players['numTeams'] != 0]
-players.to_csv('mut_powerups_nov2.csv')
-```
 
 
 ```python
@@ -35,12 +15,6 @@ players.shape
 
     (206, 38)
 
-
-
-
-```python
-players[ players['Type']=='Legend']
-```
 
 
 
