@@ -1,142 +1,63 @@
 
 # MUT Power Up Players and Their Eligible Teams
-#### - Matt , last updated: Nov 9, 2018<br>
+#### - Matt , last updated: Nov 16, 2018<br>
 
-
-
-<<<<<<< HEAD
-```python
-date = 'nov9'
-```
 
 
 ```python
 %matplotlib inline
 import pandas as pd
-import numpy as np
+from PowerUpAnalyzer import PowerUpAnalyzer
 import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
-
-data = pd.read_csv('mut_powerups.csv').drop('Unnamed: 0', axis=1)
-data = data[ data['Type'].str.strip() != 'Legend']
-df = pd.concat( [data, data['All Teams'].str.replace(',', '|').str.get_dummies()], axis=1)
-numeric_data = df.select_dtypes(include=[float, int])
-obj_data = df.select_dtypes(exclude=[float, int])
-numeric_data['numTeams'] = numeric_data.sum(axis=1).astype(int)
-players = pd.concat([obj_data, numeric_data], axis=1)
-players['Position'] = players['Position'].str.replace('RB', 'HB').str.replace('Qb', 'QB')
-players = players[ players['numTeams'] != 0]
-players['Type'] = players['Type'].str.strip()
-players_ = players[ (players['Type']!='Legend') & (players['Type']!='Legend Ltd')]
-players.to_csv(f'mut_powerups_{date}.csv')
-players = players_
+%load_ext autoreload
+%autoreload 2
 ```
 
 
 ```python
-players_['Type'].value_counts()
+date = 'nov16'
+
+pa = PowerUpAnalyzer(date)
+```
+
+
+![png](output_2_0.png)
+
+
+
+![png](output_2_1.png)
+
+
+
+![png](output_2_2.png)
+
+
+
+![png](output_2_3.png)
+
+
+
+```python
+pa.player_data['Type'].value_counts()
 ```
 
 
 
 
     Power Up     155
-    Legend PU     36
+    Legend PU     38
     HoF            5
     Captain        4
     Master         2
-    MF             1
-    NG             1
     Name: Type, dtype: int64
 
-
-
-
-```python
-plt.figure(figsize=(13, 7))
-sns.countplot(players['Position']);
-plt.title('Number of Power-Up Players by Position');
-```
-
-
-![png](output_4_0.png)
-
-
-
-```python
-# Number of teams per power up player
-plt.figure(figsize=(13, 4))
-sns.countplot(players['numTeams']);
-plt.title('Power-Up Players Binned by Number of Teams Played For');
-```
-=======
->>>>>>> 477709c4bad6d7e1b7bdd3b4245ab0feb65a4626
-
-
-![png](output_5_0.png)
-
-
-
-```python
-numeric_data = players_.select_dtypes(include=[float, int])
-
-a = numeric_data.sum().sort_values(ascending=False)[1:]
-
-pal = {'PHI':'xkcd:green', 'NE': 'darkblue', 'NO':'gold', 'GB':'green',
-       'MIN':'xkcd:purple', 'WAS':'maroon', 'TEN': 'cyan', 'TB':'xkcd:crimson',
-       'SEA':'chartreuse', 'LAC':'xkcd:azure', 'ATL':'xkcd:red',
-       'BAL':'indigo', 'LAR':'xkcd:khaki', 'KC':'red', 'NYJ': 'darkgreen',
-       'JAX':'xkcd:darkgreen', 'OAK':'grey', 'BUF':'xkcd:blue', 'CAR':'aqua',
-       'CLE':'chocolate', 'PIT':'xkcd:yellow', 'NYG':'blue', 'SF':'xkcd:gold',
-       'CHI':'xkcd:orange', 'DAL':'xkcd:darkblue', 'MIA':'xkcd:aqua',
-       'DEN':'xkcd:orangered', 'HOU':'xkcd:navy', 'ARI':'xkcd:red',
-       'CIN':'xkcd:orange', 'DET':'xkcd:lightblue', 'IND':'xkcd:azure'}
-```
-
-
-```python
-plt.figure(figsize=(15, 10))
-ax = sns.barplot(x=a.values, y=a.index, palette=pal)
-for p in ax.patches:
-    if np.isnan(p.get_width()):
-        gh = 0.0
-    else:
-        gh = np.round(p.get_width(), 2)
-                
-    ax.annotate(int(gh), (np.round(gh+0.15, 3), p.get_y()+0.5))
-ax.set_title('Number of Power Up Players Eligible for Each Team');
-```
-
-
-![png](output_7_0.png)
 
 
 ### Biggest journeymen
 
 
 ```python
-small = pd.concat([obj_data[['Name', 'Position', 'Type', 'All Teams']], players_['numTeams']], axis=1)
-small['All Teams'] = small['All Teams'].str.lstrip(',')
-small[ small['numTeams'] >= 4].sort_values('numTeams', ascending=False)
-small = small[ small['Type'] != 'Legend']
-```
-
-
-```python
-team_abbrevs = list(pal.keys())
-team_list = []
-
-players = players.dropna()
-
-players.reset_index(drop=True, inplace=True)
-small.reset_index(drop=True, inplace=True)
-
-for team in team_abbrevs:
-    current_team = players[ players[team]==1]
-    indices = current_team.index.values
-    team_list.append(small.iloc[indices])
+team_list = pa.get_team_list()
 ```
 
 # Team Lists
@@ -156,7 +77,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -175,135 +108,135 @@ team_list[i]
       <td>QB</td>
       <td>Legend PU</td>
       <td>ATL,PHI,NYJ,PIT</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>107</th>
-      <td>Howie Long</td>
-      <td>RT</td>
-      <td>Legend Ltd</td>
-      <td>OAK</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>108</th>
-      <td>Tim Brown</td>
-      <td>WR</td>
-      <td>Legend PU</td>
-      <td>OAK,TB</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>109</th>
       <td>Donovan McNabb</td>
       <td>QB</td>
       <td>Legend PU</td>
       <td>PHI,MIN</td>
-      <td>2.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
+      <td>Legend PU</td>
+      <td>PHI,DEN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>Reggie White</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>PHI,GB,CAR</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>113</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
+      <td>Terell Owens</td>
+      <td>WR</td>
+      <td>HoF</td>
+      <td>SF,PHI,DAL,BUF,CIN</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>Rodney Hudson</td>
-      <td>C</td>
-      <td>Power Up</td>
-      <td>OAK,KC</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>147</th>
-      <td>Rashaan Melvin</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>OAK,TB,BAL,NE,IND</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>148</th>
       <td>Fletcher Cox</td>
       <td>DT</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>149</th>
+      <th>147</th>
       <td>Zach Ertz</td>
       <td>TE</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>150</th>
+      <th>148</th>
       <td>Brandon Graham</td>
       <td>LE</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>151</th>
+      <th>149</th>
       <td>Jordan Hicks</td>
       <td>MLB</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>152</th>
+      <th>150</th>
       <td>Lane Johnson</td>
       <td>RT</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>153</th>
+      <th>151</th>
       <td>Jason Kelce</td>
       <td>C</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>154</th>
+      <th>152</th>
       <td>Carson Wentz</td>
       <td>QB</td>
       <td>Power Up</td>
       <td>PHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>155</th>
+      <th>153</th>
       <td>Nigel Bradham</td>
       <td>LOLB</td>
       <td>Power Up</td>
       <td>PHI,BUF</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>199</th>
-      <td>Brandin Cooks</td>
+      <th>154</th>
+      <td>Jason Peters</td>
+      <td>LT</td>
+      <td>Power Up</td>
+      <td>PHI,BUF</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Malcom Jenkins</td>
+      <td>SS</td>
+      <td>Power Up</td>
+      <td>PHI,NO</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Alshon Jeffery</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NE,LAR</td>
-      <td>3.0</td>
+      <td>CHI,PHI</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>200</th>
-      <td>T.J. Watt</td>
-      <td>ROLB</td>
-      <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
+      <th>198</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -325,7 +258,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -344,7 +289,7 @@ team_list[i]
       <td>RE</td>
       <td>Power Up</td>
       <td>IND,CLE,NE</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>99</th>
@@ -352,111 +297,111 @@ team_list[i]
       <td>WR</td>
       <td>Legend PU</td>
       <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>119</th>
-      <td>Sean Taylor</td>
-      <td>FS</td>
-      <td>Legend PU</td>
-      <td>WAS</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>120</th>
-      <td>Champ Bailey</td>
-      <td>CB</td>
-      <td>Legend PU</td>
-      <td>WAS,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>121</th>
       <td>David Andrews</td>
       <td>C</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>122</th>
+      <th>120</th>
       <td>Tom Brady</td>
       <td>QB</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>123</th>
+      <th>121</th>
       <td>James Develin</td>
       <td>FB</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>124</th>
+      <th>122</th>
       <td>Julian Edelman</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>125</th>
+      <th>123</th>
       <td>Rob Gronkowski</td>
       <td>TE</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>126</th>
+      <th>124</th>
       <td>Devin McCourty</td>
       <td>FS</td>
       <td>Power Up</td>
       <td>NE</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>Dont'a Hightower</td>
+      <td>LOLB</td>
+      <td>Power Up</td>
+      <td>NE</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>Stephon Gilmore</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NE,BUF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>145</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>OAK,BAL</td>
-      <td>2.0</td>
+      <td>OAK,TB,BAL,NE,IND</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>177</th>
-      <td>Jurell Casey</td>
-      <td>RE</td>
+      <td>Malcolm Butler</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>TEN</td>
-      <td>1.0</td>
+      <td>TEN,NE</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>190</th>
-      <td>Mean Joe Greene</td>
-      <td>DT</td>
-      <td>NG</td>
-      <td>PIT</td>
-      <td>1.0</td>
+      <th>188</th>
+      <td>Willie McGinest</td>
+      <td>ROLB</td>
+      <td>Legend PU</td>
+      <td>NE</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>197</th>
-      <td>Emmanuel Sanders</td>
+      <th>195</th>
+      <td>Brandin Cooks</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>DEN,PIT</td>
-      <td>2.0</td>
+      <td>NO,NE,LAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>202</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
+      <th>200</th>
+      <td>Ty Law</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -478,7 +423,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -497,7 +454,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>GB,NO,SEA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>101</th>
@@ -505,7 +462,7 @@ team_list[i]
       <td>LT</td>
       <td>Legend PU</td>
       <td>NO,KC</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>102</th>
@@ -513,7 +470,7 @@ team_list[i]
       <td>HB</td>
       <td>Master</td>
       <td>NO,MIA,BAL</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>103</th>
@@ -521,87 +478,87 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>127</th>
-      <td>Dont'a Hightower</td>
-      <td>LOLB</td>
-      <td>Power Up</td>
-      <td>NE</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>128</th>
-      <td>Stephon Gilmore</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NE,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>129</th>
       <td>Cameron Jordan</td>
       <td>LE</td>
       <td>Power Up</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>130</th>
+      <th>128</th>
       <td>Alvin Kamara</td>
       <td>HB</td>
       <td>Power Up</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>131</th>
+      <th>129</th>
       <td>Marson Lattimore</td>
       <td>CB</td>
       <td>Power Up</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>132</th>
+      <th>130</th>
       <td>Ryan Ramczyk</td>
       <td>RT</td>
       <td>Power Up</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>133</th>
+      <th>131</th>
       <td>Michael Thomas</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>NO</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>Drew Brees</td>
+      <td>QB</td>
+      <td>Power Up</td>
+      <td>NO,LAC</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>Demario Davis</td>
+      <td>MLB</td>
+      <td>Power Up</td>
+      <td>NO,NYJ,CLE</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>155</th>
-      <td>Nigel Bradham</td>
-      <td>LOLB</td>
+      <td>Malcom Jenkins</td>
+      <td>SS</td>
       <td>Power Up</td>
-      <td>PHI,BUF</td>
-      <td>2.0</td>
+      <td>PHI,NO</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>191</th>
-      <td>Calvin Johnson</td>
-      <td>WR</td>
-      <td>MF</td>
-      <td>DET</td>
-      <td>1.0</td>
+      <th>189</th>
+      <td>Jeremy Shockey</td>
+      <td>TE</td>
+      <td>Legend PU</td>
+      <td>NYG,NO,CAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>197</th>
-      <td>Emmanuel Sanders</td>
+      <th>195</th>
+      <td>Brandin Cooks</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>DEN,PIT</td>
-      <td>2.0</td>
+      <td>NO,NE,LAR</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -623,7 +580,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -642,7 +611,7 @@ team_list[i]
       <td>SS</td>
       <td>Power Up</td>
       <td>BUF,GB</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>37</th>
@@ -650,7 +619,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>GB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>38</th>
@@ -658,7 +627,7 @@ team_list[i]
       <td>LT</td>
       <td>Power Up</td>
       <td>GB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>39</th>
@@ -666,7 +635,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>GB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>40</th>
@@ -674,7 +643,7 @@ team_list[i]
       <td>QB</td>
       <td>Power Up</td>
       <td>GB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>41</th>
@@ -682,7 +651,7 @@ team_list[i]
       <td>FS</td>
       <td>Power Up</td>
       <td>GB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>42</th>
@@ -690,7 +659,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>GB,NO,SEA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>68</th>
@@ -698,7 +667,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>LAC,GB</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>75</th>
@@ -706,7 +675,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>MIA,GB,CHI</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>95</th>
@@ -714,15 +683,15 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>IND,GB,OAK</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>109</th>
-      <td>Donovan McNabb</td>
-      <td>QB</td>
+      <td>Reggie White</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>PHI,MIN</td>
-      <td>2.0</td>
+      <td>PHI,GB,CAR</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -744,7 +713,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -763,7 +744,7 @@ team_list[i]
       <td>ROLB</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>77</th>
@@ -771,7 +752,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>78</th>
@@ -779,7 +760,7 @@ team_list[i]
       <td>RE</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>79</th>
@@ -787,7 +768,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>80</th>
@@ -795,7 +776,7 @@ team_list[i]
       <td>FS</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>81</th>
@@ -803,7 +784,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>MIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>82</th>
@@ -811,7 +792,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>MIN,NYG</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>99</th>
@@ -819,7 +800,7 @@ team_list[i]
       <td>WR</td>
       <td>Legend PU</td>
       <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>100</th>
@@ -827,31 +808,39 @@ team_list[i]
       <td>DT</td>
       <td>Legend PU</td>
       <td>MIN,SEA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>107</th>
-      <td>Howie Long</td>
-      <td>RT</td>
-      <td>Legend Ltd</td>
-      <td>OAK</td>
-      <td>NaN</td>
+      <td>Donovan McNabb</td>
+      <td>QB</td>
+      <td>Legend PU</td>
+      <td>PHI,MIN</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>111</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
-      <td>3.0</td>
+      <td>SEA,MIN,TEN</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>186</th>
-      <td>Ronde Barber</td>
-      <td>CB</td>
+      <td>Paul Krause</td>
+      <td>FS</td>
       <td>Legend PU</td>
-      <td>TB</td>
-      <td>1.0</td>
+      <td>WAS,MIN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Alan Page</td>
+      <td>DT</td>
+      <td>Legend PU</td>
+      <td>MIN,CHI</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -873,7 +862,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -892,7 +893,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>88</th>
@@ -900,71 +901,71 @@ team_list[i]
       <td>RE</td>
       <td>Legend PU</td>
       <td>BUF,WAS</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>117</th>
-      <td>Steve Young</td>
-      <td>QB</td>
+      <td>Sean Taylor</td>
+      <td>FS</td>
       <td>Legend PU</td>
-      <td>TB,SF</td>
-      <td>2.0</td>
+      <td>WAS</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>118</th>
-      <td>Eddie George</td>
-      <td>HB</td>
+      <td>Champ Bailey</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>TEN</td>
-      <td>1.0</td>
+      <td>WAS,DEN</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>179</th>
-      <td>Malcolm Butler</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>TEN,NE</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>180</th>
-      <td>Delanie Walker</td>
-      <td>TE</td>
-      <td>Power Up</td>
-      <td>TEN,SF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>181</th>
       <td>Ryan Kerrigan</td>
       <td>LOLB</td>
       <td>Power Up</td>
       <td>WAS</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>182</th>
+      <th>180</th>
       <td>Jordan Reed</td>
       <td>TE</td>
       <td>Power Up</td>
       <td>WAS</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>183</th>
+      <th>181</th>
       <td>Brandon Scherff</td>
       <td>RG</td>
       <td>Power Up</td>
       <td>WAS</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>Trent Williams</td>
+      <td>LT</td>
+      <td>Power Up</td>
+      <td>WAS</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>Zach Brown</td>
+      <td>MLB</td>
+      <td>Power Up</td>
+      <td>WAS,TEN,BUF</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>186</th>
-      <td>Ronde Barber</td>
-      <td>CB</td>
+      <td>Paul Krause</td>
+      <td>FS</td>
       <td>Legend PU</td>
-      <td>TB</td>
-      <td>1.0</td>
+      <td>WAS,MIN</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -986,7 +987,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1005,7 +1018,7 @@ team_list[i]
       <td>WR</td>
       <td>Legend PU</td>
       <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>103</th>
@@ -1013,79 +1026,87 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>111</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
-      <td>3.0</td>
+      <td>SEA,MIN,TEN</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>116</th>
-      <td>Derrick Brooks</td>
-      <td>ROLB</td>
+      <td>Eddie George</td>
+      <td>HB</td>
       <td>Legend PU</td>
-      <td>TB</td>
-      <td>1.0</td>
+      <td>TEN</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>174</th>
-      <td>Gerald McCoy</td>
-      <td>DT</td>
-      <td>Power Up</td>
-      <td>TB</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>175</th>
-      <td>Brent Grimes</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>TB,ATL,MIA</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>176</th>
       <td>Kevin Byard</td>
       <td>FS</td>
       <td>Power Up</td>
       <td>TEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>177</th>
+      <th>175</th>
       <td>Jurell Casey</td>
       <td>RE</td>
       <td>Power Up</td>
       <td>TEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>178</th>
+      <th>176</th>
       <td>Taylor Lewan</td>
       <td>LT</td>
       <td>Power Up</td>
       <td>TEN</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>Malcolm Butler</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>TEN,NE</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>Delanie Walker</td>
+      <td>TE</td>
+      <td>Power Up</td>
+      <td>TEN,SF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>183</th>
-      <td>Brandon Scherff</td>
-      <td>RG</td>
+      <td>Zach Brown</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>WAS</td>
-      <td>1.0</td>
+      <td>WAS,TEN,BUF</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>200</th>
-      <td>T.J. Watt</td>
-      <td>ROLB</td>
-      <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
+      <th>198</th>
+      <td>Jevon Kearse</td>
+      <td>LE</td>
+      <td>Legend PU</td>
+      <td>TEN,PHI</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>Bruce Matthews</td>
+      <td>C</td>
+      <td>Legend PU</td>
+      <td>TEN</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -1107,7 +1128,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1126,87 +1159,87 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>106</th>
-      <td>Kevin Mawae</td>
-      <td>C</td>
-      <td>Legend Ltd</td>
-      <td>NYJ</td>
-      <td>NaN</td>
+      <td>Tim Brown</td>
+      <td>WR</td>
+      <td>Legend PU</td>
+      <td>OAK,TB</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>114</th>
-      <td>Jerry Rice</td>
-      <td>WR</td>
-      <td>Captain</td>
-      <td>SF,OAK,SEA</td>
-      <td>3.0</td>
+      <td>Derrick Brooks</td>
+      <td>ROLB</td>
+      <td>Legend PU</td>
+      <td>TB</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>115</th>
-      <td>Terell Owens</td>
-      <td>WR</td>
-      <td>HoF</td>
-      <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
+      <td>Steve Young</td>
+      <td>QB</td>
+      <td>Legend PU</td>
+      <td>TB,SF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>145</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>OAK,BAL</td>
-      <td>2.0</td>
+      <td>OAK,TB,BAL,NE,IND</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>169</th>
-      <td>Kyle Juszczyk</td>
-      <td>FB</td>
-      <td>Power Up</td>
-      <td>SF,BAL</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>Richard Sherman</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>SF,SEA</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>171</th>
       <td>Lavonte David</td>
       <td>ROLB</td>
       <td>Power Up</td>
       <td>TB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>172</th>
+      <th>170</th>
       <td>Demar Dotson</td>
       <td>RT</td>
       <td>Power Up</td>
       <td>TB</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>173</th>
+      <th>171</th>
       <td>Mike Evans</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>TB</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>Gerald McCoy</td>
+      <td>DT</td>
+      <td>Power Up</td>
+      <td>TB</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>Brent Grimes</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>TB,ATL,MIA</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>184</th>
-      <td>Trent Williams</td>
-      <td>LT</td>
-      <td>Power Up</td>
-      <td>WAS</td>
-      <td>1.0</td>
+      <td>Ronde Barber</td>
+      <td>CB</td>
+      <td>Legend PU</td>
+      <td>TB</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -1228,7 +1261,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1247,7 +1292,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>DET,SEA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>42</th>
@@ -1255,7 +1300,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>GB,NO,SEA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>100</th>
@@ -1263,87 +1308,87 @@ team_list[i]
       <td>DT</td>
       <td>Legend PU</td>
       <td>MIN,SEA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>111</th>
-      <td>Reggie White</td>
-      <td>LE</td>
+      <td>Steve Hutchinson</td>
+      <td>LG</td>
       <td>Legend PU</td>
-      <td>PHI,GB,CAR</td>
-      <td>3.0</td>
+      <td>SEA,MIN,TEN</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>112</th>
-      <td>Rod Woodson</td>
-      <td>CB</td>
-      <td>HoF</td>
-      <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
+      <td>Jerry Rice</td>
+      <td>WR</td>
+      <td>Captain</td>
+      <td>SF,OAK,SEA</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>162</th>
-      <td>Marcus Gilbert</td>
-      <td>RT</td>
-      <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>163</th>
-      <td>Ben Roethlisberger</td>
-      <td>QB</td>
-      <td>Power Up</td>
-      <td>PIT</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>164</th>
       <td>Doug Baldwin</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>SEA</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>165</th>
+      <th>163</th>
       <td>Kam Chancellor</td>
       <td>SS</td>
       <td>Power Up</td>
       <td>SEA</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>166</th>
+      <th>164</th>
       <td>Earl Thomas III</td>
       <td>FS</td>
       <td>Power Up</td>
       <td>SEA</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>168</th>
+      <th>165</th>
+      <td>Bobby Wagner</td>
+      <td>MLB</td>
+      <td>Power Up</td>
+      <td>SEA</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>166</th>
       <td>Russell Wilson</td>
       <td>QB</td>
       <td>Power Up</td>
       <td>SEA</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Richard Sherman</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>SF,SEA</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>187</th>
-      <td>Dermontti Dawson</td>
-      <td>C</td>
+      <td>Franco Harris</td>
+      <td>FB</td>
       <td>Legend PU</td>
-      <td>PIT</td>
-      <td>1.0</td>
+      <td>PIT,SEA</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>192</th>
-      <td>Willie McGinest</td>
-      <td>ROLB</td>
-      <td>Legend PU</td>
-      <td>NE</td>
-      <td>1.0</td>
+      <th>190</th>
+      <td>Marshawn Lynch</td>
+      <td>HB</td>
+      <td>Power Up</td>
+      <td>OAK,BUF,SEA</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -1365,7 +1410,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1384,7 +1441,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>LAC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>64</th>
@@ -1392,7 +1449,7 @@ team_list[i]
       <td>LE</td>
       <td>Power Up</td>
       <td>LAC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>65</th>
@@ -1400,7 +1457,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>LAC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>66</th>
@@ -1408,7 +1465,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>LAC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>67</th>
@@ -1416,7 +1473,7 @@ team_list[i]
       <td>RE</td>
       <td>Power Up</td>
       <td>LAC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>68</th>
@@ -1424,7 +1481,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>LAC,GB</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>103</th>
@@ -1432,23 +1489,23 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>132</th>
-      <td>Ryan Ramczyk</td>
-      <td>RT</td>
+      <td>Drew Brees</td>
+      <td>QB</td>
       <td>Power Up</td>
-      <td>NO</td>
-      <td>1.0</td>
+      <td>NO,LAC</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>203</th>
-      <td>Willie Anderson</td>
-      <td>RT</td>
+      <th>201</th>
+      <td>LaDainian Tomlinson</td>
+      <td>HB</td>
       <td>Legend PU</td>
-      <td>CIN,BAL</td>
-      <td>2.0</td>
+      <td>LAC,NYJ</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -1470,7 +1527,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1489,7 +1558,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>ATL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1497,7 +1566,7 @@ team_list[i]
       <td>MLB</td>
       <td>Power Up</td>
       <td>ATL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1505,7 +1574,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>ATL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1513,7 +1582,7 @@ team_list[i]
       <td>QB</td>
       <td>Power Up</td>
       <td>ATL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1521,7 +1590,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>ATL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>8</th>
@@ -1529,7 +1598,7 @@ team_list[i]
       <td>C</td>
       <td>Power Up</td>
       <td>ATL,CLE</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>84</th>
@@ -1537,7 +1606,7 @@ team_list[i]
       <td>QB</td>
       <td>Legend PU</td>
       <td>ATL,PHI,NYJ,PIT</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>85</th>
@@ -1545,7 +1614,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>96</th>
@@ -1553,23 +1622,23 @@ team_list[i]
       <td>TE</td>
       <td>Legend PU</td>
       <td>KC,ATL</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>173</th>
-      <td>Mike Evans</td>
-      <td>WR</td>
+      <td>Brent Grimes</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>TB</td>
-      <td>1.0</td>
+      <td>TB,ATL,MIA</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>194</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
+      <th>192</th>
+      <td>Dontari Poe</td>
+      <td>DT</td>
       <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
+      <td>KC,ATL,CAR</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -1591,7 +1660,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1610,7 +1691,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>BAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1618,7 +1699,7 @@ team_list[i]
       <td>ROLB</td>
       <td>Power Up</td>
       <td>BAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1626,7 +1707,7 @@ team_list[i]
       <td>RG</td>
       <td>Power Up</td>
       <td>BAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>85</th>
@@ -1634,7 +1715,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>86</th>
@@ -1642,7 +1723,7 @@ team_list[i]
       <td>MLB</td>
       <td>Captain</td>
       <td>BAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>87</th>
@@ -1650,7 +1731,7 @@ team_list[i]
       <td>LT</td>
       <td>Legend PU</td>
       <td>BAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>93</th>
@@ -1658,7 +1739,7 @@ team_list[i]
       <td>TE</td>
       <td>Captain</td>
       <td>DEN,BAL</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>102</th>
@@ -1666,7 +1747,7 @@ team_list[i]
       <td>HB</td>
       <td>Master</td>
       <td>NO,MIA,BAL</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>103</th>
@@ -1674,47 +1755,47 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>110</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>HoF</td>
+      <td>PIT,SF,BAL,OAK</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>143</th>
-      <td>Khalil Mack</td>
-      <td>LE</td>
-      <td>Power Up</td>
-      <td>CHI,OAK</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>145</th>
       <td>Kelechi Osemele</td>
       <td>LG</td>
       <td>Power Up</td>
       <td>OAK,BAL</td>
-      <td>2.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>OAK,TB,BAL,NE,IND</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>167</th>
-      <td>Bobby Wagner</td>
-      <td>MLB</td>
+      <td>Kyle Juszczyk</td>
+      <td>FB</td>
       <td>Power Up</td>
-      <td>SEA</td>
-      <td>1.0</td>
+      <td>SF,BAL</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>201</th>
-      <td>Alshon Jeffery</td>
-      <td>WR</td>
-      <td>Power Up</td>
-      <td>CHI,PHI</td>
-      <td>2.0</td>
+      <th>199</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
+      <td>Legend PU</td>
+      <td>CIN,BAL</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -1736,7 +1817,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1755,7 +1848,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>LAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>70</th>
@@ -1763,7 +1856,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>LAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>71</th>
@@ -1771,7 +1864,7 @@ team_list[i]
       <td>FS</td>
       <td>Power Up</td>
       <td>LAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>72</th>
@@ -1779,7 +1872,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>LAR,DET,MIA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>73</th>
@@ -1787,7 +1880,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>LAR,KC</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>83</th>
@@ -1795,7 +1888,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ARI,LAR</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>97</th>
@@ -1803,31 +1896,31 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>LAR,PIT,CAR,SF</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>136</th>
-      <td>Odell Beckham Jr</td>
-      <td>WR</td>
+      <td>Janoris Jenkins</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>NYG</td>
-      <td>1.0</td>
+      <td>NYG,LAR</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>139</th>
-      <td>Damon Harrison Sr</td>
-      <td>DT</td>
+      <td>Trumaine Johnson</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>NYG,NYJ</td>
-      <td>2.0</td>
+      <td>NYJ,LAR</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>197</th>
-      <td>Emmanuel Sanders</td>
+      <th>195</th>
+      <td>Brandin Cooks</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>DEN,PIT</td>
-      <td>2.0</td>
+      <td>NO,NE,LAR</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -1849,7 +1942,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1868,7 +1973,7 @@ team_list[i]
       <td>SS</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>58</th>
@@ -1876,7 +1981,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>59</th>
@@ -1884,7 +1989,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>60</th>
@@ -1892,7 +1997,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>61</th>
@@ -1900,7 +2005,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>62</th>
@@ -1908,7 +2013,7 @@ team_list[i]
       <td>QB</td>
       <td>Power Up</td>
       <td>KC</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>73</th>
@@ -1916,7 +2021,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>LAR,KC</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>96</th>
@@ -1924,7 +2029,7 @@ team_list[i]
       <td>TE</td>
       <td>Legend PU</td>
       <td>KC,ATL</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>101</th>
@@ -1932,31 +2037,31 @@ team_list[i]
       <td>LT</td>
       <td>Legend PU</td>
       <td>NO,KC</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>144</th>
-      <td>Derek Carr</td>
-      <td>QB</td>
+      <td>Rodney Hudson</td>
+      <td>C</td>
       <td>Power Up</td>
-      <td>OAK</td>
-      <td>1.0</td>
+      <td>OAK,KC</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>194</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
+      <th>192</th>
+      <td>Dontari Poe</td>
+      <td>DT</td>
       <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
+      <td>KC,ATL,CAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>202</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
+      <th>200</th>
+      <td>Ty Law</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -1978,7 +2083,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1997,7 +2114,7 @@ team_list[i]
       <td>QB</td>
       <td>Legend PU</td>
       <td>ATL,PHI,NYJ,PIT</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>103</th>
@@ -2005,55 +2122,55 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>133</th>
-      <td>Michael Thomas</td>
-      <td>WR</td>
+      <td>Demario Davis</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>NO</td>
-      <td>1.0</td>
+      <td>NO,NYJ,CLE</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>137</th>
-      <td>Landon Collins</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>NYG</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>Janoris Jenkins</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYG,LAR</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>139</th>
       <td>Damon Harrison Sr</td>
       <td>DT</td>
       <td>Power Up</td>
       <td>NYG,NYJ</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>202</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
-      <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <th>138</th>
+      <td>Jamal Adams</td>
+      <td>SS</td>
+      <td>Power Up</td>
+      <td>NYJ</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>203</th>
-      <td>Willie Anderson</td>
-      <td>RT</td>
+      <th>139</th>
+      <td>Trumaine Johnson</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NYJ,LAR</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Ty Law</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>CIN,BAL</td>
-      <td>2.0</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>LaDainian Tomlinson</td>
+      <td>HB</td>
+      <td>Legend PU</td>
+      <td>LAC,NYJ</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -2075,7 +2192,19 @@ team_list[i]
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2094,7 +2223,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>JAX</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>51</th>
@@ -2102,7 +2231,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Power Up</td>
       <td>JAX</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>52</th>
@@ -2110,7 +2239,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>JAX</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>53</th>
@@ -2118,7 +2247,7 @@ team_list[i]
       <td>ROLB</td>
       <td>Power Up</td>
       <td>JAX</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>54</th>
@@ -2126,7 +2255,7 @@ team_list[i]
       <td>LE</td>
       <td>Power Up</td>
       <td>JAX,ARI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>55</th>
@@ -2134,7 +2263,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>JAX,CAR</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>56</th>
@@ -2142,7 +2271,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>JAX,HOU</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -2151,22 +2280,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/163/thumbs/g9mgk6x3ge26t44cccm9oq1vl.gif)
+## Oakland Raiders
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    OAK
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2185,7 +2323,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>IND,GB,OAK</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>99</th>
@@ -2193,87 +2331,87 @@ team_list[i]
       <td>WR</td>
       <td>Legend PU</td>
       <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>106</th>
-      <td>Kevin Mawae</td>
-      <td>C</td>
-      <td>Legend Ltd</td>
-      <td>NYJ</td>
-      <td>NaN</td>
+      <td>Tim Brown</td>
+      <td>WR</td>
+      <td>Legend PU</td>
+      <td>OAK,TB</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>110</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>112</th>
       <td>Rod Woodson</td>
       <td>CB</td>
       <td>HoF</td>
       <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Jerry Rice</td>
+      <td>WR</td>
+      <td>Captain</td>
+      <td>SF,OAK,SEA</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>140</th>
-      <td>Jamal Adams</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>NYJ</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>141</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
-      <td>Power Up</td>
-      <td>NYJ,LAR</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>142</th>
       <td>Amari Cooper</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>OAK</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>143</th>
+      <th>141</th>
       <td>Khalil Mack</td>
       <td>LE</td>
       <td>Power Up</td>
       <td>CHI,OAK</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>144</th>
+      <th>142</th>
       <td>Derek Carr</td>
       <td>QB</td>
       <td>Power Up</td>
       <td>OAK</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>145</th>
+      <th>143</th>
       <td>Kelechi Osemele</td>
       <td>LG</td>
       <td>Power Up</td>
       <td>OAK,BAL</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>192</th>
-      <td>Willie McGinest</td>
-      <td>ROLB</td>
-      <td>Legend PU</td>
-      <td>NE</td>
-      <td>1.0</td>
+      <th>144</th>
+      <td>Rodney Hudson</td>
+      <td>C</td>
+      <td>Power Up</td>
+      <td>OAK,KC</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>OAK,TB,BAL,NE,IND</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Marshawn Lynch</td>
+      <td>HB</td>
+      <td>Power Up</td>
+      <td>OAK,BUF,SEA</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -2282,22 +2420,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/149/thumbs/n0fd1z6xmhigb0eej3323ebwq.gif)
+## Buffalo Bills
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    BUF
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2316,7 +2463,7 @@ team_list[i]
       <td>SS</td>
       <td>Power Up</td>
       <td>BUF,GB</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>88</th>
@@ -2324,55 +2471,55 @@ team_list[i]
       <td>RE</td>
       <td>Legend PU</td>
       <td>BUF,WAS</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>113</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
+      <td>Terell Owens</td>
+      <td>WR</td>
+      <td>HoF</td>
+      <td>SF,PHI,DAL,BUF,CIN</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>126</th>
-      <td>Devin McCourty</td>
-      <td>FS</td>
+      <td>Stephon Gilmore</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>NE</td>
-      <td>1.0</td>
+      <td>NE,BUF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>153</th>
-      <td>Jason Kelce</td>
-      <td>C</td>
+      <td>Nigel Bradham</td>
+      <td>LOLB</td>
       <td>Power Up</td>
-      <td>PHI</td>
-      <td>1.0</td>
+      <td>PHI,BUF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>154</th>
-      <td>Carson Wentz</td>
-      <td>QB</td>
+      <td>Jason Peters</td>
+      <td>LT</td>
       <td>Power Up</td>
-      <td>PHI</td>
-      <td>1.0</td>
+      <td>PHI,BUF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>183</th>
-      <td>Brandon Scherff</td>
-      <td>RG</td>
+      <td>Zach Brown</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>WAS</td>
-      <td>1.0</td>
+      <td>WAS,TEN,BUF</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>192</th>
-      <td>Willie McGinest</td>
-      <td>ROLB</td>
-      <td>Legend PU</td>
-      <td>NE</td>
-      <td>1.0</td>
+      <th>190</th>
+      <td>Marshawn Lynch</td>
+      <td>HB</td>
+      <td>Power Up</td>
+      <td>OAK,BUF,SEA</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -2381,22 +2528,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/174/thumbs/f1wggq2k8ql88fe33jzhw641u.gif)
+## Carolina Panthers
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    CAR
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2415,15 +2571,15 @@ team_list[i]
       <td>MLB</td>
       <td>Power Up</td>
       <td>CAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>14</th>
       <td>Cam Newton</td>
-      <td>Qb</td>
+      <td>QB</td>
       <td>Power Up</td>
       <td>CAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>15</th>
@@ -2431,7 +2587,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>CAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>16</th>
@@ -2439,7 +2595,7 @@ team_list[i]
       <td>RT</td>
       <td>Power Up</td>
       <td>CAR</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>17</th>
@@ -2447,7 +2603,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>CAR,CHI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>55</th>
@@ -2455,7 +2611,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>JAX,CAR</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>97</th>
@@ -2463,39 +2619,39 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>LAR,PIT,CAR,SF</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>109</th>
-      <td>Donovan McNabb</td>
-      <td>QB</td>
+      <td>Reggie White</td>
+      <td>LE</td>
       <td>Legend PU</td>
-      <td>PHI,MIN</td>
-      <td>2.0</td>
+      <td>PHI,GB,CAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>191</th>
-      <td>Calvin Johnson</td>
-      <td>WR</td>
-      <td>MF</td>
-      <td>DET</td>
-      <td>1.0</td>
+      <th>189</th>
+      <td>Jeremy Shockey</td>
+      <td>TE</td>
+      <td>Legend PU</td>
+      <td>NYG,NO,CAR</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>194</th>
-      <td>Marshawn Lynch</td>
-      <td>RB</td>
-      <td>Power Up</td>
-      <td>OAK,BUF,SEA</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>196</th>
+      <th>192</th>
       <td>Dontari Poe</td>
       <td>DT</td>
       <td>Power Up</td>
       <td>KC,ATL,CAR</td>
-      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Christian McCaffrey</td>
+      <td>HB</td>
+      <td>Power Up</td>
+      <td>CAR</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -2504,22 +2660,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/155/thumbs/15578552015.gif)
+## Cleveland Browns
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    CLE
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2538,7 +2703,7 @@ team_list[i]
       <td>C</td>
       <td>Power Up</td>
       <td>ATL,CLE</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>23</th>
@@ -2546,7 +2711,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>CLE</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>24</th>
@@ -2554,7 +2719,7 @@ team_list[i]
       <td>RG</td>
       <td>Power Up</td>
       <td>CLE,CIN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>25</th>
@@ -2562,7 +2727,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>CLE,MIA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>49</th>
@@ -2570,15 +2735,15 @@ team_list[i]
       <td>RE</td>
       <td>Power Up</td>
       <td>IND,CLE,NE</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>133</th>
-      <td>Michael Thomas</td>
-      <td>WR</td>
+      <td>Demario Davis</td>
+      <td>MLB</td>
       <td>Power Up</td>
-      <td>NO</td>
-      <td>1.0</td>
+      <td>NO,NYJ,CLE</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -2587,22 +2752,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/156/thumbs/970.gif)
+## Pittsburgh Steelers
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    PIT
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2621,7 +2795,7 @@ team_list[i]
       <td>QB</td>
       <td>Legend PU</td>
       <td>ATL,PHI,NYJ,PIT</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>97</th>
@@ -2629,103 +2803,95 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>LAR,PIT,CAR,SF</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>110</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
+      <td>Rod Woodson</td>
+      <td>CB</td>
+      <td>HoF</td>
+      <td>PIT,SF,BAL,OAK</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>156</th>
-      <td>Jason Peters</td>
-      <td>LT</td>
-      <td>Power Up</td>
-      <td>PHI,BUF</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>157</th>
-      <td>Malcom Jenkins</td>
-      <td>SS</td>
-      <td>Power Up</td>
-      <td>PHI,NO</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>158</th>
       <td>Ryan Shazier</td>
       <td>MLB</td>
       <td>Master</td>
       <td>PIT</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>159</th>
+      <th>157</th>
       <td>Le'Veon Bell</td>
       <td>HB</td>
       <td>Power Up</td>
       <td>PIT</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>160</th>
+      <th>158</th>
       <td>Antonio Brown</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>PIT</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>161</th>
+      <th>159</th>
       <td>David DeCastro</td>
       <td>RG</td>
       <td>Power Up</td>
       <td>PIT</td>
-      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>Marcus Gilbert</td>
+      <td>RT</td>
+      <td>Power Up</td>
+      <td>PIT</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>Ben Roethlisberger</td>
+      <td>QB</td>
+      <td>Power Up</td>
+      <td>PIT</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>185</th>
-      <td>Zach Brown</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>WAS,TEN,BUF</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>187</th>
       <td>Dermontti Dawson</td>
       <td>C</td>
       <td>Legend PU</td>
       <td>PIT</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>188</th>
-      <td>Paul Krause</td>
-      <td>FS</td>
+      <th>187</th>
+      <td>Franco Harris</td>
+      <td>FB</td>
       <td>Legend PU</td>
-      <td>WAS,MIN</td>
-      <td>2.0</td>
+      <td>PIT,SEA</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>195</th>
-      <td>Demarcus Lawrence</td>
-      <td>LE</td>
+      <th>193</th>
+      <td>Emmanuel Sanders</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>DAL</td>
-      <td>1.0</td>
+      <td>DEN,PIT</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>198</th>
-      <td>Christian McCaffrey</td>
-      <td>RB</td>
+      <th>196</th>
+      <td>T.J. Watt</td>
+      <td>ROLB</td>
       <td>Power Up</td>
-      <td>CAR</td>
-      <td>1.0</td>
+      <td>PIT</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -2734,22 +2900,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/166/thumbs/919.gif)
+## New York Giants
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    NYG
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2768,7 +2943,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>MIN,NYG</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>104</th>
@@ -2776,7 +2951,7 @@ team_list[i]
       <td>LE</td>
       <td>Captain</td>
       <td>NYG</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>105</th>
@@ -2784,47 +2959,47 @@ team_list[i]
       <td>ROLB</td>
       <td>Legend PU</td>
       <td>NYG</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>134</th>
-      <td>Drew Brees</td>
-      <td>QB</td>
-      <td>Power Up</td>
-      <td>NO,LAC</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>135</th>
-      <td>Demario Davis</td>
-      <td>MLB</td>
-      <td>Power Up</td>
-      <td>NO,NYJ,CLE</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>136</th>
       <td>Odell Beckham Jr</td>
       <td>WR</td>
       <td>Power Up</td>
       <td>NYG</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>137</th>
+      <th>135</th>
       <td>Landon Collins</td>
       <td>SS</td>
       <td>Power Up</td>
       <td>NYG</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>191</th>
-      <td>Calvin Johnson</td>
-      <td>WR</td>
-      <td>MF</td>
-      <td>DET</td>
-      <td>1.0</td>
+      <th>136</th>
+      <td>Janoris Jenkins</td>
+      <td>CB</td>
+      <td>Power Up</td>
+      <td>NYG,LAR</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>Damon Harrison Sr</td>
+      <td>DT</td>
+      <td>Power Up</td>
+      <td>NYG,NYJ</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>189</th>
+      <td>Jeremy Shockey</td>
+      <td>TE</td>
+      <td>Legend PU</td>
+      <td>NYG,NO,CAR</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -2833,22 +3008,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/179/thumbs/17994552009.gif)
+## San Francisco 49ers
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    SF
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2867,7 +3051,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>91</th>
@@ -2875,7 +3059,7 @@ team_list[i]
       <td>RG</td>
       <td>Legend PU</td>
       <td>DAL,SF</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>97</th>
@@ -2883,7 +3067,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>LAR,PIT,CAR,SF</td>
-      <td>4.0</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>99</th>
@@ -2891,63 +3075,63 @@ team_list[i]
       <td>WR</td>
       <td>Legend PU</td>
       <td>MIN,OAK,NE,TEN,SF</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>110</th>
-      <td>Brian Dawkins</td>
-      <td>SS</td>
-      <td>Legend PU</td>
-      <td>PHI,DEN</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>112</th>
       <td>Rod Woodson</td>
       <td>CB</td>
       <td>HoF</td>
       <td>PIT,SF,BAL,OAK</td>
-      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Jerry Rice</td>
+      <td>WR</td>
+      <td>Captain</td>
+      <td>SF,OAK,SEA</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>113</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>115</th>
       <td>Terell Owens</td>
       <td>WR</td>
       <td>HoF</td>
       <td>SF,PHI,DAL,BUF,CIN</td>
-      <td>5.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>Steve Young</td>
+      <td>QB</td>
+      <td>Legend PU</td>
+      <td>TB,SF</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>167</th>
-      <td>Bobby Wagner</td>
-      <td>MLB</td>
+      <td>Kyle Juszczyk</td>
+      <td>FB</td>
       <td>Power Up</td>
-      <td>SEA</td>
-      <td>1.0</td>
+      <td>SF,BAL</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>168</th>
-      <td>Russell Wilson</td>
-      <td>QB</td>
+      <td>Richard Sherman</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>SEA</td>
-      <td>1.0</td>
+      <td>SF,SEA</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>178</th>
-      <td>Taylor Lewan</td>
-      <td>LT</td>
+      <td>Delanie Walker</td>
+      <td>TE</td>
       <td>Power Up</td>
-      <td>TEN</td>
-      <td>1.0</td>
+      <td>TEN,SF</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -2956,22 +3140,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/169/thumbs/364.gif)
+## Chicago Bears
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    CHI
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2990,7 +3183,7 @@ team_list[i]
       <td>TE</td>
       <td>Power Up</td>
       <td>CAR,CHI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>18</th>
@@ -2998,7 +3191,7 @@ team_list[i]
       <td>SS</td>
       <td>Power Up</td>
       <td>CHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>19</th>
@@ -3006,7 +3199,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>CHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>20</th>
@@ -3014,7 +3207,7 @@ team_list[i]
       <td>MLB</td>
       <td>Power Up</td>
       <td>CHI,DEN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>75</th>
@@ -3022,7 +3215,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>MIA,GB,CHI</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>89</th>
@@ -3030,23 +3223,31 @@ team_list[i]
       <td>MLB</td>
       <td>HoF</td>
       <td>CHI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>141</th>
-      <td>Trumaine Johnson</td>
-      <td>CB</td>
+      <td>Khalil Mack</td>
+      <td>LE</td>
       <td>Power Up</td>
-      <td>NYJ,LAR</td>
-      <td>2.0</td>
+      <td>CHI,OAK</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>199</th>
-      <td>Brandin Cooks</td>
+      <th>197</th>
+      <td>Alshon Jeffery</td>
       <td>WR</td>
       <td>Power Up</td>
-      <td>NO,NE,LAR</td>
-      <td>3.0</td>
+      <td>CHI,PHI</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Alan Page</td>
+      <td>DT</td>
+      <td>Legend PU</td>
+      <td>MIN,CHI</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -3055,22 +3256,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/165/thumbs/406.gif)
+## Dallas Cowboys
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    DAL
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3089,7 +3299,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>DAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>27</th>
@@ -3097,7 +3307,7 @@ team_list[i]
       <td>C</td>
       <td>Power Up</td>
       <td>DAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>28</th>
@@ -3105,7 +3315,7 @@ team_list[i]
       <td>ROLB</td>
       <td>Power Up</td>
       <td>DAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>29</th>
@@ -3113,7 +3323,7 @@ team_list[i]
       <td>RG</td>
       <td>Power Up</td>
       <td>DAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>30</th>
@@ -3121,7 +3331,7 @@ team_list[i]
       <td>LT</td>
       <td>Power Up</td>
       <td>DAL</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>85</th>
@@ -3129,7 +3339,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ATL,SF,DAL,WAS,BAL</td>
-      <td>5.0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>90</th>
@@ -3137,7 +3347,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>DAL,DEN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>91</th>
@@ -3145,23 +3355,23 @@ team_list[i]
       <td>RG</td>
       <td>Legend PU</td>
       <td>DAL,SF</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>113</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
+      <td>Terell Owens</td>
+      <td>WR</td>
+      <td>HoF</td>
+      <td>SF,PHI,DAL,BUF,CIN</td>
+      <td>5</td>
     </tr>
     <tr>
-      <th>193</th>
-      <td>Jeremy Shockey</td>
-      <td>TE</td>
-      <td>Legend PU</td>
-      <td>NYG,NO,CAR</td>
-      <td>3.0</td>
+      <th>191</th>
+      <td>Demarcus Lawrence</td>
+      <td>LE</td>
+      <td>Power Up</td>
+      <td>DAL</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -3170,22 +3380,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/150/thumbs/15073062018.gif)
+## Miami Dolphins
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    MIA
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3204,7 +3423,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>CLE,MIA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>72</th>
@@ -3212,7 +3431,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>LAR,DET,MIA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>74</th>
@@ -3220,7 +3439,7 @@ team_list[i]
       <td>SS</td>
       <td>Power Up</td>
       <td>MIA</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>75</th>
@@ -3228,7 +3447,7 @@ team_list[i]
       <td>LG</td>
       <td>Power Up</td>
       <td>MIA,GB,CHI</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>98</th>
@@ -3236,7 +3455,7 @@ team_list[i]
       <td>QB</td>
       <td>HoF</td>
       <td>MIA</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>102</th>
@@ -3244,15 +3463,15 @@ team_list[i]
       <td>HB</td>
       <td>Master</td>
       <td>NO,MIA,BAL</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>173</th>
-      <td>Mike Evans</td>
-      <td>WR</td>
+      <td>Brent Grimes</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>TB</td>
-      <td>1.0</td>
+      <td>TB,ATL,MIA</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -3261,22 +3480,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/161/thumbs/9ebzja2zfeigaziee8y605aqp.gif)
+## Denver Broncos
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    DEN
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3295,7 +3523,7 @@ team_list[i]
       <td>MLB</td>
       <td>Power Up</td>
       <td>CHI,DEN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>31</th>
@@ -3303,7 +3531,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>DEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>32</th>
@@ -3311,7 +3539,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Power Up</td>
       <td>DEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>33</th>
@@ -3319,7 +3547,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>DEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>90</th>
@@ -3327,7 +3555,7 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>DAL,DEN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>92</th>
@@ -3335,7 +3563,7 @@ team_list[i]
       <td>HB</td>
       <td>HoF</td>
       <td>DEN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>93</th>
@@ -3343,39 +3571,39 @@ team_list[i]
       <td>TE</td>
       <td>Captain</td>
       <td>DEN,BAL</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>108</th>
-      <td>Tim Brown</td>
-      <td>WR</td>
+      <td>Brian Dawkins</td>
+      <td>SS</td>
       <td>Legend PU</td>
-      <td>OAK,TB</td>
-      <td>2.0</td>
+      <td>PHI,DEN</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>118</th>
-      <td>Eddie George</td>
-      <td>HB</td>
+      <td>Champ Bailey</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>TEN</td>
-      <td>1.0</td>
+      <td>WAS,DEN</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>195</th>
-      <td>Demarcus Lawrence</td>
-      <td>LE</td>
+      <th>193</th>
+      <td>Emmanuel Sanders</td>
+      <td>WR</td>
       <td>Power Up</td>
-      <td>DAL</td>
-      <td>1.0</td>
+      <td>DEN,PIT</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>202</th>
-      <td>Jevon Kearse</td>
-      <td>LE</td>
+      <th>200</th>
+      <td>Ty Law</td>
+      <td>CB</td>
       <td>Legend PU</td>
-      <td>TEN,PHI</td>
-      <td>2.0</td>
+      <td>NE,NYJ,KC,DEN</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -3384,22 +3612,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/157/thumbs/570.gif)
+## Houston Texans
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    HOU
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3418,7 +3655,7 @@ team_list[i]
       <td>ROLB</td>
       <td>Power Up</td>
       <td>HOU</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>44</th>
@@ -3426,7 +3663,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>HOU</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>45</th>
@@ -3434,7 +3671,7 @@ team_list[i]
       <td>LE</td>
       <td>Power Up</td>
       <td>HOU</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>46</th>
@@ -3442,7 +3679,7 @@ team_list[i]
       <td>FS</td>
       <td>Power Up</td>
       <td>HOU,ARI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>56</th>
@@ -3450,7 +3687,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>JAX,HOU</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -3459,22 +3696,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/177/thumbs/kwth8f1cfa2sch5xhjjfaof90.gif)
+## Arizona Cardinals
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    ARI
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3493,7 +3739,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>ARI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
@@ -3501,7 +3747,7 @@ team_list[i]
       <td>HB</td>
       <td>Power Up</td>
       <td>ARI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
@@ -3509,7 +3755,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>ARI</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>46</th>
@@ -3517,7 +3763,7 @@ team_list[i]
       <td>FS</td>
       <td>Power Up</td>
       <td>HOU,ARI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>54</th>
@@ -3525,7 +3771,7 @@ team_list[i]
       <td>LE</td>
       <td>Power Up</td>
       <td>JAX,ARI</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>83</th>
@@ -3533,7 +3779,7 @@ team_list[i]
       <td>CB</td>
       <td>Legend PU</td>
       <td>ARI,LAR</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -3542,22 +3788,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/154/thumbs/403.gif)
+## Cincinnati Bengals
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    CIN
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3576,7 +3831,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>CIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>22</th>
@@ -3584,7 +3839,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>CIN</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>24</th>
@@ -3592,7 +3847,7 @@ team_list[i]
       <td>RG</td>
       <td>Power Up</td>
       <td>CLE,CIN</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>103</th>
@@ -3600,23 +3855,23 @@ team_list[i]
       <td>FB</td>
       <td>Legend PU</td>
       <td>NO,NYJ,TB,TEN,CIN,LAC,BAL</td>
-      <td>7.0</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>113</th>
-      <td>Steve Hutchinson</td>
-      <td>LG</td>
-      <td>Legend PU</td>
-      <td>SEA,MIN,TEN</td>
-      <td>3.0</td>
+      <td>Terell Owens</td>
+      <td>WR</td>
+      <td>HoF</td>
+      <td>SF,PHI,DAL,BUF,CIN</td>
+      <td>5</td>
     </tr>
     <tr>
-      <th>201</th>
-      <td>Alshon Jeffery</td>
-      <td>WR</td>
-      <td>Power Up</td>
-      <td>CHI,PHI</td>
-      <td>2.0</td>
+      <th>199</th>
+      <td>Willie Anderson</td>
+      <td>RT</td>
+      <td>Legend PU</td>
+      <td>CIN,BAL</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -3625,22 +3880,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/170/thumbs/17013982017.gif)
+## Detroit Lions
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    DET
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3659,7 +3923,7 @@ team_list[i]
       <td>CB</td>
       <td>Power Up</td>
       <td>DET</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>35</th>
@@ -3667,7 +3931,7 @@ team_list[i]
       <td>QB</td>
       <td>Power Up</td>
       <td>DET</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>36</th>
@@ -3675,7 +3939,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>DET,SEA</td>
-      <td>2.0</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>72</th>
@@ -3683,7 +3947,7 @@ team_list[i]
       <td>DT</td>
       <td>Power Up</td>
       <td>LAR,DET,MIA</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>94</th>
@@ -3691,15 +3955,7 @@ team_list[i]
       <td>HB</td>
       <td>Legend PU</td>
       <td>DET</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>189</th>
-      <td>Franco Harris</td>
-      <td>FB</td>
-      <td>Legend PU</td>
-      <td>PIT,SEA</td>
-      <td>2.0</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -3708,22 +3964,31 @@ team_list[i]
 
 
 ![Image](http://content.sportslogos.net/logos/7/158/thumbs/593.gif)
+## Indianapolis Colts
 
 
 ```python
 i+=1
-print(team_abbrevs[i])
 team_list[i]
 ```
-
-    IND
-
 
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3742,7 +4007,7 @@ team_list[i]
       <td>WR</td>
       <td>Power Up</td>
       <td>IND</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>48</th>
@@ -3750,7 +4015,7 @@ team_list[i]
       <td>QB</td>
       <td>Power Up</td>
       <td>IND</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>49</th>
@@ -3758,7 +4023,7 @@ team_list[i]
       <td>RE</td>
       <td>Power Up</td>
       <td>IND,CLE,NE</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>95</th>
@@ -3766,15 +4031,15 @@ team_list[i]
       <td>LOLB</td>
       <td>Legend PU</td>
       <td>IND,GB,OAK</td>
-      <td>3.0</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>145</th>
-      <td>Kelechi Osemele</td>
-      <td>LG</td>
+      <td>Rashaan Melvin</td>
+      <td>CB</td>
       <td>Power Up</td>
-      <td>OAK,BAL</td>
-      <td>2.0</td>
+      <td>OAK,TB,BAL,NE,IND</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
