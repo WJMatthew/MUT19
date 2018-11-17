@@ -4,6 +4,7 @@
 
 
 
+<<<<<<< HEAD
 ```python
 %matplotlib inline
 import pandas as pd
@@ -51,17 +52,30 @@ pa.player_data['Type'].value_counts()
     Master         2
     Name: Type, dtype: int64
 
+=======
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_4_0.png)
+
+
+
+
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_5_0.png)
+
+
+![png](https://github.com/WJMatthew/MUT19/blob/master/img/output_7_0.png)
+>>>>>>> c08f09bb9c06a2c048b4a9d39ba018d823fdcf41
 
 
 ### Biggest journeymen
 
 
+<<<<<<< HEAD
 ```python
 team_list = pa.get_team_list()
 ```
+=======
+>>>>>>> c08f09bb9c06a2c048b4a9d39ba018d823fdcf41
 
 # Team Lists
-**---------------------------------------------------------------**
 
 ![Image](http://content.sportslogos.net/logos/7/167/thumbs/960.gif)
 
