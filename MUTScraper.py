@@ -33,6 +33,7 @@ class Player:
         self.team = '-'
         self.height_wt = ''
         self.cap_hit = 0
+        self.attrib_dict = {}
 
     def get_ratings(self):
         response = requests.get(self.full_link)
@@ -45,6 +46,7 @@ class Player:
         if len(self.trait_dict.keys()) == 10: self.traits_correct = 1
         self.get_price(self.soup)
         self.set_values(self.soup)
+        self.set_attrib_dict()
 
     def summary(self):
         print(self.name, ' - ', self.price, ' - ', self.traits_correct)
@@ -74,10 +76,16 @@ class Player:
                 except:
                     pass
 
+    def set_attrib_dict(self):
+        self.attrib_dict.update({'HtWt': self.height_wt})
+        self.attrib_dict.update({'OVR': self.ovr})
+        self.attrib_dict.update({'Team': self.team})
+        self.attrib_dict.update({'Position': self.position})
+
     def set_values(self, soup):
         try:
             self.ovr = int(soup.find('span', class_='overall').string)
-            self.pos = soup.find('span', class_='position').string
+            self.position = soup.find('span', class_='position').string
             self.program = soup.find('div', class_='program-name').string
             self.first_name = soup.find('span', class_='first-name').string
             self.last_name = soup.find('span', class_='last-name').string
@@ -94,8 +102,9 @@ class Player:
     def get_traits_df(self):
         return pd.DataFrame({self.name: self.trait_dict}).T
 
+    def get_attribs_df(self):
+        return pd.DataFrame({self.name: self.attrib_dict}).T
 
-# position = 8 <- WR
 
 class PlayerHandler:
 
@@ -158,18 +167,21 @@ class PlayerHandler:
     def make_dataframe(self):
         stat_list = []
         trait_list = []
+        attrib_list = []
 
         for player in self.player_list:
             stat_list.append(player.get_stats_df())
             trait_list.append(player.get_traits_df())
+            attrib_list.append(player.get_attribs_df())
 
         player_stats = pd.concat(stat_list)
         player_traits = pd.concat(trait_list)
+        player_attribs = pd.concat(attrib_list)
 
         for _ in player_stats.columns:
-            player_stats[_] = player_stats[_].astype(int)
+            player_stats[_] = player_stats[_].fillna(0).astype(int)
 
-        self.player_df = pd.concat([player_stats, player_traits], axis=1)
+        self.player_df = pd.concat([player_stats, player_traits, player_attribs], axis=1)
 
     def save_dataframe(self):
         self.player_df.to_csv(f'csv/mut_{self.position}s_{self.min_ovr}plus_{self.date}.csv')
