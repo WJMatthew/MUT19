@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
-import warnings; warnings.simplefilter('ignore')
+import warnings;
+warnings.simplefilter('ignore')
 import time
 import re
 
@@ -106,9 +107,13 @@ class Player:
         return pd.DataFrame({self.name: self.attrib_dict}).T
 
 
+pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
+                 'DL': 7168, 'ST': 1572864}
+
+
 class PlayerHandler:
 
-    def __init__(self, position, min_ovr, date, pages):
+    def __init__(self, position, min_ovr, date):
         self.player_list = []
         self.MIN_OVR = 90
         self.player_links = []
@@ -116,20 +121,21 @@ class PlayerHandler:
         self.position = position
         self.min_ovr = min_ovr
         self.date = date
-        self.n_pages = pages
+        self.n_pages = 0
+        self.print_first_page_link()
 
-    def handle_players(self):
+    def handle_players(self, pages):
+        self.n_pages = pages
         self.get_player_links()
         self.make_player_list()
         self.make_dataframe()
+        self.parse_height_and_weight()
         self.save_dataframe()
 
     def get_player_links(self):
         links = []
 
         i = 0
-        pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
-                    'DL': 7168, 'ST': 1572864}
 
         if self.position not in pos_dict.keys():
             print('Position not programmed in yet!')
@@ -183,5 +189,24 @@ class PlayerHandler:
 
         self.player_df = pd.concat([player_stats, player_traits, player_attribs], axis=1)
 
+    def parse_height_and_weight(self):
+        # Parsing Height and Weight
+        try:
+            htwt = self.player_df['HtWt'].str.split('Wt: ')
+            ht = htwt.map(lambda x: x[0])
+            wt = htwt.map(lambda x: x[1])
+
+            ht2 = ht.str.lstrip('Ht: ').str.rstrip('" ').str.split("' ")
+            self.player_df['Ht'] = ht2.map(lambda x: int(x[0]) * 12 + int(x[1].strip()))
+            self.player_df['Wt'] = wt.astype(int)
+            self.player_df['OVR'] = self.player_df['OVR'].astype(int)
+        except:
+            pass
+
     def save_dataframe(self):
         self.player_df.to_csv(f'csv/mut_{self.position}s_{self.min_ovr}plus_{self.date}.csv')
+
+    def print_first_page_link(self):
+        url = f'https://www.muthead.com/19/players?filter-market=3&filter-ovr-min={self.min_ovr}&filter-position={pos_dict.get(self.position)}&page=1'
+        print('Retrieve the number of pages...')
+        print(url)
