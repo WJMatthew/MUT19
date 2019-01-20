@@ -401,7 +401,7 @@ py.iplot(fig)
 ```
 
 
-[!png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/plotly_dline.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/plotly_dline.png)
 
 
 
