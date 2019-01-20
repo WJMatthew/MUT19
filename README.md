@@ -302,7 +302,7 @@ sns.distplot(pdf['SPD']);
 ```
 
 
-![png](output_12_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/output_12_0.png)
 
 
 
@@ -417,5 +417,5 @@ sns.heatmap(pdf.corr(), annot=True);
 ```
 
 
-![png](output_22_0.png)
+![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/output_22_0.png)
 
