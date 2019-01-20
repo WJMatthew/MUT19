@@ -401,9 +401,7 @@ py.iplot(fig)
 ```
 
 
-
-
-<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~perronfrobenius/122.embed" height="800px" width="1000px"></iframe>
+[!png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/plotly_dline.png)
 
 
 
