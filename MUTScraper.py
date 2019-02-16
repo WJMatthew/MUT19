@@ -107,8 +107,10 @@ class Player:
         return pd.DataFrame({self.name: self.attrib_dict}).T
 
 
-pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
-                 'DL': 7168, 'ST': 1572864}
+pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'BACKS': 6, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
+            'DL': 7168, 'ST': 1572864}
+
+print('Available Positions:', [pos for pos in pos_dict.keys()])
 
 
 class PlayerHandler:
@@ -205,6 +207,7 @@ class PlayerHandler:
 
     def save_dataframe(self):
         self.player_df.to_csv(f'csv/mut_{self.position}s_{self.min_ovr}plus_{self.date}.csv')
+
 
     def print_first_page_link(self):
         url = f'https://www.muthead.com/19/players?filter-market=3&filter-ovr-min={self.min_ovr}&filter-position={pos_dict.get(self.position)}&page=1'
