@@ -1,9 +1,13 @@
 
 # MUT Scraper
-### A short tutorial for the MUTScraper module
-#### Matt Johnson Jan 20, 2019
+### A short tutorial for using the MUTScraper module
+#### Matt Johnson. January, 2019 (last updated July 5, 2019)
 
 -------------
+
+Scrape and save data from desired positions by inputing one of the following position options and a minimum overall to filter for.
+
+Scraped data included player ratings and traits and is saved to a csv file.
 
 Available Position Options:
 - WR
@@ -18,55 +22,50 @@ Available Position Options:
 - ST (K, P)
 
 
-```python
-# Import Libraries
+```
 %matplotlib inline
+import matplotlib.pyplot as plt
+from MUTScraper import Player, PlayerHandler
 %load_ext autoreload
 %autoreload 2
-import pandas as pd
-import matplotlib.pyplot as plt
 import plotly as py
 import plotly.plotly as py
 import plotly.graph_objs as go
+import pandas as pd
 from ipywidgets import interactive, HBox, VBox, widgets, interact
-from MUTScraper import Player, PlayerHandler
+import time
 ```
-
-    The autoreload extension is already loaded. To reload it, use:
-      %reload_ext autoreload
 
 
 #### Input position, minimum overall, and date:
-Click the link and get the number of pages (TODO: this is not great, fix).
 
-Here we have chosen to look at Defensive Line (DL) players:
+- Here we have chosen to look at Offensive Line (OL) players.
+- Calling handle_players() starts the scraping process.
 
 
-```python
-ph = PlayerHandler(position='DL', min_ovr=90, date='jan20')
+```
+start = time.time()
+
+ph = PlayerHandler(position='OL', min_ovr=93, date='july5')
+ph.handle_players()
+
+finish = time.time()
+
+print(f'Time elapsed: {finish-start:.2f} sec')
 ```
 
-    Retrieve the number of pages...
-    https://www.muthead.com/19/players?filter-market=3&filter-ovr-min=90&filter-position=7168&page=1
+    Number of pages: 6
+    https://www.muthead.com/19/players?filter-market=3&filter-ovr-min=93&filter-position=992&page=1
+     129 player links gathered.
+    Time elapsed: 357.39 sec
 
 
-#### Start Scraping
-Calling handle_players(pages=numberOfPages) starts the scraping process:
-
-
-```python
-ph.handle_players(pages=4)
-```
-
-     100 player links gathered.
-
-
-#### Data
-We now have the defensive attributes and traits for the players.<br>
+### Data
+We now have the ratings, attributes, and traits for the players.<br>
 Here is the DataFrame holding the player data:
 
 
-```python
+```
 pdf = ph.player_df
 pdf.head()
 ```
@@ -75,6 +74,19 @@ pdf.head()
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -82,18 +94,18 @@ pdf.head()
       <th>ACC</th>
       <th>AGI</th>
       <th>AWR</th>
-      <th>BKS</th>
-      <th>FNM</th>
-      <th>JMP</th>
-      <th>POW</th>
-      <th>PRC</th>
-      <th>PUR</th>
-      <th>PWM</th>
+      <th>IBL</th>
+      <th>LBK</th>
+      <th>PBF</th>
+      <th>PBK</th>
+      <th>PBP</th>
+      <th>RBF</th>
+      <th>RBK</th>
       <th>...</th>
-      <th>DL Swim Move</th>
+      <th>SPD</th>
+      <th>STR</th>
       <th>High Motor</th>
       <th>Penalty</th>
-      <th>Strips Ball</th>
       <th>HtWt</th>
       <th>OVR</th>
       <th>Position</th>
@@ -104,281 +116,213 @@ pdf.head()
   </thead>
   <tbody>
     <tr>
-      <th>Myles Garrett</th>
-      <td>92</td>
-      <td>85</td>
+      <th>Willie Anderson</th>
+      <td>69</td>
+      <td>57</td>
+      <td>99</td>
+      <td>99</td>
+      <td>90</td>
+      <td>97</td>
+      <td>98</td>
+      <td>99</td>
+      <td>97</td>
+      <td>98</td>
+      <td>...</td>
+      <td>59</td>
+      <td>99</td>
+      <td>Yes</td>
+      <td>Norma</td>
+      <td>Ht: 6' 5" Wt: 340</td>
+      <td>99</td>
+      <td>RT</td>
+      <td>Cincinnati Bengals</td>
+      <td>77</td>
+      <td>340</td>
+    </tr>
+    <tr>
+      <th>David Andrews</th>
+      <td>89</td>
+      <td>63</td>
+      <td>99</td>
+      <td>96</td>
+      <td>98</td>
+      <td>99</td>
+      <td>98</td>
+      <td>97</td>
+      <td>99</td>
+      <td>99</td>
+      <td>...</td>
+      <td>73</td>
       <td>91</td>
-      <td>95</td>
-      <td>85</td>
-      <td>95</td>
-      <td>92</td>
-      <td>91</td>
+      <td>Yes</td>
+      <td>Norma</td>
+      <td>Ht: 6' 3" Wt: 295</td>
+      <td>99</td>
+      <td>C</td>
+      <td>New England Patriots</td>
+      <td>75</td>
+      <td>295</td>
+    </tr>
+    <tr>
+      <th>Steve Hutchinson</th>
+      <td>80</td>
+      <td>65</td>
+      <td>99</td>
+      <td>99</td>
       <td>98</td>
       <td>95</td>
-      <td>...</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Undisciplined</td>
-      <td>Yes</td>
-      <td>Ht: 6' 4" Wt: 272</td>
       <td>97</td>
-      <td>RE</td>
-      <td>Cleveland Browns</td>
-      <td>76</td>
-      <td>272</td>
-    </tr>
-    <tr>
-      <th>Damon Harrison Sr</th>
-      <td>79</td>
-      <td>68</td>
+      <td>98</td>
       <td>96</td>
-      <td>97</td>
-      <td>85</td>
-      <td>75</td>
-      <td>82</td>
-      <td>96</td>
-      <td>95</td>
-      <td>91</td>
+      <td>99</td>
       <td>...</td>
-      <td>Yes</td>
+      <td>67</td>
+      <td>97</td>
       <td>Yes</td>
       <td>Disciplined</td>
-      <td>No</td>
-      <td>Ht: 6' 3" Wt: 350</td>
-      <td>96</td>
-      <td>DT</td>
-      <td>Detroit Lions</td>
-      <td>75</td>
-      <td>350</td>
+      <td>Ht: 6' 5" Wt: 313</td>
+      <td>99</td>
+      <td>LG</td>
+      <td>Seattle Seahawks</td>
+      <td>77</td>
+      <td>313</td>
     </tr>
     <tr>
-      <th>Ed Too Tall Jones</th>
-      <td>84</td>
-      <td>78</td>
-      <td>95</td>
+      <th>Chris Lindstrom</th>
+      <td>89</td>
+      <td>74</td>
+      <td>99</td>
+      <td>99</td>
+      <td>99</td>
+      <td>97</td>
       <td>96</td>
-      <td>88</td>
-      <td>87</td>
-      <td>88</td>
-      <td>95</td>
-      <td>91</td>
-      <td>94</td>
+      <td>96</td>
+      <td>99</td>
+      <td>99</td>
       <td>...</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Norma</td>
-      <td>No</td>
-      <td>Ht: 6' 9" Wt: 271</td>
-      <td>96</td>
-      <td>LE</td>
-      <td>Dallas Cowboys</td>
       <td>81</td>
-      <td>271</td>
-    </tr>
-    <tr>
-      <th>Bruce Smith</th>
-      <td>85</td>
-      <td>75</td>
-      <td>94</td>
-      <td>90</td>
-      <td>94</td>
-      <td>79</td>
-      <td>88</td>
-      <td>94</td>
-      <td>88</td>
-      <td>96</td>
-      <td>...</td>
-      <td>Yes</td>
+      <td>93</td>
       <td>Yes</td>
       <td>Norma</td>
-      <td>No</td>
-      <td>Ht: 6' 4" Wt: 262</td>
-      <td>96</td>
-      <td>RE</td>
-      <td>Buffalo Bills</td>
+      <td>Ht: 6' 4" Wt: 308</td>
+      <td>99</td>
+      <td>RG</td>
+      <td>Atlanta Falcons</td>
       <td>76</td>
-      <td>262</td>
+      <td>308</td>
     </tr>
     <tr>
-      <th>Geno Atkins</th>
-      <td>84</td>
-      <td>71</td>
-      <td>96</td>
-      <td>96</td>
-      <td>86</td>
-      <td>75</td>
-      <td>72</td>
-      <td>96</td>
-      <td>91</td>
+      <th>Kevin Mawae</th>
+      <td>82</td>
+      <td>68</td>
+      <td>98</td>
       <td>94</td>
+      <td>97</td>
+      <td>99</td>
+      <td>99</td>
+      <td>98</td>
+      <td>98</td>
+      <td>96</td>
       <td>...</td>
-      <td>No</td>
+      <td>69</td>
+      <td>97</td>
       <td>Yes</td>
-      <td>Disciplined</td>
-      <td>Yes</td>
-      <td>Ht: 6' 1" Wt: 300</td>
-      <td>95</td>
-      <td>DT</td>
-      <td>Cincinnati Bengals</td>
-      <td>73</td>
-      <td>300</td>
+      <td>Norma</td>
+      <td>Ht: 6' 4" Wt: 289</td>
+      <td>99</td>
+      <td>C</td>
+      <td>New York Jets</td>
+      <td>76</td>
+      <td>289</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 26 columns</p>
+<p>5 rows × 21 columns</p>
 </div>
 
 
 
-#### Variables
 
-
-```python
-print(pdf.columns)
 ```
-
-    Index([ACC, AGI, AWR, BKS, FNM, JMP, POW, PRC, PUR, PWM, SPD, STR, TAK,
-           'Big Hitter', 'DL Bull Rush Move', 'DL Spin Move', 'DL Swim Move',
-           'High Motor', 'Penalty', 'Strips Ball', 'HtWt', 'OVR', 'Position',
-           'Team', 'Ht', 'Wt'],
-          dtype='object')
-
-
-
-```python
-pdf.shape
-```
-
-
-
-
-    (100, 26)
-
-
-
-
-```python
-pdf.dtypes
-```
-
-
-
-
-    ACC                   int64
-    AGI                   int64
-    AWR                   int64
-    BKS                   int64
-    FNM                   int64
-    JMP                   int64
-    POW                   int64
-    PRC                   int64
-    PUR                   int64
-    PWM                   int64
-    SPD                   int64
-    STR                   int64
-    TAK                   int64
-    Big Hitter           object
-    DL Bull Rush Move    object
-    DL Spin Move         object
-    DL Swim Move         object
-    High Motor           object
-    Penalty              object
-    Strips Ball          object
-    HtWt                 object
-    OVR                   int64
-    Position             object
-    Team                 object
-    Ht                    int64
-    Wt                    int64
-    dtype: object
-
-
-
-
-```python
 import seaborn as sns
 
-sns.distplot(pdf['SPD']);
+plt.figure(figsize=(12,5))
+
+attribs = ['SPD', 'STR', 'LBK', 'IBL', 'RBK', 'PBK']
+
+for i in range(len(attribs)):
+    plt.subplot(2, 3, i+1)
+    sns.distplot(pdf[attribs[i]]);
+plt.tight_layout();
 ```
 
 
-![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/output_12_0.png)
+![png](img/output_6_0.png)
 
 
+#### Filtering data to fit our needs
+- Lead the Way requires 90 LBK and is a must we filter for 89 as to keep players with Power-Ups in play (which would give them a +1). 
+- Speed is important for pulling and getting blocks so we remove the slower players to clean up our visualization
 
-```python
-heavy = pdf[ pdf['Wt'] >= 300]
-lighter = pdf[ pdf['Wt'] < 300]
 
-fast = pdf[ pdf['SPD'] >= 80]
-medium = pdf[ (pdf['SPD'] >= 70) & (pdf['SPD'] < 80)]
-slow = pdf[ pdf['SPD'] < 70]
 ```
-
-Grouping players by position:
-
-
-```python
-position_groups = pdf.groupby('Position')
-
-df_dict = {}
-
-for name, group in position_groups:
-    df_dict.update({name: group})
-```
-
-Method for filtering dataframe by an attributes rating:
-
-
-```python
 def attribute_restriction(dat, attrib, rating):
     df = dat.copy()
     df = df[ df[attrib] >= rating]
     return df
 ```
 
+
+```
+pdf2 = attribute_restriction(pdf, 'LBK', 89)
+pdf2 = attribute_restriction(pdf2, 'SPD', 70)
+```
+
+#### Grouping players by position:
+- This is just for coloring in Plotly
+
+
+```
+ol_groups = pdf2.groupby('Position')
+
+df_dict = {}
+
+for name, group in ol_groups:
+    df_dict.update({name: group})
+```
+
 ### Visualization with Plotly 
 
 
-```python
-#pdf2 = attribute_restriction(pdf, 'AGI', 87)
-#pdf2 = attribute_restriction(pdf2, 'SPD', 85)
+```
+positions = ['LT', 'LG', 'C', 'RG', 'RT']
+attribs = ['RBK', 'Wt', 'PBK', 'LBK', 'SPD', 'IBL', 'STR', 'AGI']
+color_map = {'LT': 'rgb(230,0,230)', 'LG': 'rgb(230,230,230)', 'C': 'rgb(20,230,100)', 
+             'RG': 'rgb(240,5,30)', 'RT': 'rgb(0,50,240)'}
 
-#df = pdf
-
-color_map = {'LE': 'rgb(230,0,230)', 'DT': 'rgb(230,230,230)', 'RE': 'rgb(240,5,30)'}
-
-attrib_list = ['SPD', 'BKS', 'PWM', 'Wt', 'STR', 'FNM', 'TAK', 'Ht']
-
-def get_trace(pos, df0):
-
-    trace = go.Splom(dimensions=[dict(label=attrib, values=df0[attrib]) for attrib in attrib_list],
-                text=df0.index.values,
+def get_trace(df, pos):
+    trace = go.Splom(dimensions = [dict(label=attrib, values=df[attrib]) for attrib in attribs],
+                text=df.index.values,
                 name=pos,
-                marker=dict(size=5,
+                marker=dict(size=6,
                             showscale=False,
                             line=dict(width=0.5,
-                                      color=color_map.get(pos)))
-                )
+                                      color=color_map[pos])))
+    trace['diagonal'].update(visible=False)
+    trace['showupperhalf']=False
     return trace
-```
 
+    
+traces = [get_trace(df_dict.get(pos), pos) for pos in positions]
 
-```python
-# Trace
-traces = []
-
-for pos in ['LE', 'DT', 'RE']:
-    traces.append( get_trace(pos, df_dict.get(pos)))
-
-# Axis
 axis = dict(showline=True,
           zeroline=False,
           gridcolor='#fff',
           ticklen=4)
 
+
 layout = go.Layout(
-    title='MUT19 Defensive Lineman (90+ OVR)',
+    title='MUT19 Offensive Lineman (93+ OVR)',
     dragmode='select',
     width=1000,
     height=800,
@@ -391,29 +335,27 @@ layout = go.Layout(
     yaxis5=dict(axis), yaxis6=dict(axis), yaxis7=dict(axis), yaxis8=dict(axis)
 )
 
-for trace in traces:
-    trace['diagonal'].update(visible=False)
-    trace['showupperhalf']=False
-
 fig = dict(data=traces, layout=layout)
 
 py.iplot(fig)
 ```
 
 
-![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/plotly_dline.png)
+
+
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~perronfrobenius/144.embed" height="800px" width="1000px"></iframe>
 
 
 
 ### Correlation between Variables:
-We can see a correlation of 1 between PRC and AWR and -0.8 between SPD and Wt.
+We can see a correlation of -0.41 between Wt and Accel.
 
 
-```python
+```
 plt.subplots(figsize=(12,8))
 sns.heatmap(pdf.corr(), annot=True);
 ```
 
 
-![png](https://github.com/WJMatthew/MUT19/blob/master/md/jan20/output_22_0.png)
+![png](img/output_15_0.png)
 
