@@ -107,15 +107,13 @@ class Player:
         return pd.DataFrame({self.name: self.attrib_dict}).T
 
 
-pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'BACKS': 6, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
-            'DL': 7168, 'ST': 1572864}
-
-print('Available Positions:', [pos for pos in pos_dict.keys()])
+pos_dict = {'WR': 8, 'RB': 2, 'QB': 1, 'FB': 4, 'TE': 16, 'OL': 992, 'DB': 458752, 'LB': 57344,
+                 'DL': 7168, 'ST': 1572864}
 
 
 class PlayerHandler:
 
-    def __init__(self, position, min_ovr, date):
+    def __init__(self, position, min_ovr, date, pages=0):
         self.player_list = []
         self.MIN_OVR = 90
         self.player_links = []
@@ -123,16 +121,28 @@ class PlayerHandler:
         self.position = position
         self.min_ovr = min_ovr
         self.date = date
-        self.n_pages = 0
+        if pages == 0:
+            self.n_pages = self.get_num_pages()
+        else:
+            self.n_pages = pages
         self.print_first_page_link()
 
-    def handle_players(self, pages):
-        self.n_pages = pages
+    def handle_players(self, pages=None):
         self.get_player_links()
         self.make_player_list()
         self.make_dataframe()
         self.parse_height_and_weight()
         self.save_dataframe()
+
+    def get_num_pages(self):
+
+        url = f'https://www.muthead.com/19/players?filter-market=3&filter-ovr-min={self.min_ovr}\
+                                &filter-position={pos_dict.get(self.position)}&page=1'
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'lxml')
+        n_pages = int(soup.find_all('a', class_='b-pagination-item')[-1].string)
+        print(f'Number of pages: {n_pages}')
+        return n_pages
 
     def get_player_links(self):
         links = []
@@ -143,7 +153,7 @@ class PlayerHandler:
             print('Position not programmed in yet!')
             return
 
-        while i < self.n_pages:
+        for i in range(1, self.n_pages+1):
 
             try:
                 url = f'https://www.muthead.com/19/players?filter-market=3&filter-ovr-min={self.min_ovr}\
@@ -153,9 +163,8 @@ class PlayerHandler:
 
                 for link in soup.findAll('a', attrs={'href': re.compile("19/players/")}):
                     links.append(link.get('href'))
-                i += 1
 
-            except:
+            except Exception:
                 print(f'breaking... {len(links)} links gathered.')
                 break
 
@@ -208,8 +217,6 @@ class PlayerHandler:
     def save_dataframe(self):
         self.player_df.to_csv(f'csv/mut_{self.position}s_{self.min_ovr}plus_{self.date}.csv')
 
-
     def print_first_page_link(self):
         url = f'https://www.muthead.com/19/players?filter-market=3&filter-ovr-min={self.min_ovr}&filter-position={pos_dict.get(self.position)}&page=1'
-        print('Retrieve the number of pages...')
         print(url)
