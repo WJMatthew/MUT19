@@ -74,19 +74,6 @@ pdf.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -340,10 +327,7 @@ fig = dict(data=traces, layout=layout)
 py.iplot(fig)
 ```
 
-
-
-
-<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~perronfrobenius/144.embed" height="800px" width="1000px"></iframe>
+![png](img/ol_plot.png)
 
 
 
