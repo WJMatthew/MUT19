@@ -22,7 +22,7 @@ class Player:
         self.trait_dict = {}
         self.name = ' '.join(link.split('-')[1:])
         self.link = link
-        self.full_link = prefix + link  # + f'/upgrades?from={upgrade_number}'
+        self.full_link = prefix + link 
         self.price = '0K'
         self.price_diff = '0%'
         self.traits_correct = 0
@@ -146,8 +146,6 @@ class PlayerHandler:
 
     def get_player_links(self):
         links = []
-
-        i = 0
 
         if self.position not in pos_dict.keys():
             print('Position not programmed in yet!')
